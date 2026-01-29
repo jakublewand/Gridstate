@@ -1,0 +1,57 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/GameUIStyle.uss" />
+    <ui:VisualElement name="Root" class="root">
+        
+        <ui:VisualElement name="TopBar" class="topbar glass">
+            
+            <ui:VisualElement class="topbar-section-left">
+                <ui:VisualElement class="city-crest-container">
+                    <ui:VisualElement class="city-crest" />
+                </ui:VisualElement>
+                <ui:VisualElement class="city-info-group">
+                    <ui:Label name="CityName" class="city-name" text="Vermont" />
+                    <ui:Label name="DaysLabel" class="day-text" text="Day 4" />
+                </ui:VisualElement>
+                <ui:Button name="PlayBtn" class="nav-btn" text="▶" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="topbar-section-mid">
+                <ui:VisualElement class="pill pill-small">
+                    <ui:Label text="👤 :" class="pill-icon" />
+                    <ui:Label name="PopLabel" text="6.120" class="pill-text" />
+                </ui:VisualElement>
+                <ui:VisualElement class="pill pill-wide">
+                    <ui:Label text="ℹ️" class="pill-icon" />
+                    <ui:Label name="InfoLabel" text="Obama visited town!" class="pill-text" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="topbar-section-right">
+                <ui:VisualElement name="DailyProgress" class="pill pill-medium progress-container">
+                    <ui:VisualElement name="ProgressFill" class="progress-fill" />
+                    <ui:Label text="💸" class="pill-icon" />
+                    <ui:Label name="PayoutLabel" text="200/day" class="pill-text" />
+                </ui:VisualElement>
+                <ui:VisualElement class="pill pill-small">
+                    <ui:Label text="💵 :" class="pill-icon" />
+                    <ui:Label name="BalanceLabel" text="27.1k" class="pill-text" />
+                </ui:VisualElement>
+                <ui:Button name="OptionsBtn" class="nav-btn" text="●●●" />
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+
+        <ui:VisualElement name="BuyMenu" class="buy-menu glass">
+            <ui:Label text="Köp" class="panel-title" />
+            <ui:ScrollView name="BuildingList" class="building-list" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="StatPanel" class="stat-panel glass">
+            <ui:VisualElement class="stat-header">
+                <ui:Button name="ModeBuildBtn" text="Bygg" class="mode-btn mode-btn-active" />
+                <ui:Button name="ModeStatsBtn" text="Stats" class="mode-btn" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        
+    </ui:VisualElement>
+</ui:UXML>
