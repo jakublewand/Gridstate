@@ -15,8 +15,6 @@ public class CameraBehaviour : MonoBehaviour
             return;
         }
 
-        if (!Input.GetMouseButton(0))
-            return;
 
 
         Vector3 distance = dragOrigin - Input.mousePosition;
@@ -28,6 +26,6 @@ public class CameraBehaviour : MonoBehaviour
             transform.position.y,
             Mathf.Clamp(transform.position.z, -maxMovement, maxMovement)
         );
-
     }
+    
 }
