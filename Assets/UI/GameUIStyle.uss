@@ -1,0 +1,76 @@
+.root {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    padding: 2%;
+}
+
+.glass {
+    background-color: rgba(60, 90, 110, 0.88);
+    border-left-color: rgba(255, 255, 255, 0.35);
+    border-top-color: rgba(255, 255, 255, 0.35);
+    border-right-color: rgba(0, 30, 50, 0.4);
+    border-bottom-color: rgba(0, 30, 50, 0.4);
+    border-left-width: 2px;
+    border-top-width: 2px;
+    border-radius: 20px;
+}
+
+/* TOP BAR LAYOUT */
+.topbar {
+    position: absolute;
+    left: 2%; right: 2%; top: 2%;
+    height: 58px;
+    padding-left: 20px;
+    padding-right: 20px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.topbar-section-left { flex-direction: row; align-items: center; min-width: 250px; padding-left: 60px; }
+.topbar-section-mid { flex-direction: row; align-items: center; justify-content: center; flex-grow: 1; }
+.topbar-section-right { flex-direction: row; align-items: center; justify-content: flex-end; }
+
+.city-info-group { margin-right: 15px; }
+.city-name { font-size: 18px; -unity-font-style: bold; color: white; }
+.day-text { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: -4px; }
+
+/* NAV BUTTONS */
+.nav-btn {
+    width: 42px; height: 42px; border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.18);
+    color: white; border-width: 1px; border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* PILLS */
+.pill {
+    flex-direction: row; align-items: center; height: 34px;
+    border-radius: 10px; background-color: rgba(255, 255, 255, 0.12);
+    margin: 0 5px; padding: 0 10px; overflow: hidden;
+}
+.pill-small { width: 100px; }
+.pill-medium { width: 140px; }
+.pill-wide { width: 280px; }
+
+/* PROGRESS BAR */
+.progress-container { position: relative; background-color: rgba(0, 0, 0, 0.2); }
+.progress-fill {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 0%;
+    background-color: rgba(90, 220, 140, 0.45);
+}
+
+/* START ORB */
+.city-crest-container { position: absolute; left: -25px; top: 50%; margin-top: -40px; }
+.city-crest {
+    width: 80px; height: 80px; border-radius: 40px;
+    background-color: rgba(255, 255, 255, 0.25);
+    border-width: 3px; border-color: rgba(255, 255, 255, 0.75);
+    background-image: url("project://database/Assets/img/landball.png");
+    -unity-background-scale-mode: scale-to-fit;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* SIDE PANELS */
+.buy-menu { position: absolute; top: 110px; right: 2%; width: 350px; height: 50%; padding: 15px; }
+.stat-panel { position: absolute; right: 2%; bottom: 2%; width: 350px; height: 220px; padding: 15px; }
+.panel-title { font-size: 16px; -unity-font-style: bold; color: white; margin-bottom: 5px; }
