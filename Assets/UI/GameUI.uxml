@@ -46,6 +46,11 @@
             <ui:ScrollView name="BuildingList" class="building-list" />
         </ui:VisualElement>
 
+        <ui:VisualElement name="ZoomControls" class="zoom-controls glass">
+            <ui:Button name="ZoomInBtn" class="zoom-btn" text="+" />
+            <ui:Button name="ZoomOutBtn" class="zoom-btn" text="−" />
+        </ui:VisualElement>
+
         <ui:VisualElement name="StatPanel" class="stat-panel glass">
             <ui:VisualElement class="stat-header">
                 <ui:Button name="ModeBuildBtn" text="Bygg" class="mode-btn mode-btn-active" />
