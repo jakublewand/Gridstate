@@ -8,6 +8,9 @@ public class GameUIController : MonoBehaviour
     private VisualElement _progressFill;
     private Label _infoLabel;
 
+    private Button _zoomInBtn;
+    private Button _zoomOutBtn;
+
     private bool _isPaused = false;
     private float _payoutTimer = 0f;
     private const float SECONDS_PER_DAY = 10f;
@@ -22,8 +25,13 @@ public class GameUIController : MonoBehaviour
         _progressFill = _root.Q<VisualElement>("ProgressFill");
         _infoLabel = _root.Q<Label>("InfoLabel");
 
+        _zoomInBtn = _root.Q<Button>("ZoomInBtn");
+        _zoomOutBtn = _root.Q<Button>("ZoomOutBtn");
+
         // Event Listeners
         if (_playBtn != null) _playBtn.clicked += TogglePlay;
+        if (_zoomInBtn != null) _zoomInBtn.clicked += () => Zoom(-1f);
+        if (_zoomOutBtn != null) _zoomOutBtn.clicked += () => Zoom(1f);
     }
 
     void Update()
@@ -48,6 +56,20 @@ public class GameUIController : MonoBehaviour
 
         // API style feedback
         SetInfoMessage(_isPaused ? "Game Paused" : "Simulation Running...");
+    }
+
+    private void Zoom(float direction)
+    {
+        var cam = Camera.main;
+        if (cam == null) return;
+
+        float step = 2f;
+        float minY = 5f;
+        float maxY = 30f;
+
+        Vector3 pos = cam.transform.position;
+        pos.y = Mathf.Clamp(pos.y + direction * step, minY, maxY);
+        cam.transform.position = pos;
     }
 
     // Public API Methods
