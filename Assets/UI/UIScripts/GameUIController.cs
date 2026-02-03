@@ -2,7 +2,22 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 public class GameUIController : MonoBehaviour
-{
+{   /* 
+     UI API-like reference:
+        stafeful content:
+        Vignette image
+        City name
+        Day count
+        Play/pause state
+        Day Progress
+        Population count
+        Daily income
+        Balance
+        more...
+        
+
+    */
+
     private VisualElement _root;
     private Button _playBtn;
     private VisualElement _progressFill;
