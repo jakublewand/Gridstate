@@ -21,6 +21,9 @@ public class GameUIController : MonoBehaviour
     private ProgressBar educationBar;
     private ProgressBar enjoymentBar;
     private ProgressBar safetyBar;
+    private Button optionsBtn;
+    private VisualElement optionsOverlay;
+    private VisualElement greetingOverlay;
 
     void OnEnable()
     {
@@ -42,11 +45,22 @@ public class GameUIController : MonoBehaviour
         educationBar = root.Q<ProgressBar>("EducationBar");
         enjoymentBar = root.Q<ProgressBar>("EnjoymentBar");
         safetyBar = root.Q<ProgressBar>("SafetyBar");
+        optionsBtn = root.Q<Button>("OptionsBtn");
+        optionsOverlay = root.Q<VisualElement>("OptionsOverlay");
+        greetingOverlay = root.Q<VisualElement>("GreetingOverlay");
 
         // Event Listeners
         if (playBtn != null) playBtn.clicked += TogglePlay;
         if (zoomInBtn != null) zoomInBtn.clicked += () => Zoom(-1f);
         if (zoomOutBtn != null) zoomOutBtn.clicked += () => Zoom(1f);
+        if (optionsBtn != null) optionsBtn.clicked += () => ShowOverlay(optionsOverlay);
+
+        var closeOptionsBtn = root.Q<Button>("CloseOptionsBtn");
+        var showGreetingBtn = root.Q<Button>("ShowGreetingBtn");
+        var closeGreetingBtn = root.Q<Button>("CloseGreetingBtn");
+        if (closeOptionsBtn != null) closeOptionsBtn.clicked += () => HideOverlay(optionsOverlay);
+        if (showGreetingBtn != null) showGreetingBtn.clicked += () => { HideOverlay(optionsOverlay); ShowOverlay(greetingOverlay); };
+        if (closeGreetingBtn != null) closeGreetingBtn.clicked += () => HideOverlay(greetingOverlay);
     }
 
     private void Start()
@@ -92,6 +106,17 @@ public class GameUIController : MonoBehaviour
         Vector3 pos = cam.transform.position;
         pos.y = Mathf.Clamp(pos.y + direction * step, minY, maxY);
         cam.transform.position = pos;
+    }
+
+    // Overlay Methods
+    private void ShowOverlay(VisualElement overlay)
+    {
+        overlay.RemoveFromClassList("hidden");
+    }
+
+    private void HideOverlay(VisualElement overlay)
+    {
+        overlay.AddToClassList("hidden");
     }
 
     // Public API Methods

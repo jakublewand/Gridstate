@@ -64,7 +64,7 @@
     width: 80px; height: 80px; border-radius: 40px;
     background-color: rgba(255, 255, 255, 0.25);
     border-width: 3px; border-color: rgba(255, 255, 255, 0.75);
-    background-image: url("project://database/Assets/img/landball.png");
+    background-image: url("project://database/Assets/UI/img/vignette0.png");
     -unity-background-scale-mode: scale-to-fit;
     background-position: center;
     background-repeat: no-repeat;
@@ -94,3 +94,34 @@
 .stat-bar .unity-progress-bar__background { margin: 0; padding: 0; background-color: rgba(0, 0, 0, 0.3); border-radius: 0; }
 .stat-bar .unity-progress-bar__progress { margin: 0; padding: 0; background-color: rgba(90, 220, 140, 0.8); border-radius: 0; }
 .stat-bar .unity-progress-bar__title { display: none; }
+
+/* OVERLAYS */
+.overlay {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    align-items: center;
+    justify-content: center;
+}
+.overlay.hidden { display: none; }
+.overlay-panel {
+    width: 400px;
+    padding: 25px;
+    flex-direction: column;
+}
+.overlay-text {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.overlay-btn {
+    height: 36px;
+    margin-top: 10px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.18);
+    color: white;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.3);
+    font-size: 14px;
+}

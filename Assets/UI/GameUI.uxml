@@ -66,6 +66,23 @@
             <ui:Label text="Safety" class="stat-label" />
             <ui:ProgressBar name="SafetyBar" value="0" high-value="100" class="stat-bar" />
         </ui:VisualElement>
-        
+
+        <ui:VisualElement name="OptionsOverlay" class="overlay hidden">
+            <ui:VisualElement class="overlay-panel glass">
+                <ui:Label text="Options" class="panel-title" />
+                <ui:Label text="This is the options screen." class="overlay-text" />
+                <ui:Button name="ShowGreetingBtn" text="Show Greeting Screen" class="overlay-btn" />
+                <ui:Button name="CloseOptionsBtn" text="Close" class="overlay-btn" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="GreetingOverlay" class="overlay hidden">
+            <ui:VisualElement class="overlay-panel glass">
+                <ui:Label text="Welcome!" class="panel-title" />
+                <ui:Label text="This is the greeting screen demo." class="overlay-text" />
+                <ui:Button name="CloseGreetingBtn" text="Close" class="overlay-btn" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
     </ui:VisualElement>
 </ui:UXML>
