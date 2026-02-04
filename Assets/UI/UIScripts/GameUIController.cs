@@ -2,62 +2,70 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 public class GameUIController : MonoBehaviour
+    // Script for the UI
 {
-    private VisualElement _root;
-    private Button _playBtn;
-    private VisualElement _progressFill;
-    private Label _infoLabel;
 
-    private Button _zoomInBtn;
-    private Button _zoomOutBtn;
-
-    private bool _isPaused = false;
-    private float _payoutTimer = 0f;
-    private const float SECONDS_PER_DAY = 10f;
+    private VisualElement root;
+    private Button playBtn;
+    private VisualElement progressFill;
+    private Label infoLabel;
+    private Button zoomInBtn;
+    private Button zoomOutBtn;
+    private GameManager gameManager;
+    private Label CityName;
+    private Label DaysLabel;
+    private Label PopLabel;
+    private Label PayoutLabel;
+    private Label BalanceLabel;
 
     void OnEnable()
     {
         var uiDoc = GetComponent<UIDocument>();
-        _root = uiDoc.rootVisualElement;
+        root = uiDoc.rootVisualElement;
 
         // Query UI Elements
-        _playBtn = _root.Q<Button>("PlayBtn");
-        _progressFill = _root.Q<VisualElement>("ProgressFill");
-        _infoLabel = _root.Q<Label>("InfoLabel");
-
-        _zoomInBtn = _root.Q<Button>("ZoomInBtn");
-        _zoomOutBtn = _root.Q<Button>("ZoomOutBtn");
+        playBtn = root.Q<Button>("PlayBtn");
+        progressFill = root.Q<VisualElement>("ProgressFill");
+        infoLabel = root.Q<Label>("InfoLabel");
+        zoomInBtn = root.Q<Button>("ZoomInBtn");
+        zoomOutBtn = root.Q<Button>("ZoomOutBtn");
+        CityName = root.Q<Label>("CityName");
+        DaysLabel = root.Q<Label>("DaysLabel");
+        PopLabel = root.Q<Label>("PopLabel");
+        PayoutLabel = root.Q<Label>("PayoutLabel");
+        BalanceLabel = root.Q<Label>("BalanceLabel");
 
         // Event Listeners
-        if (_playBtn != null) _playBtn.clicked += TogglePlay;
-        if (_zoomInBtn != null) _zoomInBtn.clicked += () => Zoom(-1f);
-        if (_zoomOutBtn != null) _zoomOutBtn.clicked += () => Zoom(1f);
+        if (playBtn != null) playBtn.clicked += TogglePlay;
+        if (zoomInBtn != null) zoomInBtn.clicked += () => Zoom(-1f);
+        if (zoomOutBtn != null) zoomOutBtn.clicked += () => Zoom(1f);
+    }
+
+    private void Start()
+    {
+        gameManager = GameManager.instance;
     }
 
     void Update()
     {
-        if (!_isPaused && _progressFill != null)
-        {
-            // Progress Bar Demo
-            _payoutTimer += Time.deltaTime;
-            float progress = (_payoutTimer / SECONDS_PER_DAY) * 100f;
-            _progressFill.style.width = new Length(Mathf.Clamp(progress, 0, 100), LengthUnit.Percent);
+        if (gameManager == null) return; // avoid null refs
 
-            if (_payoutTimer >= SECONDS_PER_DAY) _payoutTimer = 0f;
-        }
+        //update these every frame, basically optimal to do this even though most of them rarely change
+        CityName.text = gameManager.getCityName();
+        DaysLabel.text = $"Day {gameManager.getDayCount()}";
+        PopLabel.text = gameManager.getPopulation().ToString();
+        BalanceLabel.text = gameManager.getBalance().ToString();
+        PayoutLabel.text = $"{gameManager.getIncome()}/day";
+        progressFill.style.width = new Length(Mathf.Clamp(gameManager.getDayProgress(), 0, 100), LengthUnit.Percent);
     }
 
     private void TogglePlay()
     {
-        _isPaused = !_isPaused;
-
-        // Change Icon
-        _playBtn.text = _isPaused ? "II" : "▶";
-
-        // API style feedback
-        SetInfoMessage(_isPaused ? "Game Paused" : "Simulation Running...");
+        gameManager.playPauseGame();
+        playBtn.text = gameManager.isPaused() ? "▶" : "II";
     }
 
+    //vibe coded zoom function, remove/improve
     private void Zoom(float direction)
     {
         var cam = Camera.main;
@@ -73,6 +81,5 @@ public class GameUIController : MonoBehaviour
     }
 
     // Public API Methods
-    public void SetInfoMessage(string msg) => _infoLabel.text = msg;
-    public void SetBalance(string amount) => _root.Q<Label>("BalanceLabel").text = amount;
+    public void SetInfoMessage(string msg) => infoLabel.text = msg;
 }
