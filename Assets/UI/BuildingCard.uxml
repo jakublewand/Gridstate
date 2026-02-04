@@ -1,0 +1,42 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/GameUIStyle.uss" />
+
+    <ui:VisualElement name="BuildingCard" class="building-card">
+
+        <!-- TITLE -->
+        <ui:Label name="Title" class="card-title" text="School" />
+
+        <!-- MAINTENANCE -->
+        <ui:VisualElement class="card-maintenance">
+            <ui:Label text="Maintenance:" class="card-label" />
+            <ui:Label name="Maintenance" class="card-value" text="100 / day" />
+        </ui:VisualElement>
+
+        <!-- STATS -->
+        <ui:VisualElement class="card-stats">
+            <ui:VisualElement class="stat-row">
+                <ui:Label text="Jobs" class="stat-name" />
+                <ui:Label name="JobsStat" class="stat-value" text="+" />
+            </ui:VisualElement>
+            <ui:VisualElement class="stat-row">
+                <ui:Label text="Education" class="stat-name" />
+                <ui:Label name="EducationStat" class="stat-value" text="+++" />
+            </ui:VisualElement>
+            <ui:VisualElement class="stat-row">
+                <ui:Label text="Enjoyment" class="stat-name" />
+                <ui:Label name="EnjoymentStat" class="stat-value stat-zero" text="0" />
+            </ui:VisualElement>
+            <ui:VisualElement class="stat-row">
+                <ui:Label text="Safety" class="stat-name" />
+                <ui:Label name="SafetyStat" class="stat-value stat-zero" text="0" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- COST & BUY -->
+        <ui:VisualElement class="card-footer">
+            <ui:Label name="Cost" class="card-cost" text="$500" />
+            <ui:Button name="BuyBtn" class="card-buy-btn" text="Buy" />
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

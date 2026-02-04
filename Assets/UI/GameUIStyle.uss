@@ -84,9 +84,120 @@
 }
 
 /* SIDE PANELS */
-.buy-menu { position: absolute; top: 110px; right: 2%; width: 350px; height: 50%; padding: 15px; }
-.stat-panel { position: absolute; right: 2%; bottom: 2%; width: 350px; height: 220px; padding: 15px; flex-direction: column; }
+.right-panels { position: absolute; top: 110px; right: 2%; bottom: 2%; width: 350px; flex-direction: column; }
+.buy-menu { flex-grow: 1; padding: 15px; margin-bottom: 20px; }
+.stat-panel { flex-shrink: 0; width: 100%; height: 220px; padding: 15px; flex-direction: column; }
 .panel-title { font-size: 16px; -unity-font-style: bold; color: white; margin-bottom: -14px; }
+
+/* BUILDING CARDS */
+.building-card {
+    background-color: rgba(80, 110, 130, 0.7);
+    border-radius: 12px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+    flex-direction: column;
+}
+
+.card-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.card-title {
+    font-size: 14px;
+    -unity-font-style: bold;
+    color: white;
+    flex-grow: 1;
+}
+
+.card-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 6px;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+.card-maintenance {
+    flex-direction: row;
+    margin-bottom: 6px;
+}
+
+.card-label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.7);
+    flex-grow: 0;
+}
+
+.card-value {
+    font-size: 11px;
+    color: white;
+    margin-left: 5px;
+    -unity-font-style: bold;
+}
+
+.card-stats {
+    flex-direction: column;
+    margin-bottom: 8px;
+}
+
+.stat-row {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 3px;
+}
+
+.stat-name {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.stat-value {
+    font-size: 10px;
+    color: rgba(100, 220, 150, 0.9);
+    -unity-font-style: bold;
+    margin-right: 5px;
+}
+
+.stat-zero {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.card-footer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.card-cost {
+    font-size: 12px;
+    -unity-font-style: bold;
+    color: rgba(255, 215, 100, 0.9);
+}
+
+.card-buy-btn {
+    width: 60px;
+    height: 28px;
+    border-radius: 6px;
+    background-color: rgba(100, 220, 150, 0.3);
+    color: white;
+    border-width: 1px;
+    border-color: rgba(100, 220, 150, 0.6);
+    font-size: 11px;
+    -unity-font-style: bold;
+}
+
+.card-buy-btn:hover {
+    background-color: rgba(100, 220, 150, 0.5);
+}
 
 /* STAT BARS */
 .stat-label { font-size: 11px; color: rgba(255, 255, 255, 0.85); margin: 0; margin-top: 18px; margin-bottom: 2px; padding: 0; }
