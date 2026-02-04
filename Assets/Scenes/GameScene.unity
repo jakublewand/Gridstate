@@ -128,26 +128,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 282369903}
-  - component: {fileID: 282369902}
+  - component: {fileID: 282369904}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: City
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &282369902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 282369901}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48473b8a6e9c4fd40a1afb9592121571, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &282369903
 Transform:
   m_ObjectHideFlags: 0
@@ -163,6 +151,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &282369904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282369901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48473b8a6e9c4fd40a1afb9592121571, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameState:
+    cityName: 
+    dayCount: 0
+    paused: 0
+    dayProgress: 0
+    population: 0
+    income: 0
+    balance: 0
+    jobs: 0
+    education: 0
+    enjoyment: 0
+    safety: 0
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,15 +492,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca982d54ec42c6340b7853064071d260, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 0
-  population: 0
-  qualityofLife: 0
-  education: 0
-  safety: 0
-  energy: 0
-  jobs: 0
-  totalTime: 0
-  cityName: 
 --- !u!114 &795805868
 MonoBehaviour:
   m_ObjectHideFlags: 0

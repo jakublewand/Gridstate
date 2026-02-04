@@ -1,5 +1,5 @@
 using UnityEngine;
-
+[System.Serializable]
 public class GameState
 {
     //Simple gamestate with important fields (should even help with saving correctly later)
@@ -11,6 +11,11 @@ public class GameState
     public int population;
     public int income;
     public int balance;
+    // Stats:
+    public double jobs;
+    public double education;
+    public double enjoyment;
+    public double safety;
 
 
 }
