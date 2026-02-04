@@ -85,5 +85,12 @@
 
 /* SIDE PANELS */
 .buy-menu { position: absolute; top: 110px; right: 2%; width: 350px; height: 50%; padding: 15px; }
-.stat-panel { position: absolute; right: 2%; bottom: 2%; width: 350px; height: 220px; padding: 15px; }
-.panel-title { font-size: 16px; -unity-font-style: bold; color: white; margin-bottom: 5px; }
+.stat-panel { position: absolute; right: 2%; bottom: 2%; width: 350px; height: 220px; padding: 15px; flex-direction: column; }
+.panel-title { font-size: 16px; -unity-font-style: bold; color: white; margin-bottom: -14px; }
+
+/* STAT BARS */
+.stat-label { font-size: 11px; color: rgba(255, 255, 255, 0.85); margin: 0; margin-top: 18px; margin-bottom: 2px; padding: 0; }
+.stat-bar { height: 6px; flex-shrink: 0; margin: 0; padding: 0; }
+.stat-bar .unity-progress-bar__background { margin: 0; padding: 0; background-color: rgba(0, 0, 0, 0.3); border-radius: 0; }
+.stat-bar .unity-progress-bar__progress { margin: 0; padding: 0; background-color: rgba(90, 220, 140, 0.8); border-radius: 0; }
+.stat-bar .unity-progress-bar__title { display: none; }

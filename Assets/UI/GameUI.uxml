@@ -52,10 +52,19 @@
         </ui:VisualElement>
 
         <ui:VisualElement name="StatPanel" class="stat-panel glass">
-            <ui:VisualElement class="stat-header">
-                <ui:Button name="ModeBuildBtn" text="Bygg" class="mode-btn mode-btn-active" />
-                <ui:Button name="ModeStatsBtn" text="Stats" class="mode-btn" />
-            </ui:VisualElement>
+            <ui:Label text="Stats" class="panel-title" />
+
+            <ui:Label text="Jobs" class="stat-label" />
+            <ui:ProgressBar name="JobsBar" value="0" high-value="100" class="stat-bar" />
+
+            <ui:Label text="Education" class="stat-label" />
+            <ui:ProgressBar name="EducationBar" value="0" high-value="100" class="stat-bar" />
+
+            <ui:Label text="Enjoyment" class="stat-label" />
+            <ui:ProgressBar name="EnjoymentBar" value="0" high-value="100" class="stat-bar" />
+
+            <ui:Label text="Safety" class="stat-label" />
+            <ui:ProgressBar name="SafetyBar" value="0" high-value="100" class="stat-bar" />
         </ui:VisualElement>
         
     </ui:VisualElement>

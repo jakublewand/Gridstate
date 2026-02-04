@@ -17,6 +17,10 @@ public class GameUIController : MonoBehaviour
     private Label PopLabel;
     private Label PayoutLabel;
     private Label BalanceLabel;
+    private ProgressBar jobsBar;
+    private ProgressBar educationBar;
+    private ProgressBar enjoymentBar;
+    private ProgressBar safetyBar;
 
     void OnEnable()
     {
@@ -34,6 +38,10 @@ public class GameUIController : MonoBehaviour
         PopLabel = root.Q<Label>("PopLabel");
         PayoutLabel = root.Q<Label>("PayoutLabel");
         BalanceLabel = root.Q<Label>("BalanceLabel");
+        jobsBar = root.Q<ProgressBar>("JobsBar");
+        educationBar = root.Q<ProgressBar>("EducationBar");
+        enjoymentBar = root.Q<ProgressBar>("EnjoymentBar");
+        safetyBar = root.Q<ProgressBar>("SafetyBar");
 
         // Event Listeners
         if (playBtn != null) playBtn.clicked += TogglePlay;
@@ -57,6 +65,12 @@ public class GameUIController : MonoBehaviour
         BalanceLabel.text = city.getBalance().ToString();
         PayoutLabel.text = $"{city.getIncome()}/day";
         progressFill.style.width = new Length(Mathf.Clamp(city.getDayProgress(), 0, 100), LengthUnit.Percent);
+
+        // Update stat bars (values are 0-1, ProgressBar uses 0-100)
+        jobsBar.value = (float)city.getJobs() * 100;
+        educationBar.value = (float)city.getEducation() * 100;
+        enjoymentBar.value = (float)city.getEnjoyment() * 100;
+        safetyBar.value = (float)city.getSafety() * 100;
     }
 
     private void TogglePlay()
