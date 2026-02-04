@@ -1,12 +1,13 @@
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class City : MonoBehaviour
     //god object for game progress
 {
     private int SECONDS_PER_DAY = 20; // what should it be???
-    public static GameManager instance; //singleton to reference manager everywhere
+    public static City instance; //singleton to reference manager everywhere
 
-    public GameState gameState { get; private set; } //not decided if to make private: gamestate has only values for now
+    [SerializeField] private GameState _gameState;
+    public GameState gameState => _gameState; //not decided if to make private: gamestate has only values for now
 
     // Awake is called when loading the script, good to ensure existing data like gamestate
     void Awake()    
@@ -23,18 +24,13 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //create gamestate with starting values
-        gameState = new GameState
-        {
-            cityName = "City Name",
-            dayCount = 0,
-            paused = false,
-            dayProgress = 0,
-            population = 0,
-            income = 1000,
-            balance = 100,
-        };
-        
+        // set some defaults for good standard sity values
+        if (string.IsNullOrEmpty(_gameState.cityName))
+            _gameState.cityName = "City Name";
+        if (_gameState.income == 0)
+            _gameState.income = 1000;
+        if (_gameState.balance == 0)
+            _gameState.balance = 100;
     }
 
     // Update is called once per frame
@@ -89,6 +85,18 @@ public class GameManager : MonoBehaviour
 
     public int getIncome()
     { return gameState.income; }
+
+    public double getJobs()
+    { return gameState.jobs; }
+
+    public double getEducation()
+    { return gameState.education; }
+
+    public double getEnjoyment()
+    { return gameState.enjoyment; }
+
+    public double getSafety()
+    { return gameState.safety; }
 
     public void renameCity(string newName) { gameState.cityName = newName; }
     //more methods related to state...

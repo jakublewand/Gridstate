@@ -11,7 +11,7 @@ public class GameUIController : MonoBehaviour
     private Label infoLabel;
     private Button zoomInBtn;
     private Button zoomOutBtn;
-    private GameManager gameManager;
+    private City city;
     private Label CityName;
     private Label DaysLabel;
     private Label PopLabel;
@@ -43,26 +43,26 @@ public class GameUIController : MonoBehaviour
 
     private void Start()
     {
-        gameManager = GameManager.instance;
+        city = City.instance;
     }
 
     void Update()
     {
-        if (gameManager == null) return; // avoid null refs
+        if (city == null) return; // avoid null refs
 
         //update these every frame, basically optimal to do this even though most of them rarely change
-        CityName.text = gameManager.getCityName();
-        DaysLabel.text = $"Day {gameManager.getDayCount()}";
-        PopLabel.text = gameManager.getPopulation().ToString();
-        BalanceLabel.text = gameManager.getBalance().ToString();
-        PayoutLabel.text = $"{gameManager.getIncome()}/day";
-        progressFill.style.width = new Length(Mathf.Clamp(gameManager.getDayProgress(), 0, 100), LengthUnit.Percent);
+        CityName.text = city.getCityName();
+        DaysLabel.text = $"Day {city.getDayCount()}";
+        PopLabel.text = city.getPopulation().ToString();
+        BalanceLabel.text = city.getBalance().ToString();
+        PayoutLabel.text = $"{city.getIncome()}/day";
+        progressFill.style.width = new Length(Mathf.Clamp(city.getDayProgress(), 0, 100), LengthUnit.Percent);
     }
 
     private void TogglePlay()
     {
-        gameManager.playPauseGame();
-        playBtn.text = gameManager.isPaused() ? "▶" : "II";
+        city.playPauseGame();
+        playBtn.text = city.isPaused() ? "▶" : "II";
     }
 
     //vibe coded zoom function, remove/improve
