@@ -37,6 +37,7 @@
 # Visual Studio Code
 .vscode/
 .vsconfig/
+UpgradeLog.htm
 
 # Gradle cache directory
 .gradle/

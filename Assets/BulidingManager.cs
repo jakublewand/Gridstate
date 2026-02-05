@@ -13,6 +13,7 @@ public class BulidingManager : MonoBehaviour
     private Ray ray;
     private RaycastHit hit;
     public Collider planeCollider;
+    private Vector2 mouseDownLocation;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -49,11 +50,21 @@ public class BulidingManager : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0))
             {
+                mouseDownLocation = Input.mousePosition;
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
                 if (EventSystem.current.IsPointerOverGameObject())
                 {
-                Debug.Log(EventSystem.current.IsPointerOverGameObject());
-                    return; // Ignore click – pointer is over UI
+                    return;
                 }
+                if (Vector3.Distance(mouseDownLocation, Input.mousePosition) > 5f)
+                {
+                    return;
+                }
+
+
                 Vector3 mousePos = Input.mousePosition;
                 ray = Camera.main.ScreenPointToRay(mousePos);
                 if (Physics.Raycast(ray, out hit))
