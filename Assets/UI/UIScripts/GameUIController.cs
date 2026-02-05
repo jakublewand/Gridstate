@@ -80,16 +80,10 @@ public class GameUIController : MonoBehaviour
         if (showGreetingBtn != null) showGreetingBtn.clicked += () => { HideOverlay(optionsOverlay); ShowOverlay(greetingOverlay); };
         if (closeGreetingBtn != null) closeGreetingBtn.clicked += () => HideOverlay(greetingOverlay);
 
-        // Demo: Create 5 building cards
         var buildingList = root.Q<ScrollView>("BuildingList");
-
-        string[] buildingNames = { "School", "Factory", "Park", "Hospital", "Market" };
-        int[] costs = { 500, 800, 300, 1200, 400 };
-        int[] maintenance = { 100, 150, 50, 200, 75 };
-
-        for (int i = 0; i < 5; i++)
+        foreach (BuildingType building in Consts.buildingTypes)
         {
-            buildingList.Add(CreateBuildingCard(buildingNames[i], costs[i], maintenance[i]));
+            buildingList.Add(CreateBuildingCard(Consts.buildingNameDatabase[building], Consts.buildingEffectsDatabase[building].cost, Consts.buildingEffectsDatabase[building].maintenance));
         }
     }
 
@@ -149,7 +143,7 @@ public class GameUIController : MonoBehaviour
         overlay.AddToClassList("hidden");
     }
 
-    private VisualElement CreateBuildingCard(string title, int cost, int maintenance)
+    private VisualElement CreateBuildingCard(string title, double cost, double maintenance)
     {
         var card = new VisualElement { name = "BuildingCard" };
         card.AddToClassList("building-card");

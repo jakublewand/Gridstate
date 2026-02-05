@@ -32,6 +32,7 @@ public class Building : MonoBehaviour
 {
     public PrimaryCategory primaryCategory;
     public BuildingType buildingType;
+    public string name;
     public Vector2 location;
     public BuildingEffects effects;
     public GameObject gameObject;
@@ -39,6 +40,7 @@ public class Building : MonoBehaviour
     public Building(BuildingType type, Vector2 location)
     {
         this.buildingType = type;
+        this.name = Consts.buildingNameDatabase[type];
         this.primaryCategory = Consts.buildingCategoryDatabase[type];
         this.effects = Consts.buildingEffectsDatabase[type];
         this.location = location;

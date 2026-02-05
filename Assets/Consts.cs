@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class Consts : MonoBehaviour
 {
+    public static List<BuildingType> buildingTypes = new List<BuildingType>() { BuildingType.TownHall, BuildingType.House };
     public static Dictionary<BuildingType, BuildingEffects> buildingEffectsDatabase = new Dictionary<BuildingType, BuildingEffects>()
     {
         { BuildingType.TownHall, new BuildingEffects { cost = 1000, maintenance = 10, housing = 0, jobs = 5, education = 0, safety = 0, enjoyment = 0 } },
@@ -12,5 +13,11 @@ public class Consts : MonoBehaviour
     {
         { BuildingType.TownHall, PrimaryCategory.TownHall },
         { BuildingType.House, PrimaryCategory.Housing },
+    };
+
+    public static Dictionary<BuildingType, string> buildingNameDatabase = new Dictionary<BuildingType, string>()
+    {
+        { BuildingType.TownHall, "Town Hall" },
+        { BuildingType.House, "House" },
     };
 }
