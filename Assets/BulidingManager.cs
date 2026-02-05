@@ -9,6 +9,7 @@ public class BulidingManager : MonoBehaviour
     public Dictionary<BuildingType, GameObject> buildingPrefabs = new Dictionary<BuildingType, GameObject>();
     List<Building> buildings = new List<Building>();
     public BuildingType selectedBuilding;
+    private BuildingType lastSelectedBuilding;
     public GameObject selectedBuildingObject;
     private Ray ray;
     private RaycastHit hit;
@@ -18,16 +19,11 @@ public class BulidingManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
-    buildingPrefabs = new Dictionary<BuildingType, GameObject>() {
-        { BuildingType.None, null },
-        { BuildingType.TownHall, townHallPrefab },
-
-        { BuildingType.House, housePrefab },
-    };
-        Build(BuildingType.TownHall, new Vector2(0, 0));
-        Build(BuildingType.House, new Vector2(2, 0));
-        selectedBuilding = BuildingType.House;
+        buildingPrefabs = new Dictionary<BuildingType, GameObject>() {
+            { BuildingType.None, null },
+            { BuildingType.TownHall, townHallPrefab },
+            { BuildingType.House, housePrefab },
+        };
     }
 
     // Update is called once per frame
@@ -36,6 +32,11 @@ public class BulidingManager : MonoBehaviour
         if (selectedBuilding != BuildingType.None) {
             if (selectedBuildingObject == null) {
                 selectedBuildingObject = Instantiate(buildingPrefabs[selectedBuilding], Vector3.zero, Quaternion.identity);
+            }
+            if (lastSelectedBuilding != selectedBuilding) {
+                Destroy(selectedBuildingObject);
+                selectedBuildingObject = Instantiate(buildingPrefabs[selectedBuilding], Vector3.zero, Quaternion.identity);
+                lastSelectedBuilding = selectedBuilding;
             }
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
