@@ -7,23 +7,24 @@ public class CameraBehaviour : MonoBehaviour
     private const float maxMovement = 20f;
     private Vector3 dragOrigin;
     private Vector3 cameraOrigin;
+    private bool panning;
     [SerializeField] float dragSpeed = 0.002f;
     void Update()
     {
-        RaycastHit hit;
-		if (Input.GetMouseButtonDown(0) & EventSystem.current.IsPointerOverGameObject())
-		{               
-			Vector3 fwd = transform.TransformDirection(Vector3.forward);
-		}
-    
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             cameraOrigin = transform.position;
             dragOrigin = Input.mousePosition;
+            panning = true;
             return;
         }
 
-        if (!Input.GetMouseButton(0)) return;
+        if (!Input.GetMouseButton(0))
+        {
+            panning = false;
+        }
+        if (!panning)
+            return;
 
         Vector3 distance = dragOrigin - Input.mousePosition;
         Vector3 move = new Vector3(distance.x * dragSpeed, 0, distance.y * dragSpeed);
