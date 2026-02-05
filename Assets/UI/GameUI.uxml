@@ -41,9 +41,27 @@
 
         </ui:VisualElement>
 
-        <ui:VisualElement name="BuyMenu" class="buy-menu glass">
-            <ui:Label text="Köp" class="panel-title" />
-            <ui:ScrollView name="BuildingList" class="building-list" />
+        <ui:VisualElement name="RightPanels" class="right-panels">
+            <ui:VisualElement name="BuyMenu" class="buy-menu glass">
+                <ui:Label text="Köp" class="panel-title" />
+                <ui:ScrollView name="BuildingList" class="building-list" />
+            </ui:VisualElement>
+
+            <ui:VisualElement name="StatPanel" class="stat-panel glass">
+            <ui:Label text="Stats" class="panel-title" />
+
+            <ui:Label text="Jobs" class="stat-label" />
+            <ui:ProgressBar name="JobsBar" value="0" high-value="100" class="stat-bar" />
+
+            <ui:Label text="Education" class="stat-label" />
+            <ui:ProgressBar name="EducationBar" value="0" high-value="100" class="stat-bar" />
+
+            <ui:Label text="Enjoyment" class="stat-label" />
+            <ui:ProgressBar name="EnjoymentBar" value="0" high-value="100" class="stat-bar" />
+
+            <ui:Label text="Safety" class="stat-label" />
+            <ui:ProgressBar name="SafetyBar" value="0" high-value="100" class="stat-bar" />
+            </ui:VisualElement>
         </ui:VisualElement>
 
         <ui:VisualElement name="ZoomControls" class="zoom-controls glass">
@@ -51,12 +69,22 @@
             <ui:Button name="ZoomOutBtn" class="zoom-btn" text="−" />
         </ui:VisualElement>
 
-        <ui:VisualElement name="StatPanel" class="stat-panel glass">
-            <ui:VisualElement class="stat-header">
-                <ui:Button name="ModeBuildBtn" text="Bygg" class="mode-btn mode-btn-active" />
-                <ui:Button name="ModeStatsBtn" text="Stats" class="mode-btn" />
+        <ui:VisualElement name="OptionsOverlay" class="overlay hidden">
+            <ui:VisualElement class="overlay-panel glass">
+                <ui:Label text="Options" class="panel-title" />
+                <ui:Label text="This is the options screen." class="overlay-text" />
+                <ui:Button name="ShowGreetingBtn" text="Show Greeting Screen" class="overlay-btn" />
+                <ui:Button name="CloseOptionsBtn" text="Close" class="overlay-btn" />
             </ui:VisualElement>
         </ui:VisualElement>
-        
+
+        <ui:VisualElement name="GreetingOverlay" class="overlay hidden">
+            <ui:VisualElement class="overlay-panel glass">
+                <ui:Label text="Welcome!" class="panel-title" />
+                <ui:Label text="This is the greeting screen demo." class="overlay-text" />
+                <ui:Button name="CloseGreetingBtn" text="Close" class="overlay-btn" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
     </ui:VisualElement>
 </ui:UXML>

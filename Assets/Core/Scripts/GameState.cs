@@ -12,10 +12,10 @@ public class GameState
     public int income;
     public int balance;
     // Stats:
-    public double jobs;
-    public double education;
-    public double enjoyment;
-    public double safety;
+    public int jobs;
+    public int education;
+    public int enjoyment;
+    public int safety;
 
 
 }
