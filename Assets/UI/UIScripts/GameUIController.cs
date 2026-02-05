@@ -22,6 +22,7 @@ using UnityEngine.UIElements;
 public class GameUIController : MonoBehaviour
     // Script for the UI
 {
+    [SerializeField] CameraBehaviour cameraBehaviour;
     private VisualElement root;
     private Button playBtn;
     private VisualElement progressFill;
@@ -68,8 +69,8 @@ public class GameUIController : MonoBehaviour
 
         // Event Listeners
         if (playBtn != null) playBtn.clicked += TogglePlay;
-        if (zoomInBtn != null) zoomInBtn.clicked += () => Zoom(-1f);
-        if (zoomOutBtn != null) zoomOutBtn.clicked += () => Zoom(1f);
+        if (zoomInBtn != null) zoomInBtn.clicked += () => cameraBehaviour.Zoom(-1f);
+        if (zoomOutBtn != null) zoomOutBtn.clicked += () => cameraBehaviour.Zoom(1f);
         if (optionsBtn != null) optionsBtn.clicked += () => ShowOverlay(optionsOverlay);
 
         var closeOptionsBtn = root.Q<Button>("CloseOptionsBtn");
@@ -116,20 +117,6 @@ public class GameUIController : MonoBehaviour
         playBtn.text = city.isPaused() ? "▶" : "II";
     }
 
-    //vibe coded zoom function, remove/improve
-    private void Zoom(float direction)
-    {
-        var cam = Camera.main;
-        if (cam == null) return;
-
-        float step = 2f;
-        float minY = 5f;
-        float maxY = 30f;
-
-        Vector3 pos = cam.transform.position;
-        pos.y = Mathf.Clamp(pos.y + direction * step, minY, maxY);
-        cam.transform.position = pos;
-    }
 
     // Overlay Methods
     private void ShowOverlay(VisualElement overlay)

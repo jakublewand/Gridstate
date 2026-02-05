@@ -9,8 +9,28 @@ public class CameraBehaviour : MonoBehaviour
     private Vector3 cameraOrigin;
     private bool panning;
     [SerializeField] float dragSpeed = 0.002f;
+
+    public void Zoom(float direction)
+    {
+        var cam = Camera.main;
+        if (cam == null) return;
+
+        float step = 2f;
+        float minY = 5f;
+        float maxY = 30f;
+
+        Vector3 pos = cam.transform.position;
+        pos.y = Mathf.Clamp(pos.y + direction * step, minY, maxY);
+        cam.transform.position = pos;
+    }
+
     void Update()
     {
+        if (Input.mouseScrollDelta.y != 0)
+        {
+            Zoom(-Input.mouseScrollDelta.y);
+        }
+
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             cameraOrigin = transform.position;
