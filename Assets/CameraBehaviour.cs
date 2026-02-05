@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class CameraBehaviour : MonoBehaviour
 {
@@ -8,7 +9,16 @@ public class CameraBehaviour : MonoBehaviour
     [SerializeField] float dragSpeed = 0.002f;
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) Debug.Log("True");
+        RaycastHit hit;
+		if (Input.GetMouseButtonDown(0))
+		{
+			Vector3 fwd = transform.TransformDirection(Vector3.forward);
+			if (Physics.Raycast(transform.position + new Vector3(0, 0, 1), fwd, out hit, 100))
+            {
+                Debug.Log("Hit " + hit.collider.gameObject.name);
+            }
+		}
+    
         if (Input.GetMouseButtonDown(0))
         {
             cameraOrigin = transform.position;
@@ -16,7 +26,7 @@ public class CameraBehaviour : MonoBehaviour
             return;
         }
 
-        if (!Input.GetMouseButton(0)) return; // Idk what this line does but it doesn't work without it
+        if (!Input.GetMouseButton(0)) return;
 
         Vector3 distance = dragOrigin - Input.mousePosition;
         Vector3 move = new Vector3(distance.x * dragSpeed, 0, distance.y * dragSpeed);
