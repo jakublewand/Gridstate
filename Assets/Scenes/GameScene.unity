@@ -803,6 +803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraBehaviour: {fileID: 330585548}
+  buildingManager: {fileID: 282369905}
 --- !u!1 &1849272949
 GameObject:
   m_ObjectHideFlags: 0
