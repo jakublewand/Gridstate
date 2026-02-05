@@ -84,7 +84,8 @@ public class GameUIController : MonoBehaviour
         var buildingList = root.Q<ScrollView>("BuildingList");
         foreach (BuildingType buildingType in Consts.buildingTypes)
         {
-            buildingList.Add(CreateBuildingCard(buildingType));
+            if (buildingType != BuildingType.TownHall)
+                buildingList.Add(CreateBuildingCard(buildingType));
         }
     }
 
