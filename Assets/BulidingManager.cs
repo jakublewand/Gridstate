@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class BulidingManager : MonoBehaviour
 {
@@ -48,12 +49,15 @@ public class BulidingManager : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0))
             {
+                if (EventSystem.current.IsPointerOverGameObject())
+                    return;
                 Vector3 mousePos = Input.mousePosition;
                 ray = Camera.main.ScreenPointToRay(mousePos);
                 if (Physics.Raycast(ray, out hit))
                 {
-                    Destroy(selectedBuildingObject);
                     Build(selectedBuilding, selectedBuildingObject.transform.position);
+                    Destroy(selectedBuildingObject);
+                    selectedBuilding = BuildingType.None;
                 }
             }
         }
