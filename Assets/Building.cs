@@ -14,6 +14,7 @@ public enum BuildingType
 {
     None,
     TownHall,
+    Apartament,
     House,
 }
 

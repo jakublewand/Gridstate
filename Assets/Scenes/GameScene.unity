@@ -188,8 +188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36cc3f455ed268f458f938c609b4c0e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  housePrefab: {fileID: 6702080380065664546, guid: dfbf74979b80b544dbfb6ccc39a0ccbb, type: 3}
   townHallPrefab: {fileID: 6702080380065664546, guid: ed510d651505bcb41a6225f6652d3b74, type: 3}
+  housePrefab: {fileID: 6702080380065664546, guid: dfbf74979b80b544dbfb6ccc39a0ccbb, type: 3}
+  apartamentPrefab: {fileID: 6702080380065664546, guid: 49c95633ea09ab949a027669deaaf40d, type: 3}
   selectedBuilding: 0
   selectedBuildingObject: {fileID: 0}
   planeCollider: {fileID: 1196345572}

@@ -4,8 +4,9 @@ using UnityEngine.EventSystems;
 
 public class BulidingManager : MonoBehaviour
 {
-    [SerializeField] GameObject housePrefab;
     [SerializeField] GameObject townHallPrefab;
+    [SerializeField] GameObject housePrefab;
+    [SerializeField] GameObject apartamentPrefab;
     public Dictionary<BuildingType, GameObject> buildingPrefabs = new Dictionary<BuildingType, GameObject>();
     List<Building> buildings = new List<Building>();
     public BuildingType selectedBuilding;
@@ -22,8 +23,11 @@ public class BulidingManager : MonoBehaviour
         buildingPrefabs = new Dictionary<BuildingType, GameObject>() {
             { BuildingType.None, null },
             { BuildingType.TownHall, townHallPrefab },
+            { BuildingType.Apartament, apartamentPrefab },
             { BuildingType.House, housePrefab },
         };
+
+        Build(BuildingType.TownHall, new Vector3(0, townHallPrefab.transform.localScale.y / 2, 0));
     }
 
     // Update is called once per frame
