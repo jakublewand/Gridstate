@@ -49,6 +49,11 @@ public class BulidingManager : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0))
             {
+                if (EventSystem.current.IsPointerOverGameObject())
+                {
+                Debug.Log(EventSystem.current.IsPointerOverGameObject());
+                    return; // Ignore click – pointer is over UI
+                }
                 Vector3 mousePos = Input.mousePosition;
                 ray = Camera.main.ScreenPointToRay(mousePos);
                 if (Physics.Raycast(ray, out hit))

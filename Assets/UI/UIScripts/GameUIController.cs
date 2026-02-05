@@ -22,7 +22,6 @@ using UnityEngine.UIElements;
 public class GameUIController : MonoBehaviour
     // Script for the UI
 {
-
     private VisualElement root;
     private Button playBtn;
     private VisualElement progressFill;
@@ -81,9 +80,9 @@ public class GameUIController : MonoBehaviour
         if (closeGreetingBtn != null) closeGreetingBtn.clicked += () => HideOverlay(greetingOverlay);
 
         var buildingList = root.Q<ScrollView>("BuildingList");
-        foreach (BuildingType building in Consts.buildingTypes)
+        foreach (BuildingType buildingType in Consts.buildingTypes)
         {
-            buildingList.Add(CreateBuildingCard(Consts.buildingNameDatabase[building], Consts.buildingEffectsDatabase[building].cost, Consts.buildingEffectsDatabase[building].maintenance));
+            buildingList.Add(CreateBuildingCard(buildingType));
         }
     }
 
@@ -143,8 +142,13 @@ public class GameUIController : MonoBehaviour
         overlay.AddToClassList("hidden");
     }
 
-    private VisualElement CreateBuildingCard(string title, double cost, double maintenance)
+    private VisualElement CreateBuildingCard(BuildingType buildingType)
     {
+        string title = Consts.buildingNameDatabase[buildingType];
+        BuildingEffects effects = Consts.buildingEffectsDatabase[buildingType];
+        double cost = effects.cost;
+        double maintenance = effects.maintenance;
+
         var card = new VisualElement { name = "BuildingCard" };
         card.AddToClassList("building-card");
 
