@@ -40,7 +40,7 @@ public class BulidingManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (planeCollider.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
             {
-                Vector3 alignedPos = hit.point;
+                Vector3 alignedPos = hit.point - new Vector3(-0.5f, 0f, -0.5f);
                 alignedPos.x = Mathf.Floor(alignedPos.x);
                 alignedPos.z = Mathf.Floor(alignedPos.z);
                 selectedBuildingObject.transform.position = alignedPos;
