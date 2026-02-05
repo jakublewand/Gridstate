@@ -10,16 +10,10 @@ public class CameraBehaviour : MonoBehaviour
     [SerializeField] float dragSpeed = 0.002f;
     void Update()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
-            return;
         RaycastHit hit;
-		if (Input.GetMouseButtonDown(0))
+		if (Input.GetMouseButtonDown(0) & EventSystem.current.IsPointerOverGameObject())
 		{               
 			Vector3 fwd = transform.TransformDirection(Vector3.forward);
-			if (Physics.Raycast(transform.position + new Vector3(0, 0, 1), fwd, out hit, 100))
-            {
-                Debug.Log("Hit " + hit.collider.gameObject.name);
-            }
 		}
     
         if (Input.GetMouseButtonDown(0))
