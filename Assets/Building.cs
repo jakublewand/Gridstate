@@ -12,10 +12,10 @@ public enum PrimaryCategory
 
 public enum BuildingType
 {
+    None,
     TownHall,
     House,
 }
-
 
 public struct BuildingEffects
 {

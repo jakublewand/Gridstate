@@ -3,33 +3,65 @@ using System.Collections.Generic;
 
 public class BulidingManager : MonoBehaviour
 {
-    [SerializeField] GameObject bulidingPrefab;
+    [SerializeField] GameObject housePrefab;
+    [SerializeField] GameObject townHallPrefab;
+    public Dictionary<BuildingType, GameObject> buildingPrefabs = new Dictionary<BuildingType, GameObject>();
     List<Building> buildings = new List<Building>();
+    public BuildingType selectedBuilding;
+    public GameObject selectedBuildingObject;
+    private Ray ray;
+    private RaycastHit hit;
+    public Collider planeCollider;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
+    buildingPrefabs = new Dictionary<BuildingType, GameObject>() {
+        { BuildingType.None, null },
+        { BuildingType.TownHall, townHallPrefab },
+
+        { BuildingType.House, housePrefab },
+    };
         Build(BuildingType.TownHall, new Vector2(0, 0));
         Build(BuildingType.House, new Vector2(2, 0));
+        selectedBuilding = BuildingType.House;
     }
 
     // Update is called once per frame
     void Update()
     {
-        foreach (Building building in buildings)
-        {
+        if (selectedBuilding != BuildingType.None) {
+            if (selectedBuildingObject == null) {
+                selectedBuildingObject = Instantiate(buildingPrefabs[selectedBuilding], Vector3.zero, Quaternion.identity);
+            }
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (planeCollider.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+            {
+                selectedBuildingObject.transform.position = hit.point;
+                selectedBuildingObject.transform.position += Vector3.up * selectedBuildingObject.transform.localScale.y / 2;
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                Vector3 mousePos = Input.mousePosition;
+                ray = Camera.main.ScreenPointToRay(mousePos);
+                if (Physics.Raycast(ray, out hit))
+                {
+                    Destroy(selectedBuildingObject);
+                    Build(selectedBuilding, selectedBuildingObject.transform.position);
+                }
+            }
         }
     }
 
 
-    public void Build(BuildingType buildingType, Vector2 location)
+    public void Build(BuildingType buildingType, Vector3 position)
     {
-        Building building = new Building(buildingType, location);
-        GameObject buildingObject = Instantiate(bulidingPrefab, new Vector3(location.x, location.y, 0), Quaternion.identity);
-        if (buildingType != BuildingType.TownHall)
-        {
-            buildingObject.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
-        }
+        Vector2 gridPos = new Vector2(0, 0);
+        Building building = new Building(buildingType, gridPos);
+        GameObject buildingObject = Instantiate(buildingPrefabs[buildingType], position, Quaternion.identity);
         building.gameObject = buildingObject;
         buildings.Add(building);
     }
