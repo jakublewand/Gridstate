@@ -7,6 +7,7 @@ public class BulidingManager : MonoBehaviour
     [SerializeField] GameObject townHallPrefab;
     [SerializeField] GameObject housePrefab;
     [SerializeField] GameObject apartamentPrefab;
+    [SerializeField] City city;
     public Dictionary<BuildingType, GameObject> buildingPrefabs = new Dictionary<BuildingType, GameObject>();
     List<Building> buildings = new List<Building>();
     public BuildingType selectedBuilding;
@@ -17,6 +18,10 @@ public class BulidingManager : MonoBehaviour
     public Collider planeCollider;
     private Vector2 mouseDownLocation;
     
+    void Awake()
+  {
+      city = GetComponent<City>();
+  }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -97,6 +102,10 @@ public class BulidingManager : MonoBehaviour
 
     public void Build(BuildingType buildingType, Vector3 position)
     {
+        if (Consts.buildingEffectsDatabase[buildingType].cost > city.GetStat(City.StatType.Balance))
+            return;
+        city.ModifyStat(City.StatType.Balance, - (int)Consts.buildingEffectsDatabase[buildingType].cost);
+        
         Vector2 gridPos = new Vector2(0, 0);
         Building building = new Building(buildingType, gridPos);
         GameObject buildingObject = Instantiate(buildingPrefabs[buildingType], position, Quaternion.identity);
