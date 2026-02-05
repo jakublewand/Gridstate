@@ -1,14 +1,12 @@
 using UnityEngine;
-using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
 public class CameraBehaviour : MonoBehaviour
-{
-    private const float maxMovement = 20f;
-    private Vector3 dragOrigin;
-    private Vector3 cameraOrigin;
+{   
+    [SerializeField] private float planeY = 0f;
+    [SerializeField] private float maxMovement = 50f;
     private bool panning;
-    [SerializeField] float dragSpeed = 0.002f;
+    private Vector3 lastMouseScreenPos;
 
     public void Zoom(float direction)
     {
@@ -33,28 +31,50 @@ public class CameraBehaviour : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-            cameraOrigin = transform.position;
-            dragOrigin = Input.mousePosition;
             panning = true;
-            return;
+            lastMouseScreenPos = Input.mousePosition;
         }
 
-        if (!Input.GetMouseButton(0))
+        if (Input.GetMouseButtonUp(0))
         {
             panning = false;
         }
-        if (!panning)
-            return;
 
-        Vector3 distance = dragOrigin - Input.mousePosition;
-        Vector3 move = new Vector3(distance.x * dragSpeed, 0, distance.y * dragSpeed);
+        if (!panning) return;
 
-        transform.position = cameraOrigin + move;
-        transform.position = new Vector3(
-            Mathf.Clamp(transform.position.x, -maxMovement, maxMovement),
-            transform.position.y,
-            Mathf.Clamp(transform.position.z, -maxMovement, maxMovement)
-        );
+        if (TryGetMousePlanePoint(lastMouseScreenPos, out Vector3 previousHitPoint) &&
+            TryGetMousePlanePoint(Input.mousePosition, out Vector3 currentHitPoint))
+        {
+            Vector3 delta = previousHitPoint - currentHitPoint;
+            Vector3 pos = transform.position + delta;
+
+            pos.x = Mathf.Clamp(pos.x, -maxMovement, maxMovement);
+            pos.z = Mathf.Clamp(pos.z, -maxMovement, maxMovement);
+
+            transform.position = pos;
+            lastMouseScreenPos = Input.mousePosition;
+        }
+    }
+    private bool TryGetMousePlanePoint(Vector3 screenPosition, out Vector3 worldPoint)
+    {
+        var cam = Camera.main;
+        if (cam == null)
+        {
+            worldPoint = default;
+            return false;
+        }
+
+        Ray ray = cam.ScreenPointToRay(screenPosition);
+        Plane plane = new Plane(Vector3.up, new Vector3(0f, planeY, 0f));
+
+        if (plane.Raycast(ray, out float t))
+        {
+            worldPoint = ray.GetPoint(t);
+            return true;
+        }
+
+        worldPoint = default;
+        return false;
     }
     
 }
