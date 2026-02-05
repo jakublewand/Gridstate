@@ -69,9 +69,21 @@ public class BulidingManager : MonoBehaviour
                 ray = Camera.main.ScreenPointToRay(mousePos);
                 if (Physics.Raycast(ray, out hit))
                 {
-                    Build(selectedBuilding, selectedBuildingObject.transform.position);
-                    Destroy(selectedBuildingObject);
-                    selectedBuilding = BuildingType.None;
+                    bool occupied = false;
+                    foreach (var building in buildings)
+                    {
+                        if (building.gameObject.transform.position.x == selectedBuildingObject.transform.position.x &&
+                            building.gameObject.transform.position.z == selectedBuildingObject.transform.position.z)
+                        {
+                            occupied = true;
+                            break;
+                        }
+                    }
+                    if (!occupied) {
+                        Build(selectedBuilding, selectedBuildingObject.transform.position);
+                        Destroy(selectedBuildingObject);
+                        selectedBuilding = BuildingType.None;
+                    }   
                 }
             }
         }
