@@ -105,16 +105,16 @@ public class GameUIController : MonoBehaviour
         //update these every frame, basically optimal to do this even though most of them rarely change
         CityName.text = city.getCityName();
         DaysLabel.text = $"Day {city.getDayCount()}";
-        PopLabel.text = city.getPopulation().ToString();
-        BalanceLabel.text = city.getBalance().ToString();
-        PayoutLabel.text = $"{city.getIncome()}/day";
+        PopLabel.text = city.GetStat(City.StatType.Population).ToString();
+        BalanceLabel.text = city.GetStat(City.StatType.Balance).ToString();
+        PayoutLabel.text = $"{city.GetStat(City.StatType.Income)}/day";
         progressFill.style.width = new Length(Mathf.Clamp(city.getDayProgress(), 0, 100), LengthUnit.Percent);
 
         // Update stat bars (values are 0-1, ProgressBar uses 0-100)
-        jobsBar.value = (float)city.getJobs() * 100;
-        educationBar.value = (float)city.getEducation() * 100;
-        enjoymentBar.value = (float)city.getEnjoyment() * 100;
-        safetyBar.value = (float)city.getSafety() * 100;
+        jobsBar.value = (float)city.GetStat(City.StatType.Jobs) * 100;
+        educationBar.value = (float)city.GetStat(City.StatType.Education) * 100;
+        enjoymentBar.value = (float)city.GetStat(City.StatType.Enjoyment) * 100;
+        safetyBar.value = (float)city.GetStat(City.StatType.Safety) * 100;
     }
 
     private void TogglePlay()
