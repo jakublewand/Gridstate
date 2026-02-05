@@ -343,7 +343,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fbed329041357d41bf232c4c1af6aee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragSpeed: 0.002
+  planeY: 0
+  maxMovement: 50
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -801,6 +802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71d1444b23f9bd1479c0a4bb7be231c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraBehaviour: {fileID: 330585548}
 --- !u!1 &1849272949
 GameObject:
   m_ObjectHideFlags: 0

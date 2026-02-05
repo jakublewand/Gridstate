@@ -23,6 +23,7 @@ public class GameUIController : MonoBehaviour
     // Script for the UI
 {
     [SerializeField] CameraBehaviour cameraBehaviour;
+    [SerializeField] BulidingManager buildingManager;
     private VisualElement root;
     private Button playBtn;
     private VisualElement progressFill;
@@ -182,6 +183,8 @@ public class GameUIController : MonoBehaviour
         footer.Add(buyBtn);
         card.Add(footer);
 
+        buyBtn.clicked += () => BuyButtonPressed(buildingType);
+
         return card;
     }
 
@@ -204,4 +207,9 @@ public class GameUIController : MonoBehaviour
 
     // Public API Methods
     public void SetInfoMessage(string msg) => infoLabel.text = msg;
+
+    private void BuyButtonPressed(BuildingType buildingType)
+    {
+        buildingManager.selectedBuilding = buildingType;
+    }
 }
