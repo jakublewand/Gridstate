@@ -1,0 +1,36 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/GameUIStyle.uss" />
+    <Style src="project://database/Assets/UI/TitleUIStyle.uss" />
+    <ui:VisualElement name="Root" class="root title-root">
+        <!-- Concept art circle on the right -->
+        <ui:VisualElement name="ConceptArt" class="title-concept-art" />
+        <!-- Glass panel filling left with concave right edge -->
+        <ui:VisualElement name="GlassPanel" class="title-glass-panel" />
+        <!-- UI content -->
+        <ui:VisualElement name="LeftPanel" class="title-left-panel">
+            <ui:VisualElement name="Logo" class="title-logo" />
+            <ui:VisualElement name="MenuButtons" class="title-menu">
+                <ui:Button name="PlayBtn" class="title-btn glass">
+                    <ui:Label text="▶" class="title-btn-icon" />
+                    <ui:Label text="Play" class="title-btn-text" />
+                </ui:Button>
+                <ui:Button name="OptionsBtn" class="title-btn glass">
+                    <ui:Label text="⚙" class="title-btn-icon" />
+                    <ui:Label text="Options" class="title-btn-text" />
+                </ui:Button>
+                <ui:Button name="QuitBtn" class="title-btn glass">
+                    <ui:Label text="✕" class="title-btn-icon" />
+                    <ui:Label text="Quit" class="title-btn-text" />
+                </ui:Button>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Label name="VersionLabel" text="v0.1" class="title-version" />
+        <ui:VisualElement name="OptionsOverlay" class="overlay hidden">
+            <ui:VisualElement class="overlay-panel glass">
+                <ui:Label text="Options" class="panel-title" />
+                <ui:Label text="Options coming soon..." class="overlay-text" />
+                <ui:Button name="CloseOptionsBtn" text="Close" class="overlay-btn" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
