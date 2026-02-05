@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class CameraBehaviour : MonoBehaviour
 {
@@ -9,9 +10,11 @@ public class CameraBehaviour : MonoBehaviour
     [SerializeField] float dragSpeed = 0.002f;
     void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
         RaycastHit hit;
 		if (Input.GetMouseButtonDown(0))
-		{
+		{               
 			Vector3 fwd = transform.TransformDirection(Vector3.forward);
 			if (Physics.Raycast(transform.position + new Vector3(0, 0, 1), fwd, out hit, 100))
             {
