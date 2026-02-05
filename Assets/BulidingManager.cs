@@ -17,11 +17,7 @@ public class BulidingManager : MonoBehaviour
     private RaycastHit hit;
     public Collider planeCollider;
     private Vector2 mouseDownLocation;
-    
-    void Awake()
-  {
-      city = GetComponent<City>();
-  }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

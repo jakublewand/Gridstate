@@ -16,7 +16,6 @@ public class Consts : MonoBehaviour
         { BuildingType.Apartament, PrimaryCategory.Housing },
         { BuildingType.House, PrimaryCategory.Housing },
     };
-
     public static Dictionary<BuildingType, string> buildingNameDatabase = new Dictionary<BuildingType, string>()
     {
         { BuildingType.TownHall, "Town Hall" },
