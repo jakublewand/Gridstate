@@ -22,7 +22,8 @@ using UnityEngine.UIElements;
 public class GameUIController : MonoBehaviour
     // Script for the UI
 {
-
+    [SerializeField] CameraBehaviour cameraBehaviour;
+    [SerializeField] BulidingManager buildingManager;
     private VisualElement root;
     private Button playBtn;
     private VisualElement progressFill;
@@ -69,8 +70,8 @@ public class GameUIController : MonoBehaviour
 
         // Event Listeners
         if (playBtn != null) playBtn.clicked += TogglePlay;
-        if (zoomInBtn != null) zoomInBtn.clicked += () => Zoom(-1f);
-        if (zoomOutBtn != null) zoomOutBtn.clicked += () => Zoom(1f);
+        if (zoomInBtn != null) zoomInBtn.clicked += () => cameraBehaviour.Zoom(-1f);
+        if (zoomOutBtn != null) zoomOutBtn.clicked += () => cameraBehaviour.Zoom(1f);
         if (optionsBtn != null) optionsBtn.clicked += () => ShowOverlay(optionsOverlay);
 
         var closeOptionsBtn = root.Q<Button>("CloseOptionsBtn");
@@ -80,16 +81,10 @@ public class GameUIController : MonoBehaviour
         if (showGreetingBtn != null) showGreetingBtn.clicked += () => { HideOverlay(optionsOverlay); ShowOverlay(greetingOverlay); };
         if (closeGreetingBtn != null) closeGreetingBtn.clicked += () => HideOverlay(greetingOverlay);
 
-        // Demo: Create 5 building cards
         var buildingList = root.Q<ScrollView>("BuildingList");
-
-        string[] buildingNames = { "School", "Factory", "Park", "Hospital", "Market" };
-        int[] costs = { 500, 800, 300, 1200, 400 };
-        int[] maintenance = { 100, 150, 50, 200, 75 };
-
-        for (int i = 0; i < 5; i++)
+        foreach (BuildingType buildingType in Consts.buildingTypes)
         {
-            buildingList.Add(CreateBuildingCard(buildingNames[i], costs[i], maintenance[i]));
+            buildingList.Add(CreateBuildingCard(buildingType));
         }
     }
 
@@ -123,20 +118,6 @@ public class GameUIController : MonoBehaviour
         playBtn.text = city.isPaused() ? "▶" : "II";
     }
 
-    //vibe coded zoom function, remove/improve
-    private void Zoom(float direction)
-    {
-        var cam = Camera.main;
-        if (cam == null) return;
-
-        float step = 2f;
-        float minY = 5f;
-        float maxY = 30f;
-
-        Vector3 pos = cam.transform.position;
-        pos.y = Mathf.Clamp(pos.y + direction * step, minY, maxY);
-        cam.transform.position = pos;
-    }
 
     // Overlay Methods
     private void ShowOverlay(VisualElement overlay)
@@ -149,8 +130,13 @@ public class GameUIController : MonoBehaviour
         overlay.AddToClassList("hidden");
     }
 
-    private VisualElement CreateBuildingCard(string title, int cost, int maintenance)
+    private VisualElement CreateBuildingCard(BuildingType buildingType)
     {
+        string title = Consts.buildingNameDatabase[buildingType];
+        BuildingEffects effects = Consts.buildingEffectsDatabase[buildingType];
+        double cost = effects.cost;
+        double maintenance = effects.maintenance;
+
         var card = new VisualElement { name = "BuildingCard" };
         card.AddToClassList("building-card");
 
@@ -197,6 +183,8 @@ public class GameUIController : MonoBehaviour
         footer.Add(buyBtn);
         card.Add(footer);
 
+        buyBtn.clicked += () => BuyButtonPressed(buildingType);
+
         return card;
     }
 
@@ -219,4 +207,9 @@ public class GameUIController : MonoBehaviour
 
     // Public API Methods
     public void SetInfoMessage(string msg) => infoLabel.text = msg;
+
+    private void BuyButtonPressed(BuildingType buildingType)
+    {
+        buildingManager.selectedBuilding = buildingType;
+    }
 }
