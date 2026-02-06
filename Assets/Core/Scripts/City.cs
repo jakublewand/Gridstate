@@ -5,6 +5,7 @@ public class City : MonoBehaviour
 {
     private int SECONDS_PER_DAY = 20; // what should it be???
     public static City instance; //singleton to reference manager everywhere
+    private StatisticCalculation statCalc;
 
     [SerializeField] private GameState _gameState;
     public GameState gameState => _gameState; //not decided if to make private: gamestate has only values for now
@@ -31,6 +32,7 @@ public class City : MonoBehaviour
             _gameState.income = 1000;
         if (_gameState.balance == 0)
             _gameState.balance = 100;
+        statCalc = new StatisticCalculation(this);
     }
 
     // Update is called once per frame
@@ -56,6 +58,7 @@ public class City : MonoBehaviour
     {
         gameState.dayProgress = 0;
         gameState.dayCount++;
+        statCalc.Recalculate();
         gameState.balance += gameState.income;
     }
 

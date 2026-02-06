@@ -188,8 +188,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36cc3f455ed268f458f938c609b4c0e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  housePrefab: {fileID: 6702080380065664546, guid: dfbf74979b80b544dbfb6ccc39a0ccbb, type: 3}
   townHallPrefab: {fileID: 6702080380065664546, guid: ed510d651505bcb41a6225f6652d3b74, type: 3}
+  housePrefab: {fileID: 6702080380065664546, guid: dfbf74979b80b544dbfb6ccc39a0ccbb, type: 3}
+  apartamentPrefab: {fileID: 6702080380065664546, guid: 49c95633ea09ab949a027669deaaf40d, type: 3}
+  city: {fileID: 282369904}
   selectedBuilding: 0
   selectedBuildingObject: {fileID: 0}
   planeCollider: {fileID: 1196345572}
@@ -280,13 +282,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 4, z: 0}
+  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 0, y: 4, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -343,7 +345,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fbed329041357d41bf232c4c1af6aee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragSpeed: 0.002
+  planeY: 0
+  maxMovement: 50
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -801,6 +804,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71d1444b23f9bd1479c0a4bb7be231c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraBehaviour: {fileID: 330585548}
+  buildingManager: {fileID: 282369905}
 --- !u!1 &1849272949
 GameObject:
   m_ObjectHideFlags: 0
