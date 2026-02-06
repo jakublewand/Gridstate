@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/GameUIStyle.uss?fileID=7433441132597879392&amp;guid=cb30eb97bb2a6dc4089312b7e41ddc2e&amp;type=3#GameUIStyle" />
+    <Style src="project://database/Assets/UI/Style.uss?fileID=7433441132597879392&amp;guid=2af02f39de7902a4b87d054371349235&amp;type=3#Style" />
     <ui:VisualElement name="Root" picking-mode="Ignore" class="root">
         <ui:VisualElement name="TopBar" class="topbar glass">
             <ui:VisualElement class="topbar-section-left">
@@ -10,7 +10,7 @@
                     <ui:Label name="CityName" text="Vermont" class="city-name" />
                     <ui:Label name="DaysLabel" text="Day 4" class="day-text" />
                 </ui:VisualElement>
-                <ui:Button name="PlayBtn" text="▶" class="nav-btn" />
+                <ui:Button name="PlayBtn" text="▶" class="btn btn-round" />
             </ui:VisualElement>
             <ui:VisualElement class="topbar-section-mid">
                 <ui:VisualElement class="pill pill-small">
@@ -32,7 +32,7 @@
                     <ui:Label text="💵 :" class="pill-icon" />
                     <ui:Label name="BalanceLabel" text="27.1k" class="pill-text" />
                 </ui:VisualElement>
-                <ui:Button name="OptionsBtn" text="●●●" class="nav-btn" />
+                <ui:Button name="OptionsBtn" text="●●●" class="btn btn-round" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="RightPanels" class="right-panels">

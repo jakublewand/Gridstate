@@ -1,26 +1,23 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/GameUIStyle.uss" />
-    <Style src="project://database/Assets/UI/TitleUIStyle.uss" />
+    <Style src="project://database/Assets/UI/Style.uss?fileID=7433441132597879392&amp;guid=2af02f39de7902a4b87d054371349235&amp;type=3#Style" />
     <ui:VisualElement name="Root" class="root title-root">
-        <!-- Concept art circle on the right -->
-        <ui:VisualElement name="ConceptArt" class="title-concept-art" />
-        <!-- Glass panel filling left with concave right edge -->
+        <ui:VisualElement name="ConceptBg" class="title-concept-bg" />
         <ui:VisualElement name="GlassPanel" class="title-glass-panel" />
-        <!-- UI content -->
+        <ui:VisualElement name="ConceptWindow" class="title-concept-window" />
         <ui:VisualElement name="LeftPanel" class="title-left-panel">
             <ui:VisualElement name="Logo" class="title-logo" />
             <ui:VisualElement name="MenuButtons" class="title-menu">
-                <ui:Button name="PlayBtn" class="title-btn glass">
-                    <ui:Label text="▶" class="title-btn-icon" />
-                    <ui:Label text="Play" class="title-btn-text" />
+                <ui:Button name="PlayBtn" class="btn btn-pill glass">
+                    <ui:Label text="▶" class="btn-icon" />
+                    <ui:Label text="Play" class="btn-text" />
                 </ui:Button>
-                <ui:Button name="OptionsBtn" class="title-btn glass">
-                    <ui:Label text="⚙" class="title-btn-icon" />
-                    <ui:Label text="Options" class="title-btn-text" />
+                <ui:Button name="OptionsBtn" class="btn btn-pill glass">
+                    <ui:Label text="⚙" class="btn-icon" />
+                    <ui:Label text="Options" class="btn-text" />
                 </ui:Button>
-                <ui:Button name="QuitBtn" class="title-btn glass">
-                    <ui:Label text="✕" class="title-btn-icon" />
-                    <ui:Label text="Quit" class="title-btn-text" />
+                <ui:Button name="QuitBtn" class="btn btn-pill glass">
+                    <ui:Label text="✕" class="btn-icon" />
+                    <ui:Label text="Quit" class="btn-text" />
                 </ui:Button>
             </ui:VisualElement>
         </ui:VisualElement>

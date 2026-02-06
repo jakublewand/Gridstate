@@ -1,8 +1,18 @@
+/* ============================================================
+   Gridstate UI – Unified Stylesheet
+   ============================================================ */
+
+/* === BASE === */
+
 .root {
     position: absolute;
     left: 0; top: 0; right: 0; bottom: 0;
     padding: 2%;
 }
+
+.hidden { display: none; }
+
+/* === GLASS === */
 
 .glass {
     background-color: rgba(60, 90, 110, 0.88);
@@ -15,7 +25,117 @@
     border-radius: 20px;
 }
 
-/* TOP BAR LAYOUT */
+/* === BUTTONS === */
+
+.btn {
+    color: white;
+    transition-duration: 0.15s;
+}
+
+.btn:hover { scale: 1.03; }
+.btn:active { scale: 0.98; }
+
+.btn-round {
+    width: 42px; height: 42px; border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.18);
+    border-width: 1px; border-color: rgba(255, 255, 255, 0.3);
+    -unity-text-align: middle-center;
+}
+
+.btn-pill {
+    flex-direction: row;
+    align-items: center;
+    height: 62px;
+    padding-left: 8px;
+    padding-right: 24px;
+    border-radius: 31px;
+    margin-top: 16px;
+}
+
+
+.btn-pill:hover {
+    background-color: rgba(80, 120, 140, 0.95);
+}
+
+.btn-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background-color: rgba(70, 140, 180, 0.9);
+    color: white;
+    font-size: 18px;
+    -unity-text-align: middle-center;
+    margin-right: 16px;
+    flex-shrink: 0;
+}
+
+.btn-text {
+    font-size: 20px;
+    color: white;
+    -unity-font-style: bold;
+    letter-spacing: 1px;
+}
+
+/* === PILLS === */
+
+.pill {
+    flex-direction: row; align-items: center; height: 34px;
+    border-radius: 10px; background-color: rgba(255, 255, 255, 0.12);
+    margin: 0 5px; padding: 0 10px; overflow: hidden;
+}
+.pill-small { width: 100px; }
+.pill-medium { width: 140px; }
+.pill-wide { width: 280px; }
+
+/* === PROGRESS === */
+
+.progress-container { position: relative; background-color: rgba(0, 0, 0, 0.2); }
+.progress-fill {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 0%;
+    background-color: rgba(90, 220, 140, 0.45);
+}
+
+/* === OVERLAYS === */
+
+.overlay {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    align-items: center;
+    justify-content: center;
+}
+.overlay.hidden { display: none; }
+.overlay-panel {
+    width: 400px;
+    padding: 25px;
+    flex-direction: column;
+}
+.overlay-text {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.overlay-btn {
+    height: 36px;
+    margin-top: 10px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.18);
+    color: white;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.3);
+    font-size: 14px;
+}
+
+/* === TYPOGRAPHY === */
+
+.panel-title { font-size: 16px; -unity-font-style: bold; color: white; margin-bottom: -14px; }
+
+/* ============================================================
+   GAME SCENE
+   ============================================================ */
+
+/* TOP BAR */
 .topbar {
     position: absolute;
     left: 2%; right: 2%; top: 2%;
@@ -34,31 +154,7 @@
 .city-name { font-size: 18px; -unity-font-style: bold; color: white; }
 .day-text { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: -4px; }
 
-/* NAV BUTTONS */
-.nav-btn {
-    width: 42px; height: 42px; border-radius: 12px;
-    background-color: rgba(255, 255, 255, 0.18);
-    color: white; border-width: 1px; border-color: rgba(255, 255, 255, 0.3);
-}
-
-/* PILLS */
-.pill {
-    flex-direction: row; align-items: center; height: 34px;
-    border-radius: 10px; background-color: rgba(255, 255, 255, 0.12);
-    margin: 0 5px; padding: 0 10px; overflow: hidden;
-}
-.pill-small { width: 100px; }
-.pill-medium { width: 140px; }
-.pill-wide { width: 280px; }
-
-/* PROGRESS BAR */
-.progress-container { position: relative; background-color: rgba(0, 0, 0, 0.2); }
-.progress-fill {
-    position: absolute; left: 0; top: 0; bottom: 0; width: 0%;
-    background-color: rgba(90, 220, 140, 0.45);
-}
-
-/* START ORB */
+/* CITY CREST */
 .city-crest-container { position: absolute; left: -25px; top: 50%; margin-top: -40px; }
 .city-crest {
     width: 80px; height: 80px; border-radius: 40px;
@@ -73,10 +169,10 @@
 /* ZOOM CONTROLS */
 .zoom-controls {
     position: absolute; left: 2%; bottom: 2%;
-    flex-direction: column; padding: 6px; gap: 6px;
+    flex-direction: column; padding: 6px;
 }
 .zoom-btn {
-    width: 42px; height: 42px; border-radius: 12px;
+    width: 42px; height: 42px; border-radius: 12px; margin-top: 6px;
     background-color: rgba(255, 255, 255, 0.18);
     color: white; font-size: 22px; -unity-font-style: bold;
     border-width: 1px; border-color: rgba(255, 255, 255, 0.3);
@@ -87,7 +183,6 @@
 .right-panels { position: absolute; top: 110px; right: 2%; bottom: 2%; width: 350px; flex-direction: column; }
 .buy-menu { flex-grow: 1; padding: 15px; margin-bottom: 20px; }
 .stat-panel { flex-shrink: 0; width: 100%; height: 220px; padding: 15px; flex-direction: column; }
-.panel-title { font-size: 16px; -unity-font-style: bold; color: white; margin-bottom: -14px; }
 
 /* BUILDING CARDS */
 .building-card {
@@ -206,33 +301,77 @@
 .stat-bar .unity-progress-bar__progress { margin: 0; padding: 0; background-color: rgba(90, 220, 140, 0.8); border-radius: 0; }
 .stat-bar .unity-progress-bar__title { display: none; }
 
-/* OVERLAYS */
-.overlay {
+/* ============================================================
+   TITLE SCENE
+   ============================================================ */
+
+.title-root {
+    overflow: hidden;
+}
+
+.title-concept-bg {
     position: absolute;
-    left: 0; top: 0; right: 0; bottom: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    align-items: center;
-    justify-content: center;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-image: resource('UI/img/conceptart0');
+    -unity-background-scale-mode: scale-and-crop;
+    background-position: center;
 }
-.overlay.hidden { display: none; }
-.overlay-panel {
+
+.title-glass-panel {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(60, 90, 110, 0.88);
+}
+
+.title-concept-window {
+    position: absolute;
+    right: -15%;
+    top: 50%;
+    width: 85%;
+    height: 0;
+    padding-bottom: 85%;
+    translate: 0 -50%;
+    border-radius: 50%;
+    background-image: resource('UI/img/conceptart0');
+    -unity-background-scale-mode: scale-and-crop;
+    background-position: center;
+    border-width: 4px;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.title-left-panel {
+    position: absolute;
+    left: 4%;
+    top: 50%;
+    translate: 0 -50%;
     width: 400px;
-    padding: 25px;
     flex-direction: column;
+    align-items: flex-start;
 }
-.overlay-text {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.85);
-    margin-top: 20px;
-    margin-bottom: 20px;
+
+.title-logo {
+    width: 400px;
+    height: 170px;
+    background-image: resource('UI/img/logo');
+    -unity-background-scale-mode: scale-to-fit;
+    margin-bottom: 50px;
 }
-.overlay-btn {
-    height: 36px;
-    margin-top: 10px;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.18);
-    color: white;
-    border-width: 1px;
-    border-color: rgba(255, 255, 255, 0.3);
-    font-size: 14px;
+
+.title-menu {
+    flex-direction: column;
+    width: 320px;
+}
+
+.title-version {
+    position: absolute;
+    left: 20px;
+    bottom: 12px;
+    font-size: 12px;
+    color: rgba(200, 220, 240, 0.5);
 }
