@@ -81,11 +81,35 @@
 .pill {
     flex-direction: row; align-items: center; height: 34px;
     border-radius: 10px; background-color: rgba(255, 255, 255, 0.12);
-    margin: 0 5px; padding: 0 10px; overflow: hidden;
+    margin: 0 5px; padding: 0; overflow: hidden;
 }
-.pill-small { width: 100px; }
-.pill-medium { width: 140px; }
-.pill-wide { width: 280px; }
+.pill-small { width: 110px; }
+.pill-medium { width: 150px; }
+.pill-wide { flex-grow: 1; }
+
+.pill-icon {
+    width: 34px;
+    height: 100%;
+    flex-shrink: 0;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-right-width: 1px;
+    border-right-color: rgba(255, 255, 255, 0.15);
+    -unity-text-align: middle-center;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+}
+
+.pill-text {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.pill-announce-white { background-color: rgba(255, 255, 255, 0.3); }
+.pill-announce-green { background-color: rgba(100, 220, 140, 0.6); }
+.pill-announce-yellow { background-color: rgba(255, 214, 100, 0.6); }
+.pill-announce-red { background-color: rgba(220, 80, 80, 0.6); }
+.pill-announce-blue { background-color: rgba(100, 180, 255, 0.6); }
 
 /* === PROGRESS === */
 
@@ -130,6 +154,7 @@
 /* === TYPOGRAPHY === */
 
 .panel-title { font-size: 16px; -unity-font-style: bold; color: white; margin-bottom: -14px; }
+.buy-menu .panel-title { margin-bottom: 0; flex-shrink: 0; }
 
 /* ============================================================
    GAME SCENE
@@ -146,6 +171,7 @@
     align-items: center;
 }
 
+.topbar Label { -unity-font-style: bold; color: white; }
 .topbar-section-left { flex-direction: row; align-items: center; min-width: 250px; padding-left: 60px; }
 .topbar-section-mid { flex-direction: row; align-items: center; justify-content: center; flex-grow: 1; }
 .topbar-section-right { flex-direction: row; align-items: center; justify-content: flex-end; }
@@ -181,7 +207,8 @@
 
 /* SIDE PANELS */
 .right-panels { position: absolute; top: 110px; right: 2%; bottom: 2%; width: 350px; flex-direction: column; }
-.buy-menu { flex-grow: 1; padding: 15px; margin-bottom: 20px; }
+.buy-menu { flex-grow: 1; padding: 15px; margin-bottom: 20px; flex-direction: column; }
+.building-list { flex-grow: 1; }
 .stat-panel { flex-shrink: 0; width: 100%; height: 220px; padding: 15px; flex-direction: column; }
 
 /* BUILDING CARDS */
@@ -265,6 +292,10 @@
     color: rgba(255, 255, 255, 0.4);
 }
 
+.stat-negative {
+    color: rgba(220, 80, 80, 0.9);
+}
+
 .card-footer {
     flex-direction: row;
     justify-content: space-between;
@@ -345,27 +376,53 @@
     border-color: rgba(255, 255, 255, 0.5);
 }
 
-.title-left-panel {
-    position: absolute;
-    left: 4%;
-    top: 50%;
-    translate: 0 -50%;
-    width: 400px;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
 .title-logo {
-    width: 400px;
-    height: 170px;
+    position: absolute;
+    left: 3%;
+    top: 3%;
+    width: 300px;
+    height: 120px;
     background-image: resource('UI/img/logo');
     -unity-background-scale-mode: scale-to-fit;
-    margin-bottom: 50px;
 }
 
-.title-menu {
-    flex-direction: column;
+/* Buttons arced along the circle's left edge */
+.title-arc-btn {
+    position: absolute;
     width: 320px;
+    height: 72px;
+    border-radius: 36px;
+    margin-top: 0;
+}
+
+.title-arc-btn .btn-icon {
+    width: 54px;
+    height: 54px;
+    font-size: 22px;
+}
+
+.title-arc-btn .btn-text {
+    font-size: 24px;
+}
+
+.title-arc-0 {
+    left: 14%;
+    top: 18%;
+}
+
+.title-arc-1 {
+    left: 10%;
+    top: 38%;
+}
+
+.title-arc-2 {
+    left: 10%;
+    top: 58%;
+}
+
+.title-arc-3 {
+    left: 14%;
+    top: 78%;
 }
 
 .title-version {

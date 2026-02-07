@@ -10,11 +10,11 @@
                     <ui:Label name="CityName" text="Vermont" class="city-name" />
                     <ui:Label name="DaysLabel" text="Day 4" class="day-text" />
                 </ui:VisualElement>
-                <ui:Button name="PlayBtn" text="▶" class="btn btn-round" />
+                <ui:Button name="PlayBtn" text="II" class="btn btn-round" />
             </ui:VisualElement>
             <ui:VisualElement class="topbar-section-mid">
                 <ui:VisualElement class="pill pill-small">
-                    <ui:Label text="👤 :" class="pill-icon" />
+                    <ui:Label text="👤" class="pill-icon" />
                     <ui:Label name="PopLabel" text="6.120" class="pill-text" />
                 </ui:VisualElement>
                 <ui:VisualElement class="pill pill-wide">
@@ -29,7 +29,7 @@
                     <ui:Label name="PayoutLabel" text="200/day" class="pill-text" />
                 </ui:VisualElement>
                 <ui:VisualElement class="pill pill-small">
-                    <ui:Label text="💵 :" class="pill-icon" />
+                    <ui:Label text="💵" class="pill-icon" />
                     <ui:Label name="BalanceLabel" text="27.1k" class="pill-text" />
                 </ui:VisualElement>
                 <ui:Button name="OptionsBtn" text="●●●" class="btn btn-round" />

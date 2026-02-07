@@ -99,7 +99,10 @@ public class BulidingManager : MonoBehaviour
     public void Build(BuildingType buildingType, Vector3 position)
     {
         if (Consts.buildingEffectsDatabase[buildingType].cost > city.GetStat(City.StatType.Balance))
+        {
+            AnnouncementManager.instance.msgAnnounce(AnnounceColor.Red,"Can't afford this building!");
             return;
+        }
         city.ModifyStat(City.StatType.Balance, - (int)Consts.buildingEffectsDatabase[buildingType].cost);
         
         Vector2 gridPos = new Vector2(0, 0);

@@ -19,6 +19,7 @@ using UnityEngine.UIElements;
   Result: 5 demo building cards stacking in buy menu with title + image header, maintenance, stats,
   cost, and buy button. */
 
+[RequireComponent(typeof(AnnouncementManager))]
 public class GameUIController : MonoBehaviour
     // Script for the UI
 {
@@ -170,8 +171,8 @@ public class GameUIController : MonoBehaviour
         statsContainer.AddToClassList("card-stats");
         AddStatRow(statsContainer, "Jobs", "+");
         AddStatRow(statsContainer, "Education", "+++");
-        AddStatRow(statsContainer, "Enjoyment", "0");
-        AddStatRow(statsContainer, "Safety", "0");
+        AddStatRow(statsContainer, "Enjoyment", "-");
+        AddStatRow(statsContainer, "Safety", "--");
         card.Add(statsContainer);
 
         var footer = new VisualElement();
@@ -201,6 +202,7 @@ public class GameUIController : MonoBehaviour
         var valueLabel = new Label { text = value };
         valueLabel.AddToClassList("stat-value");
         if (value == "0") valueLabel.AddToClassList("stat-zero");
+        else if (value.StartsWith("-")) valueLabel.AddToClassList("stat-negative");
         row.Add(valueLabel);
 
         parent.Add(row);

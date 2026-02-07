@@ -4,23 +4,25 @@
         <ui:VisualElement name="ConceptBg" class="title-concept-bg" />
         <ui:VisualElement name="GlassPanel" class="title-glass-panel" />
         <ui:VisualElement name="ConceptWindow" class="title-concept-window" />
-        <ui:VisualElement name="LeftPanel" class="title-left-panel">
-            <ui:VisualElement name="Logo" class="title-logo" />
-            <ui:VisualElement name="MenuButtons" class="title-menu">
-                <ui:Button name="PlayBtn" class="btn btn-pill glass">
-                    <ui:Label text="▶" class="btn-icon" />
-                    <ui:Label text="Play" class="btn-text" />
-                </ui:Button>
-                <ui:Button name="OptionsBtn" class="btn btn-pill glass">
-                    <ui:Label text="⚙" class="btn-icon" />
-                    <ui:Label text="Options" class="btn-text" />
-                </ui:Button>
-                <ui:Button name="QuitBtn" class="btn btn-pill glass">
-                    <ui:Label text="✕" class="btn-icon" />
-                    <ui:Label text="Quit" class="btn-text" />
-                </ui:Button>
-            </ui:VisualElement>
-        </ui:VisualElement>
+        <!-- Logo top left -->
+        <ui:VisualElement name="Logo" class="title-logo" />
+        <!-- Buttons arced around the circle -->
+        <ui:Button name="NewGameBtn" class="btn btn-pill glass title-arc-btn title-arc-0">
+            <ui:Label text="🕹️" class="btn-icon" />
+            <ui:Label text="New Game" class="btn-text" />
+        </ui:Button>
+        <ui:Button name="LoadGameBtn" class="btn btn-pill glass title-arc-btn title-arc-1">
+            <ui:Label text="💾" class="btn-icon" />
+            <ui:Label text="Load Game" class="btn-text" />
+        </ui:Button>
+        <ui:Button name="OptionsBtn" class="btn btn-pill glass title-arc-btn title-arc-2">
+            <ui:Label text="⚙️" class="btn-icon" />
+            <ui:Label text="Options" class="btn-text" />
+        </ui:Button>
+        <ui:Button name="QuitBtn" class="btn btn-pill glass title-arc-btn title-arc-3">
+            <ui:Label text="🚪" class="btn-icon" />
+            <ui:Label text="Quit" class="btn-text" />
+        </ui:Button>
         <ui:Label name="VersionLabel" text="v0.1" class="title-version" />
         <ui:VisualElement name="OptionsOverlay" class="overlay hidden">
             <ui:VisualElement class="overlay-panel glass">

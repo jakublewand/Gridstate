@@ -18,15 +18,21 @@ public class TitleUIController : MonoBehaviour
         _root = _uiDocument.rootVisualElement;
         _optionsOverlay = _root.Q<VisualElement>("OptionsOverlay");
 
-        _root.Q<Button>("PlayBtn").clicked += OnPlayClicked;
+        _root.Q<Button>("NewGameBtn").clicked += OnNewGameClicked;
+        _root.Q<Button>("LoadGameBtn").clicked += OnLoadGameClicked;
         _root.Q<Button>("OptionsBtn").clicked += OnOptionsClicked;
         _root.Q<Button>("QuitBtn").clicked += OnQuitClicked;
         _root.Q<Button>("CloseOptionsBtn").clicked += OnCloseOptionsClicked;
     }
 
-    void OnPlayClicked()
+    void OnNewGameClicked()
     {
         SceneManager.LoadScene("GameScene");
+    }
+
+    void OnLoadGameClicked()
+    {
+        // load functionality?
     }
 
     void OnOptionsClicked()
