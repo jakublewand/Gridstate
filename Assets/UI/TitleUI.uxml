@@ -1,7 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Style.uss?fileID=7433441132597879392&amp;guid=2af02f39de7902a4b87d054371349235&amp;type=3#Style" />
     <ui:VisualElement name="Root" class="root title-root">
-        <ui:VisualElement name="ConceptBg" class="title-concept-bg" />
         <ui:VisualElement name="GlassPanel" class="title-glass-panel" />
         <ui:VisualElement name="ConceptWindow" class="title-concept-window" />
         <!-- Logo top left -->
