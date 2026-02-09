@@ -3,6 +3,7 @@ using System;
 
 public class StatisticCalculation
 {
+    [SerializeField] private double growthFactor = 0.1d;
     public double quality;
     public double overshot;
     public double newIncome;
@@ -67,7 +68,7 @@ public class StatisticCalculation
                              + enjoyment * enjoyment
                              + jobs * jobs;
 
-        newIncome = population * summedSquares / 4d;
+        newIncome = growthFactor * population * summedSquares / 4d;
 
         // income = pop*quality / (log(overshot))
 

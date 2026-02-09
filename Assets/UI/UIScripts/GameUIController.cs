@@ -47,6 +47,11 @@ public class GameUIController : MonoBehaviour
     void OnEnable()
     {
         var uiDoc = GetComponent<UIDocument>();
+        if (uiDoc == null || uiDoc.rootVisualElement == null)
+        {
+            return;
+        }
+
         root = uiDoc.rootVisualElement;
 
         // Query UI Elements
@@ -70,8 +75,8 @@ public class GameUIController : MonoBehaviour
 
         // Event Listeners
         if (playBtn != null) playBtn.clicked += TogglePlay;
-        if (zoomInBtn != null) zoomInBtn.clicked += () => cameraBehaviour.Zoom(-1f);
-        if (zoomOutBtn != null) zoomOutBtn.clicked += () => cameraBehaviour.Zoom(1f);
+        if (zoomInBtn != null) zoomInBtn.clicked += () => { if (cameraBehaviour != null) cameraBehaviour.Zoom(-1f); };
+        if (zoomOutBtn != null) zoomOutBtn.clicked += () => { if (cameraBehaviour != null) cameraBehaviour.Zoom(1f); };
         if (optionsBtn != null) optionsBtn.clicked += () => ShowOverlay(optionsOverlay);
 
         var closeOptionsBtn = root.Q<Button>("CloseOptionsBtn");
@@ -104,22 +109,25 @@ public class GameUIController : MonoBehaviour
         if (city == null) return; // avoid null refs
 
         //update these every frame, basically optimal to do this even though most of them rarely change
-        CityName.text = city.getCityName() ?? string.Empty;
-        DaysLabel.text = $"Day {city.getDayCount()}";
-        PopLabel.text = FormatStat(city.GetStat(City.StatType.Population));
-        BalanceLabel.text = FormatStat(city.GetStat(City.StatType.Balance));
-        PayoutLabel.text = $"{FormatStat(city.GetStat(City.StatType.Income))}/day";
-        progressFill.style.width = new Length(Mathf.Clamp(city.getDayProgress(), 0, 100), LengthUnit.Percent);
+        if (CityName != null) CityName.text = city.getCityName() ?? string.Empty;
+        if (DaysLabel != null) DaysLabel.text = $"Day {city.getDayCount()}";
+        if (PopLabel != null) PopLabel.text = FormatStat(city.GetStat(City.StatType.Population));
+        if (BalanceLabel != null) BalanceLabel.text = FormatStat(city.GetStat(City.StatType.Balance));
+        if (PayoutLabel != null) PayoutLabel.text = $"{FormatStat(city.GetStat(City.StatType.Income))}/day";
+        if (progressFill != null)
+            progressFill.style.width = new Length(Mathf.Clamp(city.getDayProgress(), 0, 100), LengthUnit.Percent);
 
         // Update stat bars (values are 0-1, ProgressBar uses 0-100)
-        jobsBar.value = (float)(city.GetStat(City.StatType.Jobs) * 100d);
-        educationBar.value = (float)(city.GetStat(City.StatType.Education) * 100d);
-        enjoymentBar.value = (float)(city.GetStat(City.StatType.Enjoyment) * 100d);
-        safetyBar.value = (float)(city.GetStat(City.StatType.Safety) * 100d);
+        double population = city.GetStat(City.StatType.Population);
+        if (jobsBar != null) jobsBar.value = SafePercent(city.GetStat(City.StatType.Jobs), population);
+        if (educationBar != null) educationBar.value = SafePercent(city.GetStat(City.StatType.Education), population);
+        if (enjoymentBar != null) enjoymentBar.value = SafePercent(city.GetStat(City.StatType.Enjoyment), population);
+        if (safetyBar != null) safetyBar.value = SafePercent(city.GetStat(City.StatType.Safety), population);
     }
 
     private void TogglePlay()
     {
+        if (city == null || playBtn == null) return;
         city.playPauseGame();
         playBtn.text = city.isPaused() ? "▶" : "II";
     }
@@ -128,11 +136,13 @@ public class GameUIController : MonoBehaviour
     // Overlay Methods
     private void ShowOverlay(VisualElement overlay)
     {
+        if (overlay == null) return;
         overlay.RemoveFromClassList("hidden");
     }
 
     private void HideOverlay(VisualElement overlay)
     {
+        if (overlay == null) return;
         overlay.AddToClassList("hidden");
     }
 
@@ -214,15 +224,29 @@ public class GameUIController : MonoBehaviour
     }
 
     // Public API Methods
-    public void SetInfoMessage(string msg) => infoLabel.text = msg ?? string.Empty;
+    public void SetInfoMessage(string msg)
+    {
+        if (infoLabel != null) infoLabel.text = msg ?? string.Empty;
+    }
 
     private void BuyButtonPressed(BuildingDefinition buildingDefinition)
     {
+        if (buildingManager == null) return;
         buildingManager.selectedBuilding = buildingDefinition;
     }
 
     private static string FormatStat(double value)
     {
         return value.ToString("0.##");
+    }
+
+    private static float SafePercent(double value, double population)
+    {
+        if (population <= 0d) return 0f;
+
+        double result = value / population * 100d;
+        if (double.IsNaN(result) || double.IsInfinity(result)) return 0f;
+
+        return Mathf.Clamp((float)result, 0f, 100f);
     }
 }
