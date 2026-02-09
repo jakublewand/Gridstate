@@ -114,7 +114,7 @@ public class BulidingManager : MonoBehaviour
             return;
         }
 
-        city.ModifyStat(City.StatType.Balance, - (int)buildingDefinition.effects.cost);
+        city.ModifyStat(City.StatType.Balance, city.GetStat(City.StatType.Balance) - (int)buildingDefinition.effects.cost);
         building.Initialize(buildingDefinition, gridPos);
         buildings.Add(building);
     }

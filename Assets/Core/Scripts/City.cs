@@ -10,6 +10,8 @@ public class City : MonoBehaviour
     [SerializeField] private GameState _gameState;
     public GameState gameState => _gameState; //not decided if to make private: gamestate has only values for now
 
+    private int temp;
+
     // Awake is called when loading the script, good to ensure existing data like gamestate
     void Awake()    
     {
@@ -28,10 +30,9 @@ public class City : MonoBehaviour
         // set some defaults for good standard sity values
         if (string.IsNullOrEmpty(_gameState.cityName))
             _gameState.cityName = "City Name";
-        if (_gameState.income == 0)
-            _gameState.income = 1000;
         if (_gameState.balance == 0)
             _gameState.balance = 100;
+
         statCalc = new StatisticCalculation(this);
     }
 
@@ -46,6 +47,8 @@ public class City : MonoBehaviour
     {
         if (!gameState.paused)
         {
+            statCalc.Recalculate(); //calculates your income each frame
+
             gameState.dayProgress += (time / SECONDS_PER_DAY) * 100;
             if (100 <= gameState.dayProgress) //dayprogress full -> new day
             { 
@@ -58,8 +61,12 @@ public class City : MonoBehaviour
     {
         gameState.dayProgress = 0;
         gameState.dayCount++;
-        statCalc.Recalculate();
-        gameState.balance += gameState.income;
+        temp = gameState.balance;
+        gameState.balance += gameState.income; 
+        if(gameState.balance <= 0)
+        {
+            gameState.balance = temp;
+        }
     }
 
     public enum StatType
@@ -78,17 +85,17 @@ public class City : MonoBehaviour
     {
         switch (stat)
         {
-            case StatType.Enjoyment: gameState.enjoyment += amount; break;
-            case StatType.Education: gameState.education += amount; break;
-            case StatType.Safety: gameState.safety += amount; break;
-            case StatType.Jobs: gameState.jobs += amount; break;
-            case StatType.Population: gameState.population += amount; break;
-            case StatType.Income: gameState.income += amount; break;
-            case StatType.Balance: gameState.balance += amount; break;
+            case StatType.Enjoyment: gameState.enjoyment = amount; break;
+            case StatType.Education: gameState.education = amount; break;
+            case StatType.Safety: gameState.safety = amount; break;
+            case StatType.Jobs: gameState.jobs = amount; break;
+            case StatType.Population: gameState.population = amount; break;
+            case StatType.Income: gameState.income = amount; break;
+            case StatType.Balance: gameState.balance = amount; break;
         }
     }
 
-    public double GetStat(StatType stat)
+    public int GetStat(StatType stat)
     {
         switch (stat)
         {
