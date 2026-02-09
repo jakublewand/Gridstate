@@ -43,6 +43,22 @@ public class GameUIController : MonoBehaviour
     private Button optionsBtn;
     private VisualElement optionsOverlay;
     private VisualElement greetingOverlay;
+    private Button closeOptionsBtn;
+    private Button showGreetingBtn;
+    private Button closeGreetingBtn;
+    private ScrollView buildingList;
+
+    private bool uiReady;
+    private string lastCityName;
+    private int lastDay = int.MinValue;
+    private string lastPopText;
+    private string lastBalanceText;
+    private string lastPayoutText;
+    private float lastDayProgress = -1f;
+    private float lastJobsValue = -1f;
+    private float lastEducationValue = -1f;
+    private float lastEnjoymentValue = -1f;
+    private float lastSafetyValue = -1f;
 
     void OnEnable()
     {
@@ -73,22 +89,16 @@ public class GameUIController : MonoBehaviour
         optionsOverlay = root.Q<VisualElement>("OptionsOverlay");
         greetingOverlay = root.Q<VisualElement>("GreetingOverlay");
 
-        // Event Listeners
-        if (playBtn != null) playBtn.clicked += TogglePlay;
-        if (zoomInBtn != null) zoomInBtn.clicked += () => { if (cameraBehaviour != null) cameraBehaviour.Zoom(-1f); };
-        if (zoomOutBtn != null) zoomOutBtn.clicked += () => { if (cameraBehaviour != null) cameraBehaviour.Zoom(1f); };
-        if (optionsBtn != null) optionsBtn.clicked += () => ShowOverlay(optionsOverlay);
+        closeOptionsBtn = root.Q<Button>("CloseOptionsBtn");
+        showGreetingBtn = root.Q<Button>("ShowGreetingBtn");
+        closeGreetingBtn = root.Q<Button>("CloseGreetingBtn");
+        buildingList = root.Q<ScrollView>("BuildingList");
 
-        var closeOptionsBtn = root.Q<Button>("CloseOptionsBtn");
-        var showGreetingBtn = root.Q<Button>("ShowGreetingBtn");
-        var closeGreetingBtn = root.Q<Button>("CloseGreetingBtn");
-        if (closeOptionsBtn != null) closeOptionsBtn.clicked += () => HideOverlay(optionsOverlay);
-        if (showGreetingBtn != null) showGreetingBtn.clicked += () => { HideOverlay(optionsOverlay); ShowOverlay(greetingOverlay); };
-        if (closeGreetingBtn != null) closeGreetingBtn.clicked += () => HideOverlay(greetingOverlay);
+        RegisterCallbacks();
 
-        var buildingList = root.Q<ScrollView>("BuildingList");
         if (buildingList != null && buildingManager != null && buildingManager.buildingDefinitions != null)
         {
+            buildingList.Clear();
             foreach (BuildingDefinition buildingDefinition in buildingManager.buildingDefinitions)
             {
                 if (buildingDefinition == null || buildingDefinition.primaryCategory == PrimaryCategory.TownHall)
@@ -97,6 +107,8 @@ public class GameUIController : MonoBehaviour
                 buildingList.Add(CreateBuildingCard(buildingDefinition));
             }
         }
+
+        uiReady = true;
     }
 
     private void Start()
@@ -104,32 +116,99 @@ public class GameUIController : MonoBehaviour
         city = City.instance;
     }
 
+    void OnDisable()
+    {
+        UnregisterCallbacks();
+        uiReady = false;
+    }
+
     void Update()
     {
-        if (city == null) return; // avoid null refs
+        if (!uiReady || city == null || root == null || root.panel == null) return;
 
-        //update these every frame, basically optimal to do this even though most of them rarely change
-        if (CityName != null) CityName.text = city.getCityName() ?? string.Empty;
-        if (DaysLabel != null) DaysLabel.text = $"Day {city.getDayCount()}";
-        if (PopLabel != null) PopLabel.text = FormatStat(city.GetStat(City.StatType.Population));
-        if (BalanceLabel != null) BalanceLabel.text = FormatStat(city.GetStat(City.StatType.Balance));
-        if (PayoutLabel != null) PayoutLabel.text = $"{FormatStat(city.GetStat(City.StatType.Income))}/day";
+        // Update only when values changed to reduce text mesh churn in UITK.
+        string cityName = city.getCityName() ?? string.Empty;
+        if (CityName != null && cityName != lastCityName)
+        {
+            CityName.text = cityName;
+            lastCityName = cityName;
+        }
+
+        int day = city.getDayCount();
+        if (DaysLabel != null && day != lastDay)
+        {
+            DaysLabel.text = $"Day {day}";
+            lastDay = day;
+        }
+
+        string popText = FormatStat(city.GetStat(City.StatType.Population));
+        if (PopLabel != null && popText != lastPopText)
+        {
+            PopLabel.text = popText;
+            lastPopText = popText;
+        }
+
+        string balanceText = FormatStat(city.GetStat(City.StatType.Balance));
+        if (BalanceLabel != null && balanceText != lastBalanceText)
+        {
+            BalanceLabel.text = balanceText;
+            lastBalanceText = balanceText;
+        }
+
+        string payoutText = $"{FormatStat(city.GetStat(City.StatType.Income))}/day";
+        if (PayoutLabel != null && payoutText != lastPayoutText)
+        {
+            PayoutLabel.text = payoutText;
+            lastPayoutText = payoutText;
+        }
+
+        float dayProgress = Mathf.Clamp(city.getDayProgress(), 0f, 100f);
         if (progressFill != null)
-            progressFill.style.width = new Length(Mathf.Clamp(city.getDayProgress(), 0, 100), LengthUnit.Percent);
+        {
+            if (!Mathf.Approximately(dayProgress, lastDayProgress))
+            {
+                progressFill.style.width = new Length(dayProgress, LengthUnit.Percent);
+                lastDayProgress = dayProgress;
+            }
+        }
 
         // Update stat bars (values are 0-1, ProgressBar uses 0-100)
         double population = city.GetStat(City.StatType.Population);
-        if (jobsBar != null) jobsBar.value = SafePercent(city.GetStat(City.StatType.Jobs), population);
-        if (educationBar != null) educationBar.value = SafePercent(city.GetStat(City.StatType.Education), population);
-        if (enjoymentBar != null) enjoymentBar.value = SafePercent(city.GetStat(City.StatType.Enjoyment), population);
-        if (safetyBar != null) safetyBar.value = SafePercent(city.GetStat(City.StatType.Safety), population);
+        float jobsValue = SafePercent(city.GetStat(City.StatType.Jobs), population);
+        float educationValue = SafePercent(city.GetStat(City.StatType.Education), population);
+        float enjoymentValue = SafePercent(city.GetStat(City.StatType.Enjoyment), population);
+        float safetyValue = SafePercent(city.GetStat(City.StatType.Safety), population);
+
+        if (jobsBar != null && !Mathf.Approximately(jobsValue, lastJobsValue))
+        {
+            jobsBar.value = jobsValue;
+            lastJobsValue = jobsValue;
+        }
+
+        if (educationBar != null && !Mathf.Approximately(educationValue, lastEducationValue))
+        {
+            educationBar.value = educationValue;
+            lastEducationValue = educationValue;
+        }
+
+        if (enjoymentBar != null && !Mathf.Approximately(enjoymentValue, lastEnjoymentValue))
+        {
+            enjoymentBar.value = enjoymentValue;
+            lastEnjoymentValue = enjoymentValue;
+        }
+
+        if (safetyBar != null && !Mathf.Approximately(safetyValue, lastSafetyValue))
+        {
+            safetyBar.value = safetyValue;
+            lastSafetyValue = safetyValue;
+        }
     }
 
     private void TogglePlay()
     {
         if (city == null || playBtn == null) return;
         city.playPauseGame();
-        playBtn.text = city.isPaused() ? "▶" : "II";
+        playBtn.text = city.isPaused() ? ">" : "||";
     }
 
 
@@ -248,5 +327,58 @@ public class GameUIController : MonoBehaviour
         if (double.IsNaN(result) || double.IsInfinity(result)) return 0f;
 
         return Mathf.Clamp((float)result, 0f, 100f);
+    }
+
+    private void RegisterCallbacks()
+    {
+        if (playBtn != null) playBtn.clicked += TogglePlay;
+        if (zoomInBtn != null) zoomInBtn.clicked += OnZoomInClicked;
+        if (zoomOutBtn != null) zoomOutBtn.clicked += OnZoomOutClicked;
+        if (optionsBtn != null) optionsBtn.clicked += OnOptionsClicked;
+        if (closeOptionsBtn != null) closeOptionsBtn.clicked += OnCloseOptionsClicked;
+        if (showGreetingBtn != null) showGreetingBtn.clicked += OnShowGreetingClicked;
+        if (closeGreetingBtn != null) closeGreetingBtn.clicked += OnCloseGreetingClicked;
+    }
+
+    private void UnregisterCallbacks()
+    {
+        if (playBtn != null) playBtn.clicked -= TogglePlay;
+        if (zoomInBtn != null) zoomInBtn.clicked -= OnZoomInClicked;
+        if (zoomOutBtn != null) zoomOutBtn.clicked -= OnZoomOutClicked;
+        if (optionsBtn != null) optionsBtn.clicked -= OnOptionsClicked;
+        if (closeOptionsBtn != null) closeOptionsBtn.clicked -= OnCloseOptionsClicked;
+        if (showGreetingBtn != null) showGreetingBtn.clicked -= OnShowGreetingClicked;
+        if (closeGreetingBtn != null) closeGreetingBtn.clicked -= OnCloseGreetingClicked;
+    }
+
+    private void OnZoomInClicked()
+    {
+        if (cameraBehaviour != null) cameraBehaviour.Zoom(-1f);
+    }
+
+    private void OnZoomOutClicked()
+    {
+        if (cameraBehaviour != null) cameraBehaviour.Zoom(1f);
+    }
+
+    private void OnOptionsClicked()
+    {
+        ShowOverlay(optionsOverlay);
+    }
+
+    private void OnCloseOptionsClicked()
+    {
+        HideOverlay(optionsOverlay);
+    }
+
+    private void OnShowGreetingClicked()
+    {
+        HideOverlay(optionsOverlay);
+        ShowOverlay(greetingOverlay);
+    }
+
+    private void OnCloseGreetingClicked()
+    {
+        HideOverlay(greetingOverlay);
     }
 }

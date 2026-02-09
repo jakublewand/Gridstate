@@ -10,29 +10,29 @@
                     <ui:Label name="CityName" text="Vermont" class="city-name" />
                     <ui:Label name="DaysLabel" text="Day 4" class="day-text" />
                 </ui:VisualElement>
-                <ui:Button name="PlayBtn" text="▶" class="nav-btn" />
+                <ui:Button name="PlayBtn" text=">" class="nav-btn" />
             </ui:VisualElement>
             <ui:VisualElement class="topbar-section-mid">
                 <ui:VisualElement class="pill pill-small">
-                    <ui:Label text="👤 :" class="pill-icon" />
+                    <ui:Label text="Pop:" class="pill-icon" />
                     <ui:Label name="PopLabel" text="6.120" class="pill-text" />
                 </ui:VisualElement>
                 <ui:VisualElement class="pill pill-wide">
-                    <ui:Label text="ℹ️" class="pill-icon" />
+                    <ui:Label text="Info" class="pill-icon" />
                     <ui:Label name="InfoLabel" text="Obama visited town!" class="pill-text" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement class="topbar-section-right">
                 <ui:VisualElement name="DailyProgress" class="pill pill-medium progress-container">
                     <ui:VisualElement name="ProgressFill" class="progress-fill" />
-                    <ui:Label text="💸" class="pill-icon" />
+                    <ui:Label text="$" class="pill-icon" />
                     <ui:Label name="PayoutLabel" text="200/day" class="pill-text" />
                 </ui:VisualElement>
                 <ui:VisualElement class="pill pill-small">
-                    <ui:Label text="💵 :" class="pill-icon" />
+                    <ui:Label text="Bal:" class="pill-icon" />
                     <ui:Label name="BalanceLabel" text="27.1k" class="pill-text" />
                 </ui:VisualElement>
-                <ui:Button name="OptionsBtn" text="●●●" class="nav-btn" />
+                <ui:Button name="OptionsBtn" text="..." class="nav-btn" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="RightPanels" class="right-panels">
@@ -54,7 +54,7 @@
         </ui:VisualElement>
         <ui:VisualElement name="ZoomControls" class="zoom-controls glass">
             <ui:Button name="ZoomInBtn" text="+" class="zoom-btn" />
-            <ui:Button name="ZoomOutBtn" text="−" class="zoom-btn" />
+            <ui:Button name="ZoomOutBtn" text="-" class="zoom-btn" />
         </ui:VisualElement>
         <ui:VisualElement name="OptionsOverlay" class="overlay hidden">
             <ui:VisualElement class="overlay-panel glass">
