@@ -1,16 +1,16 @@
-using Unity.Collections;
 using UnityEngine;
+using System;
 
 public class StatisticCalculation
 {
-    public int quality;
-     public int overshot;
-    public int newIncome;
-    private int Enjoyment;
-    private int Education;
-    private int Safety;
-    private int Jobs;
-    private int Population;
+    public double quality;
+    public double overshot;
+    public double newIncome;
+    private double Enjoyment;
+    private double Education;
+    private double Safety;
+    private double Jobs;
+    private double Population;
     public City city;
 
     public StatisticCalculation(City city)
@@ -24,27 +24,27 @@ public class StatisticCalculation
         CalcQuality();
         CalcOvershot();
         CalcIncome();
-        city.ModifyStat(City.StatType.Income, newIncome);
+        city.SetStat(City.StatType.Income, newIncome);
     }
 
     private void CalcStats()
     {
         // get stats every tick
-        Enjoyment = (int)city.GetStat(City.StatType.Enjoyment);
-        Education = (int)city.GetStat(City.StatType.Education);
-        Safety = (int)city.GetStat(City.StatType.Safety);
-        Jobs = (int)city.GetStat(City.StatType.Jobs);  
-        Population = (int)city.GetStat(City.StatType.Population); 
+        Enjoyment = city.GetStat(City.StatType.Enjoyment);
+        Education = city.GetStat(City.StatType.Education);
+        Safety = city.GetStat(City.StatType.Safety);
+        Jobs = city.GetStat(City.StatType.Jobs);
+        Population = city.GetStat(City.StatType.Population);
     }
 
     private void CalcQuality()
     {
-        quality = 1+(Enjoyment + Education + Safety + Jobs)/4;
+        quality = 1d + (Enjoyment + Education + Safety + Jobs) / 4d;
     }
 
     private void CalcOvershot()
     {
-        overshot = Mathf.Max(Enjoyment, Education, Safety, Jobs);
+        overshot = Math.Max(Math.Max(Enjoyment, Education), Math.Max(Safety, Jobs));
 
         overshot = overshot - quality; // should be 0 if balanced perfectly
 
@@ -56,12 +56,19 @@ public class StatisticCalculation
 
     private void CalcIncome()
     {
-        float safeOvershot = Mathf.Max(overshot, 1f);
-        newIncome = (int)(Population * quality * 5) / Mathf.Max((int)Mathf.Log(safeOvershot), 1);
-        if (newIncome <= 0)
-        {
-            newIncome = 10;
-        }
+        double population = city.GetStat(City.StatType.Population);
+        double education = city.GetStat(City.StatType.Education);
+        double safety = city.GetStat(City.StatType.Safety);
+        double enjoyment = city.GetStat(City.StatType.Enjoyment);
+        double jobs = city.GetStat(City.StatType.Jobs);
+
+        double summedSquares = education * education
+                             + safety * safety
+                             + enjoyment * enjoyment
+                             + jobs * jobs;
+
+        newIncome = population * summedSquares / 4d;
+
         // income = pop*quality / (log(overshot))
 
         /*  say 1000 population

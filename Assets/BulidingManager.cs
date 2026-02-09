@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 using UnityEngine.EventSystems;
 
 public class BulidingManager : MonoBehaviour
@@ -16,8 +17,21 @@ public class BulidingManager : MonoBehaviour
     private Vector2 mouseDownLocation;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Awake()
+    {
+        if (City.instance != null)
+        {
+            city = City.instance;
+        }
+    }
+
     void Start()
     {
+        if (city == null)
+        {
+            city = City.instance;
+        }
+
         if (buildingDefinitions.Count == 0 || buildingDefinitions[0] == null || buildingDefinitions[0].prefab == null)
         {
             Debug.LogWarning("No default building definition/prefab set on BulidingManager.");
@@ -114,8 +128,29 @@ public class BulidingManager : MonoBehaviour
             return;
         }
 
-        city.ModifyStat(City.StatType.Balance, city.GetStat(City.StatType.Balance) - (int)buildingDefinition.effects.cost);
+        city.ModifyStat(City.StatType.Balance, -buildingDefinition.effects.cost);
         building.Initialize(buildingDefinition, gridPos);
         buildings.Add(building);
+
+
+        city.SetStat(City.StatType.Education, 0d);
+        city.SetStat(City.StatType.Safety, 0d);
+        city.SetStat(City.StatType.Enjoyment, 0d);
+        city.SetStat(City.StatType.Jobs, 0d);
+        city.ModifyStat(City.StatType.Population, buildingDefinition.effects.housing);
+
+        foreach (Building builtBuilding in buildings)
+        {
+            double population = Math.Max(city.GetStat(City.StatType.Population), 1d);
+
+            city.ModifyStat(City.StatType.Education,
+            (1d - city.GetStat(City.StatType.Education) / population) * builtBuilding.definition.effects.education);
+            city.ModifyStat(City.StatType.Safety,
+            (1d - city.GetStat(City.StatType.Safety) / population) * builtBuilding.definition.effects.safety);
+            city.ModifyStat(City.StatType.Enjoyment,
+            (1d - city.GetStat(City.StatType.Enjoyment) / population) * builtBuilding.definition.effects.enjoyment);
+            city.ModifyStat(City.StatType.Jobs,
+            (1d - city.GetStat(City.StatType.Jobs) / population) * builtBuilding.definition.effects.jobs);
+        }
     }
 }

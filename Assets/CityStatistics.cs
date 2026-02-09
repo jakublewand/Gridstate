@@ -11,15 +11,15 @@ public class CityStatistics : MonoBehaviour
     */
 
     //created by other stats
-    [SerializeField] private int money;
-    [SerializeField] private int population;
+    [SerializeField] private double money;
+    [SerializeField] private double population;
 
     //creator stats
-    [SerializeField] private int qualityofLife;
-    [SerializeField] private int education;
-    [SerializeField] private int safety;
-    [SerializeField] private int energy;
-    [SerializeField] private int jobs;
+    [SerializeField] private double qualityofLife;
+    [SerializeField] private double education;
+    [SerializeField] private double safety;
+    [SerializeField] private double energy;
+    [SerializeField] private double jobs;
 
     //information stats
     public float totalTime;
@@ -41,7 +41,7 @@ public class CityStatistics : MonoBehaviour
         Population
     }
 
-    public void ModifyStat(StatType stat, int amount)
+    public void ModifyStat(StatType stat, double amount)
     {
         switch (stat)
         {
@@ -54,7 +54,7 @@ public class CityStatistics : MonoBehaviour
         }
     }
 
-    public int GetStat(StatType stat)
+    public double GetStat(StatType stat)
     {
         return stat switch
         {
@@ -64,7 +64,7 @@ public class CityStatistics : MonoBehaviour
             StatType.Energy => energy,
             StatType.Jobs => jobs,
             StatType.Population => population,
-            _ => 0
+            _ => 0d
         };
     }
 
