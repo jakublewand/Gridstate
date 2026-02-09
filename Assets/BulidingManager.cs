@@ -4,14 +4,11 @@ using UnityEngine.EventSystems;
 
 public class BulidingManager : MonoBehaviour
 {
-    [SerializeField] GameObject townHallPrefab;
-    [SerializeField] GameObject housePrefab;
-    [SerializeField] GameObject apartamentPrefab;
     [SerializeField] City city;
-    public Dictionary<BuildingType, GameObject> buildingPrefabs = new Dictionary<BuildingType, GameObject>();
+    [SerializeField] public List<BuildingDefinition> buildingDefinitions = new List<BuildingDefinition>();
     List<Building> buildings = new List<Building>();
-    public BuildingType selectedBuilding;
-    private BuildingType lastSelectedBuilding;
+    public BuildingDefinition selectedBuilding;
+    private BuildingDefinition lastSelectedBuilding;
     public GameObject selectedBuildingObject;
     private Ray ray;
     private RaycastHit hit;
@@ -21,26 +18,28 @@ public class BulidingManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        buildingPrefabs = new Dictionary<BuildingType, GameObject>() {
-            { BuildingType.None, null },
-            { BuildingType.TownHall, townHallPrefab },
-            { BuildingType.Apartament, apartamentPrefab },
-            { BuildingType.House, housePrefab },
-        };
+        if (buildingDefinitions.Count == 0 || buildingDefinitions[0] == null || buildingDefinitions[0].prefab == null)
+        {
+            Debug.LogWarning("No default building definition/prefab set on BulidingManager.");
+            return;
+        }
 
-        Build(BuildingType.TownHall, new Vector3(0, townHallPrefab.transform.localScale.y / 2, 0));
+        Build(
+            buildingDefinitions[0],
+            new Vector3(0, buildingDefinitions[0].prefab.transform.localScale.y / 2, 0)
+        );
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (selectedBuilding != BuildingType.None) {
+        if (selectedBuilding != null) {
             if (selectedBuildingObject == null) {
-                selectedBuildingObject = Instantiate(buildingPrefabs[selectedBuilding], Vector3.zero, Quaternion.identity);
+                selectedBuildingObject = Instantiate(selectedBuilding.prefab, Vector3.zero, Quaternion.identity);
             }
             if (lastSelectedBuilding != selectedBuilding) {
                 Destroy(selectedBuildingObject);
-                selectedBuildingObject = Instantiate(buildingPrefabs[selectedBuilding], Vector3.zero, Quaternion.identity);
+                selectedBuildingObject = Instantiate(selectedBuilding.prefab, Vector3.zero, Quaternion.identity);
                 lastSelectedBuilding = selectedBuilding;
             }
 
@@ -73,7 +72,7 @@ public class BulidingManager : MonoBehaviour
 
                 Vector3 mousePos = Input.mousePosition;
                 ray = Camera.main.ScreenPointToRay(mousePos);
-                if (Physics.Raycast(ray, out hit))
+                if (planeCollider.Raycast(ray, out hit, Mathf.Infinity))
                 {
                     bool occupied = false;
                     foreach (var building in buildings)
@@ -88,7 +87,7 @@ public class BulidingManager : MonoBehaviour
                     if (!occupied) {
                         Build(selectedBuilding, selectedBuildingObject.transform.position);
                         Destroy(selectedBuildingObject);
-                        selectedBuilding = BuildingType.None;
+                        selectedBuilding = null;
                     }   
                 }
             }
@@ -96,16 +95,27 @@ public class BulidingManager : MonoBehaviour
     }
 
 
-    public void Build(BuildingType buildingType, Vector3 position)
+    public void Build(BuildingDefinition buildingDefinition, Vector3 position)
     {
-        if (Consts.buildingEffectsDatabase[buildingType].cost > city.GetStat(City.StatType.Balance))
+        if (buildingDefinition == null || buildingDefinition.prefab == null)
             return;
-        city.ModifyStat(City.StatType.Balance, - (int)Consts.buildingEffectsDatabase[buildingType].cost);
-        
-        Vector2 gridPos = new Vector2(0, 0);
-        Building building = new Building(buildingType, gridPos);
-        GameObject buildingObject = Instantiate(buildingPrefabs[buildingType], position, Quaternion.identity);
-        building.gameObject = buildingObject;
+
+        if (buildingDefinition.effects.cost > city.GetStat(City.StatType.Balance))
+            return;
+
+        Vector2 gridPos = new Vector2(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.z));
+        GameObject buildingObject = Instantiate(buildingDefinition.prefab, position, Quaternion.identity);
+        Building building = buildingObject.GetComponent<Building>();
+
+        if (building == null)
+        {
+            Debug.LogWarning($"Instantiated prefab '{buildingDefinition.prefab.name}' has no Building component.");
+            Destroy(buildingObject);
+            return;
+        }
+
+        city.ModifyStat(City.StatType.Balance, - (int)buildingDefinition.effects.cost);
+        building.Initialize(buildingDefinition, gridPos);
         buildings.Add(building);
     }
 }

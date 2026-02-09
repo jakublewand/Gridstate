@@ -82,10 +82,10 @@ public class GameUIController : MonoBehaviour
         if (closeGreetingBtn != null) closeGreetingBtn.clicked += () => HideOverlay(greetingOverlay);
 
         var buildingList = root.Q<ScrollView>("BuildingList");
-        foreach (BuildingType buildingType in Consts.buildingTypes)
+        foreach (BuildingDefinition buildingDefinition in buildingManager.buildingDefinitions)
         {
-            if (buildingType != BuildingType.TownHall)
-                buildingList.Add(CreateBuildingCard(buildingType));
+            if (buildingDefinition.primaryCategory != PrimaryCategory.TownHall)
+                buildingList.Add(CreateBuildingCard(buildingDefinition));
         }
     }
 
@@ -131,10 +131,10 @@ public class GameUIController : MonoBehaviour
         overlay.AddToClassList("hidden");
     }
 
-    private VisualElement CreateBuildingCard(BuildingType buildingType)
+    private VisualElement CreateBuildingCard(BuildingDefinition buildingDefinition)
     {
-        string title = Consts.buildingNameDatabase[buildingType];
-        BuildingEffects effects = Consts.buildingEffectsDatabase[buildingType];
+        string title = buildingDefinition.displayName;
+        BuildingEffects effects = buildingDefinition.effects;
         double cost = effects.cost;
         double maintenance = effects.maintenance;
 
@@ -184,7 +184,7 @@ public class GameUIController : MonoBehaviour
         footer.Add(buyBtn);
         card.Add(footer);
 
-        buyBtn.clicked += () => BuyButtonPressed(buildingType);
+        buyBtn.clicked += () => BuyButtonPressed(buildingDefinition);
 
         return card;
     }
@@ -209,8 +209,8 @@ public class GameUIController : MonoBehaviour
     // Public API Methods
     public void SetInfoMessage(string msg) => infoLabel.text = msg;
 
-    private void BuyButtonPressed(BuildingType buildingType)
+    private void BuyButtonPressed(BuildingDefinition buildingDefinition)
     {
-        buildingManager.selectedBuilding = buildingType;
+        buildingManager.selectedBuilding = buildingDefinition;
     }
 }
