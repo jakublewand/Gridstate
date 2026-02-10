@@ -101,7 +101,10 @@ public class BulidingManager : MonoBehaviour
             return;
 
         if (buildingDefinition.effects.cost > city.GetStat(City.StatType.Balance))
+        {
+            AnnouncementManager.instance.msgAnnounce(AnnounceColor.Red, "Can't afford this building!");
             return;
+        }
 
         Vector2 gridPos = new Vector2(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.z));
         GameObject buildingObject = Instantiate(buildingDefinition.prefab, position, Quaternion.identity);

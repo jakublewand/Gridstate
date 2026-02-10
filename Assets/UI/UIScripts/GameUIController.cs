@@ -1,24 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-
-/* Created:
-  - BuildingCard.uxml - Card template (unused, went programmatic instead)
-  - Assets/Resources/UI/img/ - Folder for loading images at runtime
-
-  Modified:
-  - GameUI.uxml - Wrapped BuyMenu + StatPanel in RightPanels flex container
-  - GameUIStyle.uss - Added .building-card, .card-header, .card-image, .card-maintenance, .card-stats,
-   .stat-row styles; reduced margins throughout
-  - GameUIController.cs - Added CreateBuildingCard() and AddStatRow() methods; added demo code to
-  instantiate 5 cards in OnEnable()
-
-  Moved:
-  - house0.png → Assets/Resources/UI/img/house0.png
-
-  Result: 5 demo building cards stacking in buy menu with title + image header, maintenance, stats,
-  cost, and buy button. */
-
+[RequireComponent(typeof(AnnouncementManager))]
 public class GameUIController : MonoBehaviour
     // Script for the UI
 {
@@ -177,8 +160,8 @@ public class GameUIController : MonoBehaviour
         statsContainer.AddToClassList("card-stats");
         AddStatRow(statsContainer, "Jobs", "+");
         AddStatRow(statsContainer, "Education", "+++");
-        AddStatRow(statsContainer, "Enjoyment", "0");
-        AddStatRow(statsContainer, "Safety", "0");
+        AddStatRow(statsContainer, "Enjoyment", "-");
+        AddStatRow(statsContainer, "Safety", "--");
         card.Add(statsContainer);
 
         var footer = new VisualElement();
@@ -208,6 +191,7 @@ public class GameUIController : MonoBehaviour
         var valueLabel = new Label { text = value };
         valueLabel.AddToClassList("stat-value");
         if (value == "0") valueLabel.AddToClassList("stat-zero");
+        else if (value.StartsWith("-")) valueLabel.AddToClassList("stat-negative");
         row.Add(valueLabel);
 
         parent.Add(row);

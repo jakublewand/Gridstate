@@ -469,72 +469,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
---- !u!1 &795805865
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 795805866}
-  - component: {fileID: 795805867}
-  - component: {fileID: 795805868}
-  m_Layer: 0
-  m_Name: GeneralCity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &795805866
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 795805865}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &795805867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 795805865}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca982d54ec42c6340b7853064071d260, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &795805868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 795805865}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784fbad2301ee9f4a8bc98b46b435222, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  money: 0
-  population: 0
-  qualityofLife: 0
-  education: 0
-  safety: 0
-  energy: 0
-  jobs: 0
-  totalTime: 0
-  cityName: 
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,6 +686,7 @@ GameObject:
   - component: {fileID: 1644778564}
   - component: {fileID: 1644778565}
   - component: {fileID: 1644778566}
+  - component: {fileID: 1644778567}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -807,6 +742,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraBehaviour: {fileID: 330585548}
   buildingManager: {fileID: 282369905}
+--- !u!114 &1644778567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644778563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 054e84624a8e89147b42d301670ce27b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollSpeed: 50
 --- !u!1 &1849272949
 GameObject:
   m_ObjectHideFlags: 0
@@ -893,7 +841,6 @@ SceneRoots:
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
-  - {fileID: 795805866}
   - {fileID: 1424828732}
   - {fileID: 1849272952}
   - {fileID: 1196345575}

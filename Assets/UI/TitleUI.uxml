@@ -1,0 +1,34 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Style.uss?fileID=7433441132597879392&amp;guid=2af02f39de7902a4b87d054371349235&amp;type=3#Style" />
+    <ui:VisualElement name="Root" class="root title-root">
+        <ui:VisualElement name="GlassPanel" class="title-glass-panel" />
+        <ui:VisualElement name="ConceptWindow" class="title-concept-window" />
+        <!-- Logo top left -->
+        <ui:VisualElement name="Logo" class="title-logo" />
+        <!-- Buttons arced around the circle -->
+        <ui:Button name="NewGameBtn" class="btn btn-pill glass title-arc-btn title-arc-0">
+            <ui:Label text="🕹️" class="btn-icon" />
+            <ui:Label text="New Game" class="btn-text" />
+        </ui:Button>
+        <ui:Button name="LoadGameBtn" class="btn btn-pill glass title-arc-btn title-arc-1">
+            <ui:Label text="💾" class="btn-icon" />
+            <ui:Label text="Load Game" class="btn-text" />
+        </ui:Button>
+        <ui:Button name="OptionsBtn" class="btn btn-pill glass title-arc-btn title-arc-2">
+            <ui:Label text="⚙️" class="btn-icon" />
+            <ui:Label text="Options" class="btn-text" />
+        </ui:Button>
+        <ui:Button name="QuitBtn" class="btn btn-pill glass title-arc-btn title-arc-3">
+            <ui:Label text="🚪" class="btn-icon" />
+            <ui:Label text="Quit" class="btn-text" />
+        </ui:Button>
+        <ui:Label name="VersionLabel" text="v0.1" class="title-version" />
+        <ui:VisualElement name="OptionsOverlay" class="overlay hidden">
+            <ui:VisualElement class="overlay-panel glass">
+                <ui:Label text="Options" class="panel-title" />
+                <ui:Label text="Options coming soon..." class="overlay-text" />
+                <ui:Button name="CloseOptionsBtn" text="Close" class="overlay-btn" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
