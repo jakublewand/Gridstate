@@ -126,7 +126,7 @@ public class BulidingManager : MonoBehaviour
     
     private void RecalculateStats()
     {
-        float k = 2f;
+        float k = 1.386f;
         city.SetStat(City.StatType.Jobs, 0);
         city.SetStat(City.StatType.Education, 0);
         city.SetStat(City.StatType.Enjoyment, 0);
