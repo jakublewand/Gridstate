@@ -34,7 +34,7 @@ public static class AnnouncementMessages
             //guide for making new message: 
             //1. wrap in Msg(), 
             //2. write message as value 1. 
-            // 3. write condition as lambda based on gamestate (or other) stats
+            // 3. write condition as lambda based on gamestate (or other) stats in valeu 2
             Msg("this is the worst city i have ever seen", () => true),
             Msg("pretty cool city!!!", () => 10000 < city.GetStat(City.StatType.Balance)),
             Msg("pretty cool city!!!!!!!", () => 100000 < city.GetStat(City.StatType.Balance)),
