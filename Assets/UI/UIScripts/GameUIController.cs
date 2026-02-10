@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using System;
 
 [RequireComponent(typeof(AnnouncementManager))]
 public class GameUIController : MonoBehaviour
@@ -90,8 +91,8 @@ public class GameUIController : MonoBehaviour
         CityName.text = city.getCityName() ?? string.Empty;
         DaysLabel.text = $"Day {city.getDayCount()}";
         PopLabel.text = city.GetStat(City.StatType.Population).ToString();
-        BalanceLabel.text = city.GetStat(City.StatType.Balance).ToString();
-        PayoutLabel.text = $"{city.GetStat(City.StatType.Income)}/day";
+        BalanceLabel.text = $"{Math.Round(city.GetStat(City.StatType.Balance), 1)}k";
+        PayoutLabel.text = $"{Math.Round(city.GetStat(City.StatType.Income), 1)}k/day";
         progressFill.style.width = new Length(Mathf.Clamp(city.getDayProgress(), 0, 100), LengthUnit.Percent);
 
         // Update stat bars (values are 0-1, ProgressBar uses 0-100)
@@ -166,7 +167,7 @@ public class GameUIController : MonoBehaviour
 
         var footer = new VisualElement();
         footer.AddToClassList("card-footer");
-        var costLabel = new Label { text = $"${cost}" };
+        var costLabel = new Label { text = $"${cost}k" };
         costLabel.AddToClassList("card-cost");
         var buyBtn = new Button { text = "Buy" };
         buyBtn.AddToClassList("card-buy-btn");
