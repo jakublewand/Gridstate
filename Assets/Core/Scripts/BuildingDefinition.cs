@@ -14,13 +14,13 @@ public enum PrimaryCategory
 [Serializable]
 public struct BuildingEffects
 {
-    public double cost;
-    public double maintenance;
-    public double housing;
-    public double jobs;
-    public double education;
-    public double safety;
-    public double enjoyment;
+    public float cost;
+    public float maintenance;
+    public float housing;
+    public float jobs;
+    public float education;
+    public float safety;
+    public float enjoyment;
 }
 
 [CreateAssetMenu(menuName = "Game/Buildings/Building Definition")]

@@ -8,14 +8,14 @@ public class GameState
     public int dayCount;
     public bool paused;
     public float dayProgress;
-    public int population;
-    public int income;
-    public int balance;
+    public float population;
+    public float income;
+    public float balance;
     // Stats:
-    public int jobs;
-    public int education;
-    public int enjoyment;
-    public int safety;
+    public float jobs;
+    public float education;
+    public float enjoyment;
+    public float safety;
 
 
 }

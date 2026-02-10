@@ -117,8 +117,37 @@ public class BulidingManager : MonoBehaviour
             return;
         }
 
-        city.ModifyStat(City.StatType.Balance, city.GetStat(City.StatType.Balance) - (int)buildingDefinition.effects.cost);
+        city.ModifyStat(City.StatType.Balance, -buildingDefinition.effects.cost);
+        city.ModifyStat(City.StatType.Population, buildingDefinition.effects.housing);
         building.Initialize(buildingDefinition, gridPos);
         buildings.Add(building);
+        RecalculateStats();
+    }
+    
+    private void RecalculateStats()
+    {
+        float k = 2f;
+        city.SetStat(City.StatType.Jobs, 0);
+        city.SetStat(City.StatType.Education, 0);
+        city.SetStat(City.StatType.Enjoyment, 0);
+        city.SetStat(City.StatType.Safety, 0);
+        float jobsTotal = 0;
+        float educationTotal = 0;
+        float enjoymentTotal = 0;
+        float safetyTotal = 0;
+        float population = city.GetStat(City.StatType.Population);
+
+        foreach (var building in buildings)
+        {
+            jobsTotal += building.definition.effects.jobs;
+            educationTotal += building.definition.effects.education;
+            enjoymentTotal += building.definition.effects.enjoyment;
+            safetyTotal += building.definition.effects.safety;
+        }
+
+        city.SetStat(City.StatType.Jobs, 1f - Mathf.Exp(-k * jobsTotal / population));
+        city.SetStat(City.StatType.Education, 1f - Mathf.Exp(-k * educationTotal / population));
+        city.SetStat(City.StatType.Enjoyment, 1f - Mathf.Exp(-k * enjoymentTotal / population));
+        city.SetStat(City.StatType.Safety, 1f - Mathf.Exp(-k * safetyTotal / population));
     }
 }
