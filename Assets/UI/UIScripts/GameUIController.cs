@@ -65,10 +65,15 @@ public class GameUIController : MonoBehaviour
         if (closeGreetingBtn != null) closeGreetingBtn.clicked += () => HideOverlay(greetingOverlay);
 
         var buildingList = root.Q<ScrollView>("BuildingList");
-        foreach (BuildingType buildingType in Consts.buildingTypes)
+        if (buildingList != null && buildingManager != null && buildingManager.buildingDefinitions != null)
         {
-            if (buildingType != BuildingType.TownHall)
-                buildingList.Add(CreateBuildingCard(buildingType));
+            foreach (BuildingDefinition buildingDefinition in buildingManager.buildingDefinitions)
+            {
+                if (buildingDefinition == null || buildingDefinition.primaryCategory == PrimaryCategory.TownHall)
+                    continue;
+
+                buildingList.Add(CreateBuildingCard(buildingDefinition));
+            }
         }
     }
 
@@ -82,7 +87,7 @@ public class GameUIController : MonoBehaviour
         if (city == null) return; // avoid null refs
 
         //update these every frame, basically optimal to do this even though most of them rarely change
-        CityName.text = city.getCityName();
+        CityName.text = city.getCityName() ?? string.Empty;
         DaysLabel.text = $"Day {city.getDayCount()}";
         PopLabel.text = city.GetStat(City.StatType.Population).ToString();
         BalanceLabel.text = city.GetStat(City.StatType.Balance).ToString();
@@ -114,10 +119,12 @@ public class GameUIController : MonoBehaviour
         overlay.AddToClassList("hidden");
     }
 
-    private VisualElement CreateBuildingCard(BuildingType buildingType)
+    private VisualElement CreateBuildingCard(BuildingDefinition buildingDefinition)
     {
-        string title = Consts.buildingNameDatabase[buildingType];
-        BuildingEffects effects = Consts.buildingEffectsDatabase[buildingType];
+        string title = string.IsNullOrEmpty(buildingDefinition.displayName)
+            ? buildingDefinition.name
+            : buildingDefinition.displayName;
+        BuildingEffects effects = buildingDefinition.effects;
         double cost = effects.cost;
         double maintenance = effects.maintenance;
 
@@ -127,7 +134,7 @@ public class GameUIController : MonoBehaviour
         var header = new VisualElement();
         header.AddToClassList("card-header");
 
-        var titleLabel = new Label { text = title };
+        var titleLabel = new Label { text = title ?? string.Empty };
         titleLabel.AddToClassList("card-title");
         header.Add(titleLabel);
 
@@ -167,7 +174,7 @@ public class GameUIController : MonoBehaviour
         footer.Add(buyBtn);
         card.Add(footer);
 
-        buyBtn.clicked += () => BuyButtonPressed(buildingType);
+        buyBtn.clicked += () => BuyButtonPressed(buildingDefinition);
 
         return card;
     }
@@ -191,10 +198,10 @@ public class GameUIController : MonoBehaviour
     }
 
     // Public API Methods
-    public void SetInfoMessage(string msg) => infoLabel.text = msg;
+    public void SetInfoMessage(string msg) => infoLabel.text = msg ?? string.Empty;
 
-    private void BuyButtonPressed(BuildingType buildingType)
+    private void BuyButtonPressed(BuildingDefinition buildingDefinition)
     {
-        buildingManager.selectedBuilding = buildingType;
+        buildingManager.selectedBuilding = buildingDefinition;
     }
 }

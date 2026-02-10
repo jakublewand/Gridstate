@@ -1,3 +1,4 @@
+using Unity.Collections;
 using UnityEngine;
 
 public class StatisticCalculation
@@ -38,24 +39,12 @@ public class StatisticCalculation
 
     private void CalcQuality()
     {
-        quality = (Enjoyment + Education + Safety + Jobs)/4;
+        quality = 1+(Enjoyment + Education + Safety + Jobs)/4;
     }
 
     private void CalcOvershot()
     {
-        overshot = Enjoyment;
-        if (Education > overshot)
-        {
-            overshot = Education;
-        }
-        else if (Safety > overshot)
-        {
-            overshot = Safety;
-        }
-        else if (Jobs > overshot)
-        {
-            overshot = Jobs;
-        }
+        overshot = Mathf.Max(Enjoyment, Education, Safety, Jobs);
 
         overshot = overshot - quality; // should be 0 if balanced perfectly
 
@@ -67,8 +56,24 @@ public class StatisticCalculation
 
     private void CalcIncome()
     {
-        double multiplier = Mathf.Log(Mathf.Max((float)Population / overshot, 1f));
-        newIncome = (int)(Population*multiplier);
+        float safeOvershot = Mathf.Max(overshot, 1f);
+        newIncome = (int)(Population * quality * 5) / Mathf.Max((int)Mathf.Log(safeOvershot), 1);
+        if (newIncome <= 0)
+        {
+            newIncome = 10;
+        }
+        // income = pop*quality / (log(overshot))
+
+        /*  say 1000 population
+            100 education
+            40 jobs
+            50 safety
+            10 enjoyment
+            quality =(100+40+50+10)/4 = 50
+            overshot = 100-50 = 50
+            income = (1000*50)/(log(50)) = 29 430
+        */
+
     }
 
 }
