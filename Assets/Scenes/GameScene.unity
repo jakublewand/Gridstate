@@ -192,7 +192,9 @@ MonoBehaviour:
   buildingDefinitions:
   - {fileID: 11400000, guid: e3e0a2fb1b3352b4c85d2f79f023aa5d, type: 2}
   - {fileID: 11400000, guid: b5bcab5b46cfdae45a82dd36e5bc67f6, type: 2}
-  - {fileID: 11400000, guid: eff98e3d33cdc6444a635605bb97b0b3, type: 2}
+  - {fileID: 11400000, guid: 73d0f60f719ecbe45a3323b2498a6fe9, type: 2}
+  - {fileID: 11400000, guid: 396b68bb91c14e54e87bb714081bf131, type: 2}
+  - {fileID: 11400000, guid: 2074f7c5566571748acb5583212a4816, type: 2}
   selectedBuilding: {fileID: 0}
   selectedBuildingObject: {fileID: 0}
   planeCollider: {fileID: 1196345572}
@@ -754,7 +756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 054e84624a8e89147b42d301670ce27b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scrollSpeed: 50
+  announceDuration: 5
 --- !u!1 &1849272949
 GameObject:
   m_ObjectHideFlags: 0

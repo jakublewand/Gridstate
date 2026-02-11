@@ -5,12 +5,11 @@ public class City : MonoBehaviour
 {
     private int SECONDS_PER_DAY = 20; // what should it be???
     public static City instance; //singleton to reference manager everywhere
-    private StatisticCalculation statCalc;
 
     [SerializeField] private GameState _gameState;
     public GameState gameState => _gameState; //not decided if to make private: gamestate has only values for now
 
-    private int temp;
+    private float temp;
 
     // Awake is called when loading the script, good to ensure existing data like gamestate
     void Awake()    
@@ -32,8 +31,6 @@ public class City : MonoBehaviour
             _gameState.cityName = "City Name";
         if (_gameState.balance == 0)
             _gameState.balance = 100;
-
-        statCalc = new StatisticCalculation(this);
     }
 
     // Update is called once per frame
@@ -47,7 +44,7 @@ public class City : MonoBehaviour
     {
         if (!gameState.paused)
         {
-            statCalc.Recalculate(); //calculates your income each frame
+            RecalculateIncome(); //calculates your income each frame
 
             gameState.dayProgress += (time / SECONDS_PER_DAY) * 100;
             if (100 <= gameState.dayProgress) //dayprogress full -> new day
@@ -81,7 +78,7 @@ public class City : MonoBehaviour
 
     }
 
-    public void ModifyStat(StatType stat, int amount)
+    public void SetStat(StatType stat, float amount)
     {
         switch (stat)
         {
@@ -94,8 +91,21 @@ public class City : MonoBehaviour
             case StatType.Balance: gameState.balance = amount; break;
         }
     }
+    public void ModifyStat(StatType stat, float amount)
+    {
+        switch (stat)
+        {
+            case StatType.Enjoyment: gameState.enjoyment += amount; break;
+            case StatType.Education: gameState.education += amount; break;
+            case StatType.Safety: gameState.safety += amount; break;
+            case StatType.Jobs: gameState.jobs += amount; break;
+            case StatType.Population: gameState.population += amount; break;
+            case StatType.Income: gameState.income += amount; break;
+            case StatType.Balance: gameState.balance += amount; break;
+        }
+    }
 
-    public int GetStat(StatType stat)
+    public float GetStat(StatType stat)
     {
         switch (stat)
         {
@@ -128,4 +138,11 @@ public class City : MonoBehaviour
 
     public void renameCity(string newName) { gameState.cityName = newName; }
     //more methods related to state...
+    public void RecalculateIncome()
+    {
+        float k = 10f;
+        float product = gameState.jobs * gameState.education * gameState.enjoyment * gameState.safety;
+        float quality = Mathf.Pow(product, 0.25f);
+        gameState.income = quality * gameState.population * k;
+    }
 }
