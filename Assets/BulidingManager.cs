@@ -30,7 +30,7 @@ public class BulidingManager : MonoBehaviour
             { BuildingType.House, housePrefab },
         };
 
-        BuildTownhall(BuildingType.TownHall, new Vector3(0, townHallPrefab.transform.localScale.y / 2, 0));
+        BuildTownhall(BuildingType.TownHall, new Vector3(0, 0.40f, 0));
     }
 
     // Update is called once per frame
@@ -49,11 +49,11 @@ public class BulidingManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (planeCollider.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
             {
-                Vector3 alignedPos = hit.point - new Vector3(-1f, 0f, -1f);
+                Vector3 alignedPos = hit.point - new Vector3(-0.5f, 0f, -0.5f);
                 alignedPos.x = Mathf.Floor(alignedPos.x);
                 alignedPos.z = Mathf.Floor(alignedPos.z);
                 selectedBuildingObject.transform.position = alignedPos;
-                selectedBuildingObject.transform.position += Vector3.up * selectedBuildingObject.transform.localScale.y / 2;
+                selectedBuildingObject.transform.position += Vector3.up * selectedBuildingObject.transform.localScale.y /2;
             }
 
             if (Input.GetMouseButtonDown(0))

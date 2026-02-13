@@ -9,27 +9,80 @@ public class PlaneGenerator : MonoBehaviour
 
     float minX, maxX, minZ, maxZ;
     int padding = 5;
-
+    private bool planePositionSet = false;
+    private const float squareSize = 0.9f;
+    private Vector2 planeOrigin = new Vector2(-0.5f, -0.5f);
+    private float currentWorldWidth = 0f;
+    private float currentWorldLength = 0f;
     public void SetPlaneSize(float widthInUnits, float lengthInUnits)
-    {
-        float scaleX = widthInUnits / 10f;
-        float scaleZ = lengthInUnits / 10f;
-        float centerX = Mathf.Floor((minX + maxX) / 2f);
-        float centerZ = Mathf.Floor((minZ + maxZ) / 2f);
+    {   
+        if (!planePositionSet)
+        {
+            planeTransform.position = new Vector3(-0.5f, 0f, -0.5f);
+            planePositionSet = true;
+        }
+        float worldWidth = widthInUnits;
+        float worldLength = lengthInUnits;
 
-        planeTransform.position = new Vector3(centerX, 0f, centerZ);
+        planeTransform.localScale = new Vector3(worldWidth / 10f, 1f, worldLength / 10f);
+        planeTransform.position = new Vector3(planeOrigin.x + worldWidth / 2f, 0f, planeOrigin.y + worldLength / 2f);
+        planeRenderer.material.mainTextureScale = new Vector2(worldWidth / squareSize, worldLength / squareSize);
 
-        planeTransform.localScale = new Vector3(scaleX, 1f, scaleZ);
-
-
-        planeRenderer.material.mainTextureScale =
-            new Vector2(scaleX, scaleZ);
+        currentWorldWidth = worldWidth;
+        currentWorldLength = worldLength;
     }
 
     public void UpdatePlane()
     {
         Vector3 bounds = CalculateBounds();
-        SetPlaneSize(bounds.x, bounds.z);
+
+        float snappedWidth = Mathf.Ceil(bounds.x / squareSize) * squareSize;
+        float snappedLength = Mathf.Ceil(bounds.z / squareSize) * squareSize;
+
+        float boundsMinX = minX;
+        float boundsMaxX = maxX;
+        float boundsMinZ = minZ;
+        float boundsMaxZ = maxZ;
+
+        // X: expand only on side where buildings exceed current plane
+        if (currentWorldWidth <= 0f)
+        {
+            planeOrigin.x = boundsMinX;
+        }
+        else if (boundsMaxX > planeOrigin.x + currentWorldWidth && boundsMinX >= planeOrigin.x)
+        {
+            // expand right only: origin.x stays
+        }
+        else if (boundsMinX < planeOrigin.x && boundsMaxX <= planeOrigin.x + currentWorldWidth)
+        {
+            // expand left only
+            planeOrigin.x = planeOrigin.x - (snappedWidth - currentWorldWidth);
+        }
+        else if (boundsMinX < planeOrigin.x && boundsMaxX > planeOrigin.x + currentWorldWidth)
+        {
+            // needs both sides: align to boundsMinX
+            planeOrigin.x = boundsMinX;
+        }
+
+        // Z: similar
+        if (currentWorldLength <= 0f)
+        {
+            planeOrigin.y = boundsMinZ;
+        }
+        else if (boundsMaxZ > planeOrigin.y + currentWorldLength && boundsMinZ >= planeOrigin.y)
+        {
+            // expand top only
+        }
+        else if (boundsMinZ < planeOrigin.y && boundsMaxZ <= planeOrigin.y + currentWorldLength)
+        {
+            planeOrigin.y = planeOrigin.y - (snappedLength - currentWorldLength);
+        }
+        else if (boundsMinZ < planeOrigin.y && boundsMaxZ > planeOrigin.y + currentWorldLength)
+        {
+            planeOrigin.y = boundsMinZ;
+        }
+
+        SetPlaneSize(snappedWidth, snappedLength);
     }
 
     public Vector3 CalculateBounds()
@@ -59,8 +112,8 @@ public class PlaneGenerator : MonoBehaviour
         maxX += padding;
         maxZ += padding;
 
-        float sizeX = (maxX - minX) +  padding;
-        float sizeZ = (maxZ - minZ) +  padding;
+        float sizeX = (maxX - minX);
+        float sizeZ = (maxZ - minZ);
 
 
 
