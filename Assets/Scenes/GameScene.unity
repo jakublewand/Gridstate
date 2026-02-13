@@ -192,9 +192,11 @@ MonoBehaviour:
   housePrefab: {fileID: 6702080380065664546, guid: dfbf74979b80b544dbfb6ccc39a0ccbb, type: 3}
   apartamentPrefab: {fileID: 6702080380065664546, guid: 49c95633ea09ab949a027669deaaf40d, type: 3}
   city: {fileID: 282369904}
+  buildings: []
   selectedBuilding: 0
   selectedBuildingObject: {fileID: 0}
   planeCollider: {fileID: 1196345572}
+  PL: {fileID: 1196345576}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,6 +597,7 @@ GameObject:
   - component: {fileID: 1196345574}
   - component: {fileID: 1196345573}
   - component: {fileID: 1196345572}
+  - component: {fileID: 1196345576}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -692,6 +695,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1196345576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196345571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f881e3b90a97e498d5018cf3d34751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planeTransform: {fileID: 1196345575}
+  planeRenderer: {fileID: 1196345573}
+  BM: {fileID: 282369905}
 --- !u!1 &1424828729
 GameObject:
   m_ObjectHideFlags: 0

@@ -34,11 +34,11 @@ public class Building : MonoBehaviour
     public PrimaryCategory primaryCategory;
     public BuildingType buildingType;
     public string name;
-    public Vector2 location;
+    public Vector3 location;
     public BuildingEffects effects;
     public GameObject gameObject;
 
-    public Building(BuildingType type, Vector2 location)
+    public Building(BuildingType type, Vector3 location)
     {
         this.buildingType = type;
         this.name = Consts.buildingNameDatabase[type];

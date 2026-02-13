@@ -9,7 +9,7 @@ public class BulidingManager : MonoBehaviour
     [SerializeField] GameObject apartamentPrefab;
     [SerializeField] City city;
     public Dictionary<BuildingType, GameObject> buildingPrefabs = new Dictionary<BuildingType, GameObject>();
-    List<Building> buildings = new List<Building>();
+    public List<Building> buildings = new List<Building>();
     public BuildingType selectedBuilding;
     private BuildingType lastSelectedBuilding;
     public GameObject selectedBuildingObject;
@@ -17,6 +17,8 @@ public class BulidingManager : MonoBehaviour
     private RaycastHit hit;
     public Collider planeCollider;
     private Vector2 mouseDownLocation;
+    public PlaneGenerator PL;
+    Vector3 gridPos = Vector3.zero;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,7 +30,7 @@ public class BulidingManager : MonoBehaviour
             { BuildingType.House, housePrefab },
         };
 
-        Build(BuildingType.TownHall, new Vector3(0, townHallPrefab.transform.localScale.y / 2, 0));
+        BuildTownhall(BuildingType.TownHall, new Vector3(0, townHallPrefab.transform.localScale.y / 2, 0));
     }
 
     // Update is called once per frame
@@ -47,7 +49,7 @@ public class BulidingManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (planeCollider.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
             {
-                Vector3 alignedPos = hit.point - new Vector3(-0.5f, 0f, -0.5f);
+                Vector3 alignedPos = hit.point - new Vector3(-1f, 0f, -1f);
                 alignedPos.x = Mathf.Floor(alignedPos.x);
                 alignedPos.z = Mathf.Floor(alignedPos.z);
                 selectedBuildingObject.transform.position = alignedPos;
@@ -88,6 +90,7 @@ public class BulidingManager : MonoBehaviour
                     if (!occupied) {
                         Build(selectedBuilding, selectedBuildingObject.transform.position);
                         Destroy(selectedBuildingObject);
+                        
                         selectedBuilding = BuildingType.None;
                     }   
                 }
@@ -102,10 +105,27 @@ public class BulidingManager : MonoBehaviour
             return;
         city.ModifyStat(City.StatType.Balance, - (int)Consts.buildingEffectsDatabase[buildingType].cost);
         
-        Vector2 gridPos = new Vector2(0, 0);
+        Vector3 gridPos = selectedBuildingObject.transform.position;
+        
         Building building = new Building(buildingType, gridPos);
         GameObject buildingObject = Instantiate(buildingPrefabs[buildingType], position, Quaternion.identity);
         building.gameObject = buildingObject;
         buildings.Add(building);
+        PL.UpdatePlane();
+    }
+
+        public void BuildTownhall(BuildingType buildingType, Vector3 position)
+    {
+        if (Consts.buildingEffectsDatabase[buildingType].cost > city.GetStat(City.StatType.Balance))
+            return;
+        city.ModifyStat(City.StatType.Balance, - (int)Consts.buildingEffectsDatabase[buildingType].cost);
+        
+        Vector3 gridPos = Vector3.zero;
+        
+        Building building = new Building(buildingType, gridPos);
+        GameObject buildingObject = Instantiate(buildingPrefabs[buildingType], position, Quaternion.identity);
+        building.gameObject = buildingObject;
+        buildings.Add(building);
+        PL.UpdatePlane();
     }
 }
