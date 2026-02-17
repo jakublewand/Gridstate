@@ -14,6 +14,7 @@ public class GameUIController : MonoBehaviour
     private Label infoLabel;
     private Button zoomInBtn;
     private Button zoomOutBtn;
+    private Button CamBtn;
     private City city;
     private Label CityName;
     private Label DaysLabel;
@@ -40,6 +41,7 @@ public class GameUIController : MonoBehaviour
         zoomInBtn = root.Q<Button>("ZoomInBtn");
         zoomOutBtn = root.Q<Button>("ZoomOutBtn");
         CityName = root.Q<Label>("CityName");
+        CamBtn = root.Q<Button>("CamBtn");
         DaysLabel = root.Q<Label>("DaysLabel");
         PopLabel = root.Q<Label>("PopLabel");
         PayoutLabel = root.Q<Label>("PayoutLabel");
@@ -56,6 +58,7 @@ public class GameUIController : MonoBehaviour
         if (playBtn != null) playBtn.clicked += TogglePlay;
         if (zoomInBtn != null) zoomInBtn.clicked += () => cameraBehaviour.Zoom(-1f);
         if (zoomOutBtn != null) zoomOutBtn.clicked += () => cameraBehaviour.Zoom(1f);
+        if (CamBtn != null) CamBtn.clicked += () => cameraBehaviour.changePerspective();
         if (optionsBtn != null) optionsBtn.clicked += () => ShowOverlay(optionsOverlay);
 
         var closeOptionsBtn = root.Q<Button>("CloseOptionsBtn");
@@ -92,8 +95,8 @@ public class GameUIController : MonoBehaviour
         DaysLabel.text = $"Day {city.getDayCount()}";
         PopLabel.text = city.GetStat(City.StatType.Population).ToString();
         BalanceLabel.text = $"{Math.Round(city.GetStat(City.StatType.Balance), 1)}k";
-        PayoutLabel.text = $"{Math.Round(city.GetStat(City.StatType.Income), 1)}k/day";
-        progressFill.style.width = new Length(Mathf.Clamp(city.getDayProgress(), 0, 100), LengthUnit.Percent);
+        PayoutLabel.text = $"{Math.Round(city.GetStat(City.StatType.Income), 1)}k/payout";
+        progressFill.style.width = new Length(Mathf.Clamp(city.getPayoutProgress(), 0, 100), LengthUnit.Percent);
 
         // Update stat bars (values are 0-1, ProgressBar uses 0-100)
         jobsBar.value = (float)city.GetStat(City.StatType.Jobs) * 100;

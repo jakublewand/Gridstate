@@ -3,7 +3,8 @@ using UnityEngine;
 public class City : MonoBehaviour
     //god object for game progress
 {
-    private int SECONDS_PER_DAY = 20; // what should it be???
+    [SerializeField] private int SECONDS_PER_DAY = 20; // what should it be???
+    [SerializeField] private int PAYOUTS_PER_DAY = 4; // what should it be???
     public static City instance; //singleton to reference manager everywhere
 
     [SerializeField] private GameState _gameState;
@@ -51,6 +52,12 @@ public class City : MonoBehaviour
             { 
                 newDay();
             }
+
+            gameState.payoutProgress += ((time * PAYOUTS_PER_DAY)/ SECONDS_PER_DAY) * 100;
+            if (100 <= gameState.payoutProgress ) //payoutproress full -> new payout
+            { 
+                newPayout();
+            }
         }
     }
 
@@ -58,12 +65,18 @@ public class City : MonoBehaviour
     {
         gameState.dayProgress = 0;
         gameState.dayCount++;
+    }
+
+    public void newPayout()
+    {
+        gameState.payoutProgress = 0;
         temp = gameState.balance;
         gameState.balance += gameState.income; 
         if(gameState.balance <= 0)
         {
             gameState.balance = temp;
         }
+
     }
 
     public enum StatType
@@ -129,6 +142,9 @@ public class City : MonoBehaviour
 
     public float getDayProgress()
     { return gameState.dayProgress; }
+
+    public float getPayoutProgress()
+    { return gameState.payoutProgress; }
 
     public string getCityName()
     { return gameState.cityName; }

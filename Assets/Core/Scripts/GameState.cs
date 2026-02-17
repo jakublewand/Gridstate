@@ -8,6 +8,7 @@ public class GameState
     public int dayCount;
     public bool paused;
     public float dayProgress;
+    public float payoutProgress;
     public float population;
     public float income;
     public float balance;
