@@ -67,6 +67,13 @@ public class PlaneGenerator : MonoBehaviour
         float sizeX = maxX - minX;
         float sizeZ = maxZ - minZ;
 
-        return new Vector3(sizeX, 0f, sizeZ);
+        Vector3 NewVector = new Vector3(sizeX, 0f, sizeZ);
+        if (NewVector.x <= new Vector3(10f, 0f, 10f).x || NewVector.z <= new Vector3(10f, 0f, 10f).z)
+        {
+            return new Vector3(10f, 0f, 10f);
+        }else
+        {return new Vector3(sizeX, 0f, sizeZ);}
+
+        
     }
 }
