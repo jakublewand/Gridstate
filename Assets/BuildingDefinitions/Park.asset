@@ -22,4 +22,4 @@ MonoBehaviour:
     education: 0
     safety: 0
     enjoyment: 10
-  prefab: {fileID: 6702080380065664546, guid: 7a456980951c135468af4a26469b0db9, type: 3}
+  prefab: {fileID: 6702080380065664546, guid: 5053a20562b42cb49848f832481b5ad9, type: 3}

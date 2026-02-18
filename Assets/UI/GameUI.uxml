@@ -37,7 +37,14 @@
         </ui:VisualElement>
         <ui:VisualElement name="RightPanels" class="right-panels">
             <ui:VisualElement name="BuyMenu" class="buy-menu glass">
-                <ui:Label text="Köp" class="panel-title" />
+                <ui:VisualElement name="BuyMenuHeader" class="buy-menu-header">
+                    <ui:Label text="Köp" class="panel-title" />
+                    <ui:Button name="FilterHousing"   text="🏠" class="category-filter-btn" />
+                    <ui:Button name="FilterJobs"      text="🏗️" class="category-filter-btn" />
+                    <ui:Button name="FilterEducation" text="🎓" class="category-filter-btn" />
+                    <ui:Button name="FilterSafety"    text="🚔" class="category-filter-btn" />
+                    <ui:Button name="FilterEnjoyment" text="🎡" class="category-filter-btn" />
+                </ui:VisualElement>
                 <ui:ScrollView name="BuildingList" class="building-list" />
             </ui:VisualElement>
             <ui:VisualElement name="StatPanel" class="stat-panel glass">

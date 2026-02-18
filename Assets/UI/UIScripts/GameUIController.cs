@@ -28,6 +28,9 @@ public class GameUIController : MonoBehaviour
     private Button optionsBtn;
     private VisualElement optionsOverlay;
     private VisualElement greetingOverlay;
+    private ScrollView buildingList;
+    private Button activeFilterBtn;
+    private PrimaryCategory? activeFilter = null;
 
     void OnEnable()
     {
@@ -68,17 +71,20 @@ public class GameUIController : MonoBehaviour
         if (showGreetingBtn != null) showGreetingBtn.clicked += () => { HideOverlay(optionsOverlay); ShowOverlay(greetingOverlay); };
         if (closeGreetingBtn != null) closeGreetingBtn.clicked += () => HideOverlay(greetingOverlay);
 
-        var buildingList = root.Q<ScrollView>("BuildingList");
-        if (buildingList != null && buildingManager != null && buildingManager.buildingDefinitions != null)
-        {
-            foreach (BuildingDefinition buildingDefinition in buildingManager.buildingDefinitions)
-            {
-                if (buildingDefinition == null || buildingDefinition.primaryCategory == PrimaryCategory.TownHall)
-                    continue;
+        buildingList = root.Q<ScrollView>("BuildingList");
 
-                buildingList.Add(CreateBuildingCard(buildingDefinition));
-            }
+        void BindFilter(string btnName, PrimaryCategory cat)
+        {
+            var btn = root.Q<Button>(btnName);
+            if (btn != null) btn.clicked += () => SetCategoryFilter(cat, btn);
         }
+        BindFilter("FilterHousing",   PrimaryCategory.Housing);
+        BindFilter("FilterJobs",      PrimaryCategory.Jobs);
+        BindFilter("FilterEducation", PrimaryCategory.Education);
+        BindFilter("FilterSafety",    PrimaryCategory.Safety);
+        BindFilter("FilterEnjoyment", PrimaryCategory.Enjoyment);
+
+        PopulateBuildings();
     }
 
     private void Start()
@@ -123,6 +129,21 @@ public class GameUIController : MonoBehaviour
         overlay.AddToClassList("hidden");
     }
 
+    private string calcStatfromValue(float value)
+    {
+        if (value==0f) return "";
+        if (value < 0f)
+        {
+            if (value >= -10f) return "-";
+            if (value >= -50f) return "--";
+            return "---";
+        }
+        if (value <= 10f) return "+";
+        if (value <= 50f) return "++";
+        return "+++";
+
+    }
+
     private VisualElement CreateBuildingCard(BuildingDefinition buildingDefinition)
     {
         string title = string.IsNullOrEmpty(buildingDefinition.displayName)
@@ -162,10 +183,11 @@ public class GameUIController : MonoBehaviour
 
         var statsContainer = new VisualElement();
         statsContainer.AddToClassList("card-stats");
-        AddStatRow(statsContainer, "Jobs", "+");
-        AddStatRow(statsContainer, "Education", "+++");
-        AddStatRow(statsContainer, "Enjoyment", "-");
-        AddStatRow(statsContainer, "Safety", "--");
+        AddStatRow(statsContainer, "Housing", calcStatfromValue(effects.housing));
+        AddStatRow(statsContainer, "Jobs", calcStatfromValue(effects.jobs));
+        AddStatRow(statsContainer, "Education", calcStatfromValue(effects.education));
+        AddStatRow(statsContainer, "Enjoyment", calcStatfromValue(effects.enjoyment));
+        AddStatRow(statsContainer, "Safety", calcStatfromValue(effects.safety));
         card.Add(statsContainer);
 
         var footer = new VisualElement();
@@ -185,6 +207,7 @@ public class GameUIController : MonoBehaviour
 
     private void AddStatRow(VisualElement parent, string statName, string value)
     {
+        if(string.IsNullOrEmpty(value)) return;
         var row = new VisualElement();
         row.AddToClassList("stat-row");
 
@@ -199,6 +222,27 @@ public class GameUIController : MonoBehaviour
         row.Add(valueLabel);
 
         parent.Add(row);
+    }
+
+    private void SetCategoryFilter(PrimaryCategory cat, Button btn)
+    {
+        activeFilterBtn?.RemoveFromClassList("category-filter-btn--active");
+        activeFilter = activeFilter == cat ? (PrimaryCategory?)null : cat;
+        activeFilterBtn = activeFilter == null ? null : btn;
+        activeFilterBtn?.AddToClassList("category-filter-btn--active");
+        PopulateBuildings();
+    }
+
+    private void PopulateBuildings()
+    {
+        buildingList.Clear();
+        if (buildingManager?.buildingDefinitions == null) return;
+        foreach (var def in buildingManager.buildingDefinitions)
+        {
+            if (def == null || def.primaryCategory == PrimaryCategory.TownHall) continue;
+            if (activeFilter != null && def.primaryCategory != activeFilter) continue;
+            buildingList.Add(CreateBuildingCard(def));
+        }
     }
 
     // Public API Methods
