@@ -5,10 +5,6 @@ using UnityEngine.EventSystems;
 public class BulidingManager : MonoBehaviour
 {
     [SerializeField] City city;
-    public Dictionary<BuildingType, GameObject> buildingPrefabs = new Dictionary<BuildingType, GameObject>();
-    public List<Building> buildings = new List<Building>();
-    public BuildingType selectedBuilding;
-    private BuildingType lastSelectedBuilding;
     [SerializeField] public List<BuildingDefinition> buildingDefinitions = new List<BuildingDefinition>();
     List<Building> buildings = new List<Building>();
     public BuildingDefinition selectedBuilding;
@@ -18,20 +14,10 @@ public class BulidingManager : MonoBehaviour
     private RaycastHit hit;
     public Collider planeCollider;
     private Vector2 mouseDownLocation;
-    public PlaneGenerator PL;
-    Vector3 gridPos = Vector3.zero;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        buildingPrefabs = new Dictionary<BuildingType, GameObject>() {
-            { BuildingType.None, null },
-            { BuildingType.TownHall, townHallPrefab },
-            { BuildingType.Apartament, apartamentPrefab },
-            { BuildingType.House, housePrefab },
-        };
-
-        BuildTownhall(BuildingType.TownHall, new Vector3(0, 0.40f, 0));
         if (buildingDefinitions.Count == 0 || buildingDefinitions[0] == null || buildingDefinitions[0].prefab == null)
         {
             Debug.LogWarning("No default building definition/prefab set on BulidingManager.");
@@ -64,7 +50,7 @@ public class BulidingManager : MonoBehaviour
                 alignedPos.x = Mathf.Floor(alignedPos.x);
                 alignedPos.z = Mathf.Floor(alignedPos.z);
                 selectedBuildingObject.transform.position = alignedPos;
-                selectedBuildingObject.transform.position += Vector3.up * selectedBuildingObject.transform.localScale.y /2;
+                selectedBuildingObject.transform.position += Vector3.up * selectedBuildingObject.transform.localScale.y / 2;
             }
 
             if (Input.GetMouseButtonDown(0))
@@ -101,8 +87,6 @@ public class BulidingManager : MonoBehaviour
                     if (!occupied) {
                         Build(selectedBuilding, selectedBuildingObject.transform.position);
                         Destroy(selectedBuildingObject);
-                        
-                        selectedBuilding = BuildingType.None;
                         selectedBuilding = null;
                     }   
                 }
@@ -131,30 +115,6 @@ public class BulidingManager : MonoBehaviour
             Debug.LogWarning($"Instantiated prefab '{buildingDefinition.prefab.name}' has no Building component.");
             Destroy(buildingObject);
             return;
-        city.ModifyStat(City.StatType.Balance, - (int)Consts.buildingEffectsDatabase[buildingType].cost);
-        
-        Vector3 gridPos = selectedBuildingObject.transform.position;
-        
-        Building building = new Building(buildingType, gridPos);
-        GameObject buildingObject = Instantiate(buildingPrefabs[buildingType], position, Quaternion.identity);
-        building.gameObject = buildingObject;
-        buildings.Add(building);
-        PL.UpdatePlane();
-    }
-
-        public void BuildTownhall(BuildingType buildingType, Vector3 position)
-    {
-        if (Consts.buildingEffectsDatabase[buildingType].cost > city.GetStat(City.StatType.Balance))
-            return;
-        city.ModifyStat(City.StatType.Balance, - (int)Consts.buildingEffectsDatabase[buildingType].cost);
-        
-        Vector3 gridPos = Vector3.zero;
-        
-        Building building = new Building(buildingType, gridPos);
-        GameObject buildingObject = Instantiate(buildingPrefabs[buildingType], position, Quaternion.identity);
-        building.gameObject = buildingObject;
-        buildings.Add(building);
-        PL.UpdatePlane();
         }
 
         city.ModifyStat(City.StatType.Balance, -buildingDefinition.effects.cost);
