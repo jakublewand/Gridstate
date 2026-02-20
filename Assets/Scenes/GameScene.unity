@@ -174,7 +174,7 @@ MonoBehaviour:
     payoutProgress: 0
     population: 0
     income: 0
-    balance: 0
+    balance: 90000
     jobs: 0
     education: 0
     enjoyment: 0
@@ -192,6 +192,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   city: {fileID: 282369904}
+  buildings: []
+  selectedBuilding: 0
   buildingDefinitions:
   - {fileID: 11400000, guid: e3e0a2fb1b3352b4c85d2f79f023aa5d, type: 2}
   - {fileID: 11400000, guid: b5bcab5b46cfdae45a82dd36e5bc67f6, type: 2}
@@ -201,6 +203,7 @@ MonoBehaviour:
   selectedBuilding: {fileID: 0}
   selectedBuildingObject: {fileID: 0}
   planeCollider: {fileID: 1196345572}
+  PL: {fileID: 1196345576}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,6 +590,7 @@ GameObject:
   - component: {fileID: 1196345574}
   - component: {fileID: 1196345573}
   - component: {fileID: 1196345572}
+  - component: {fileID: 1196345576}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -678,12 +682,13 @@ Transform:
   m_GameObject: {fileID: 1196345571}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0.5}
   m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1196345576
 --- !u!1 &1348919138
 GameObject:
   m_ObjectHideFlags: 0
@@ -723,6 +728,15 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196345571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f881e3b90a97e498d5018cf3d34751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planeTransform: {fileID: 1196345575}
+  planeRenderer: {fileID: 1196345573}
+  BM: {fileID: 282369905}
   m_GameObject: {fileID: 1348919138}
   m_Enabled: 1
   m_EditorHideFlags: 0
