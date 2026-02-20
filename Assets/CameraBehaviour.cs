@@ -35,7 +35,7 @@ public class CameraBehaviour : MonoBehaviour
 
     void Update()
     {
-        if (Input.mouseScrollDelta.y != 0)
+        if (Input.mouseScrollDelta.y != 0 && !EventSystem.current.IsPointerOverGameObject())
         {
             Zoom(-Input.mouseScrollDelta.y);
         }
