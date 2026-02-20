@@ -3,11 +3,14 @@ using UnityEngine;
 public class City : MonoBehaviour
     //god object for game progress
 {
-    private int SECONDS_PER_DAY = 20; // what should it be???
+    [SerializeField] private int SECONDS_PER_DAY = 20; // what should it be???
+    [SerializeField] private int PAYOUTS_PER_DAY = 4; // what should it be???
     public static City instance; //singleton to reference manager everywhere
 
     [SerializeField] private GameState _gameState;
     public GameState gameState => _gameState; //not decided if to make private: gamestate has only values for now
+
+    private float temp;
 
     // Awake is called when loading the script, good to ensure existing data like gamestate
     void Awake()    
@@ -27,8 +30,6 @@ public class City : MonoBehaviour
         // set some defaults for good standard sity values
         if (string.IsNullOrEmpty(_gameState.cityName))
             _gameState.cityName = "City Name";
-        if (_gameState.income == 0)
-            _gameState.income = 1000;
         if (_gameState.balance == 0)
             _gameState.balance = 100;
     }
@@ -44,10 +45,18 @@ public class City : MonoBehaviour
     {
         if (!gameState.paused)
         {
+            RecalculateIncome(); //calculates your income each frame
+
             gameState.dayProgress += (time / SECONDS_PER_DAY) * 100;
             if (100 <= gameState.dayProgress) //dayprogress full -> new day
             { 
                 newDay();
+            }
+
+            gameState.payoutProgress += ((time * PAYOUTS_PER_DAY)/ SECONDS_PER_DAY) * 100;
+            if (100 <= gameState.payoutProgress ) //payoutproress full -> new payout
+            { 
+                newPayout();
             }
         }
     }
@@ -56,7 +65,18 @@ public class City : MonoBehaviour
     {
         gameState.dayProgress = 0;
         gameState.dayCount++;
-        gameState.balance += gameState.income;
+    }
+
+    public void newPayout()
+    {
+        gameState.payoutProgress = 0;
+        temp = gameState.balance;
+        gameState.balance += gameState.income; 
+        if(gameState.balance <= 0)
+        {
+            gameState.balance = temp;
+        }
+
     }
 
     public enum StatType
@@ -71,7 +91,20 @@ public class City : MonoBehaviour
 
     }
 
-    public void ModifyStat(StatType stat, int amount)
+    public void SetStat(StatType stat, float amount)
+    {
+        switch (stat)
+        {
+            case StatType.Enjoyment: gameState.enjoyment = amount; break;
+            case StatType.Education: gameState.education = amount; break;
+            case StatType.Safety: gameState.safety = amount; break;
+            case StatType.Jobs: gameState.jobs = amount; break;
+            case StatType.Population: gameState.population = amount; break;
+            case StatType.Income: gameState.income = amount; break;
+            case StatType.Balance: gameState.balance = amount; break;
+        }
+    }
+    public void ModifyStat(StatType stat, float amount)
     {
         switch (stat)
         {
@@ -85,7 +118,7 @@ public class City : MonoBehaviour
         }
     }
 
-    public double GetStat(StatType stat)
+    public float GetStat(StatType stat)
     {
         switch (stat)
         {
@@ -110,6 +143,9 @@ public class City : MonoBehaviour
     public float getDayProgress()
     { return gameState.dayProgress; }
 
+    public float getPayoutProgress()
+    { return gameState.payoutProgress; }
+
     public string getCityName()
     { return gameState.cityName; }
 
@@ -118,4 +154,11 @@ public class City : MonoBehaviour
 
     public void renameCity(string newName) { gameState.cityName = newName; }
     //more methods related to state...
+    public void RecalculateIncome()
+    {
+        float k = 10f;
+        float product = gameState.jobs * gameState.education * gameState.enjoyment * gameState.safety;
+        float quality = Mathf.Pow(product, 0.25f);
+        gameState.income = quality * gameState.population * k;
+    }
 }

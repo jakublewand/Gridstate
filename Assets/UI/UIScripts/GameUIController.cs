@@ -1,24 +1,8 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using System;
 
-
-/* Created:
-  - BuildingCard.uxml - Card template (unused, went programmatic instead)
-  - Assets/Resources/UI/img/ - Folder for loading images at runtime
-
-  Modified:
-  - GameUI.uxml - Wrapped BuyMenu + StatPanel in RightPanels flex container
-  - GameUIStyle.uss - Added .building-card, .card-header, .card-image, .card-maintenance, .card-stats,
-   .stat-row styles; reduced margins throughout
-  - GameUIController.cs - Added CreateBuildingCard() and AddStatRow() methods; added demo code to
-  instantiate 5 cards in OnEnable()
-
-  Moved:
-  - house0.png → Assets/Resources/UI/img/house0.png
-
-  Result: 5 demo building cards stacking in buy menu with title + image header, maintenance, stats,
-  cost, and buy button. */
-
+[RequireComponent(typeof(AnnouncementManager))]
 public class GameUIController : MonoBehaviour
     // Script for the UI
 {
@@ -30,6 +14,7 @@ public class GameUIController : MonoBehaviour
     private Label infoLabel;
     private Button zoomInBtn;
     private Button zoomOutBtn;
+    private Button CamBtn;
     private City city;
     private Label CityName;
     private Label DaysLabel;
@@ -56,6 +41,7 @@ public class GameUIController : MonoBehaviour
         zoomInBtn = root.Q<Button>("ZoomInBtn");
         zoomOutBtn = root.Q<Button>("ZoomOutBtn");
         CityName = root.Q<Label>("CityName");
+        CamBtn = root.Q<Button>("CamBtn");
         DaysLabel = root.Q<Label>("DaysLabel");
         PopLabel = root.Q<Label>("PopLabel");
         PayoutLabel = root.Q<Label>("PayoutLabel");
@@ -72,6 +58,7 @@ public class GameUIController : MonoBehaviour
         if (playBtn != null) playBtn.clicked += TogglePlay;
         if (zoomInBtn != null) zoomInBtn.clicked += () => cameraBehaviour.Zoom(-1f);
         if (zoomOutBtn != null) zoomOutBtn.clicked += () => cameraBehaviour.Zoom(1f);
+        if (CamBtn != null) CamBtn.clicked += () => cameraBehaviour.changePerspective();
         if (optionsBtn != null) optionsBtn.clicked += () => ShowOverlay(optionsOverlay);
 
         var closeOptionsBtn = root.Q<Button>("CloseOptionsBtn");
@@ -82,10 +69,15 @@ public class GameUIController : MonoBehaviour
         if (closeGreetingBtn != null) closeGreetingBtn.clicked += () => HideOverlay(greetingOverlay);
 
         var buildingList = root.Q<ScrollView>("BuildingList");
-        foreach (BuildingType buildingType in Consts.buildingTypes)
+        if (buildingList != null && buildingManager != null && buildingManager.buildingDefinitions != null)
         {
-            if (buildingType != BuildingType.TownHall)
-                buildingList.Add(CreateBuildingCard(buildingType));
+            foreach (BuildingDefinition buildingDefinition in buildingManager.buildingDefinitions)
+            {
+                if (buildingDefinition == null || buildingDefinition.primaryCategory == PrimaryCategory.TownHall)
+                    continue;
+
+                buildingList.Add(CreateBuildingCard(buildingDefinition));
+            }
         }
     }
 
@@ -99,12 +91,12 @@ public class GameUIController : MonoBehaviour
         if (city == null) return; // avoid null refs
 
         //update these every frame, basically optimal to do this even though most of them rarely change
-        CityName.text = city.getCityName();
+        CityName.text = city.getCityName() ?? string.Empty;
         DaysLabel.text = $"Day {city.getDayCount()}";
         PopLabel.text = city.GetStat(City.StatType.Population).ToString();
-        BalanceLabel.text = city.GetStat(City.StatType.Balance).ToString();
-        PayoutLabel.text = $"{city.GetStat(City.StatType.Income)}/day";
-        progressFill.style.width = new Length(Mathf.Clamp(city.getDayProgress(), 0, 100), LengthUnit.Percent);
+        BalanceLabel.text = $"{Math.Round(city.GetStat(City.StatType.Balance), 1)}k";
+        PayoutLabel.text = $"{Math.Round(city.GetStat(City.StatType.Income), 1)}k/payout";
+        progressFill.style.width = new Length(Mathf.Clamp(city.getPayoutProgress(), 0, 100), LengthUnit.Percent);
 
         // Update stat bars (values are 0-1, ProgressBar uses 0-100)
         jobsBar.value = (float)city.GetStat(City.StatType.Jobs) * 100;
@@ -131,10 +123,12 @@ public class GameUIController : MonoBehaviour
         overlay.AddToClassList("hidden");
     }
 
-    private VisualElement CreateBuildingCard(BuildingType buildingType)
+    private VisualElement CreateBuildingCard(BuildingDefinition buildingDefinition)
     {
-        string title = Consts.buildingNameDatabase[buildingType];
-        BuildingEffects effects = Consts.buildingEffectsDatabase[buildingType];
+        string title = string.IsNullOrEmpty(buildingDefinition.displayName)
+            ? buildingDefinition.name
+            : buildingDefinition.displayName;
+        BuildingEffects effects = buildingDefinition.effects;
         double cost = effects.cost;
         double maintenance = effects.maintenance;
 
@@ -144,7 +138,7 @@ public class GameUIController : MonoBehaviour
         var header = new VisualElement();
         header.AddToClassList("card-header");
 
-        var titleLabel = new Label { text = title };
+        var titleLabel = new Label { text = title ?? string.Empty };
         titleLabel.AddToClassList("card-title");
         header.Add(titleLabel);
 
@@ -170,13 +164,13 @@ public class GameUIController : MonoBehaviour
         statsContainer.AddToClassList("card-stats");
         AddStatRow(statsContainer, "Jobs", "+");
         AddStatRow(statsContainer, "Education", "+++");
-        AddStatRow(statsContainer, "Enjoyment", "0");
-        AddStatRow(statsContainer, "Safety", "0");
+        AddStatRow(statsContainer, "Enjoyment", "-");
+        AddStatRow(statsContainer, "Safety", "--");
         card.Add(statsContainer);
 
         var footer = new VisualElement();
         footer.AddToClassList("card-footer");
-        var costLabel = new Label { text = $"${cost}" };
+        var costLabel = new Label { text = $"${cost}k" };
         costLabel.AddToClassList("card-cost");
         var buyBtn = new Button { text = "Buy" };
         buyBtn.AddToClassList("card-buy-btn");
@@ -184,7 +178,7 @@ public class GameUIController : MonoBehaviour
         footer.Add(buyBtn);
         card.Add(footer);
 
-        buyBtn.clicked += () => BuyButtonPressed(buildingType);
+        buyBtn.clicked += () => BuyButtonPressed(buildingDefinition);
 
         return card;
     }
@@ -201,16 +195,17 @@ public class GameUIController : MonoBehaviour
         var valueLabel = new Label { text = value };
         valueLabel.AddToClassList("stat-value");
         if (value == "0") valueLabel.AddToClassList("stat-zero");
+        else if (value.StartsWith("-")) valueLabel.AddToClassList("stat-negative");
         row.Add(valueLabel);
 
         parent.Add(row);
     }
 
     // Public API Methods
-    public void SetInfoMessage(string msg) => infoLabel.text = msg;
+    public void SetInfoMessage(string msg) => infoLabel.text = msg ?? string.Empty;
 
-    private void BuyButtonPressed(BuildingType buildingType)
+    private void BuyButtonPressed(BuildingDefinition buildingDefinition)
     {
-        buildingManager.selectedBuilding = buildingType;
+        buildingManager.selectedBuilding = buildingDefinition;
     }
 }

@@ -4,14 +4,15 @@ using UnityEngine.EventSystems;
 
 public class BulidingManager : MonoBehaviour
 {
-    [SerializeField] GameObject townHallPrefab;
-    [SerializeField] GameObject housePrefab;
-    [SerializeField] GameObject apartamentPrefab;
     [SerializeField] City city;
     public Dictionary<BuildingType, GameObject> buildingPrefabs = new Dictionary<BuildingType, GameObject>();
     public List<Building> buildings = new List<Building>();
     public BuildingType selectedBuilding;
     private BuildingType lastSelectedBuilding;
+    [SerializeField] public List<BuildingDefinition> buildingDefinitions = new List<BuildingDefinition>();
+    List<Building> buildings = new List<Building>();
+    public BuildingDefinition selectedBuilding;
+    private BuildingDefinition lastSelectedBuilding;
     public GameObject selectedBuildingObject;
     private Ray ray;
     private RaycastHit hit;
@@ -31,18 +32,28 @@ public class BulidingManager : MonoBehaviour
         };
 
         BuildTownhall(BuildingType.TownHall, new Vector3(0, 0.40f, 0));
+        if (buildingDefinitions.Count == 0 || buildingDefinitions[0] == null || buildingDefinitions[0].prefab == null)
+        {
+            Debug.LogWarning("No default building definition/prefab set on BulidingManager.");
+            return;
+        }
+
+        Build(
+            buildingDefinitions[0],
+            new Vector3(0, buildingDefinitions[0].prefab.transform.localScale.y / 2, 0)
+        );
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (selectedBuilding != BuildingType.None) {
+        if (selectedBuilding != null) {
             if (selectedBuildingObject == null) {
-                selectedBuildingObject = Instantiate(buildingPrefabs[selectedBuilding], Vector3.zero, Quaternion.identity);
+                selectedBuildingObject = Instantiate(selectedBuilding.prefab, Vector3.zero, Quaternion.identity);
             }
             if (lastSelectedBuilding != selectedBuilding) {
                 Destroy(selectedBuildingObject);
-                selectedBuildingObject = Instantiate(buildingPrefabs[selectedBuilding], Vector3.zero, Quaternion.identity);
+                selectedBuildingObject = Instantiate(selectedBuilding.prefab, Vector3.zero, Quaternion.identity);
                 lastSelectedBuilding = selectedBuilding;
             }
 
@@ -75,7 +86,7 @@ public class BulidingManager : MonoBehaviour
 
                 Vector3 mousePos = Input.mousePosition;
                 ray = Camera.main.ScreenPointToRay(mousePos);
-                if (Physics.Raycast(ray, out hit))
+                if (planeCollider.Raycast(ray, out hit, Mathf.Infinity))
                 {
                     bool occupied = false;
                     foreach (var building in buildings)
@@ -92,6 +103,7 @@ public class BulidingManager : MonoBehaviour
                         Destroy(selectedBuildingObject);
                         
                         selectedBuilding = BuildingType.None;
+                        selectedBuilding = null;
                     }   
                 }
             }
@@ -99,9 +111,25 @@ public class BulidingManager : MonoBehaviour
     }
 
 
-    public void Build(BuildingType buildingType, Vector3 position)
+    public void Build(BuildingDefinition buildingDefinition, Vector3 position)
     {
-        if (Consts.buildingEffectsDatabase[buildingType].cost > city.GetStat(City.StatType.Balance))
+        if (buildingDefinition == null || buildingDefinition.prefab == null)
+            return;
+
+        if (buildingDefinition.effects.cost > city.GetStat(City.StatType.Balance))
+        {
+            AnnouncementManager.instance.msgAnnounce(AnnounceColor.Red, "Can't afford this building!");
+            return;
+        }
+
+        Vector2 gridPos = new Vector2(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.z));
+        GameObject buildingObject = Instantiate(buildingDefinition.prefab, position, Quaternion.identity);
+        Building building = buildingObject.GetComponent<Building>();
+
+        if (building == null)
+        {
+            Debug.LogWarning($"Instantiated prefab '{buildingDefinition.prefab.name}' has no Building component.");
+            Destroy(buildingObject);
             return;
         city.ModifyStat(City.StatType.Balance, - (int)Consts.buildingEffectsDatabase[buildingType].cost);
         
@@ -127,5 +155,39 @@ public class BulidingManager : MonoBehaviour
         building.gameObject = buildingObject;
         buildings.Add(building);
         PL.UpdatePlane();
+        }
+
+        city.ModifyStat(City.StatType.Balance, -buildingDefinition.effects.cost);
+        city.ModifyStat(City.StatType.Population, buildingDefinition.effects.housing);
+        building.Initialize(buildingDefinition, gridPos);
+        buildings.Add(building);
+        RecalculateStats();
+    }
+    
+    private void RecalculateStats()
+    {
+        float k = 1.386f;
+        city.SetStat(City.StatType.Jobs, 0);
+        city.SetStat(City.StatType.Education, 0);
+        city.SetStat(City.StatType.Enjoyment, 0);
+        city.SetStat(City.StatType.Safety, 0);
+        float jobsTotal = 0;
+        float educationTotal = 0;
+        float enjoymentTotal = 0;
+        float safetyTotal = 0;
+        float population = city.GetStat(City.StatType.Population);
+
+        foreach (var building in buildings)
+        {
+            jobsTotal += building.definition.effects.jobs;
+            educationTotal += building.definition.effects.education;
+            enjoymentTotal += building.definition.effects.enjoyment;
+            safetyTotal += building.definition.effects.safety;
+        }
+
+        city.SetStat(City.StatType.Jobs, 1f - Mathf.Exp(-k * jobsTotal / population));
+        city.SetStat(City.StatType.Education, 1f - Mathf.Exp(-k * educationTotal / population));
+        city.SetStat(City.StatType.Enjoyment, 1f - Mathf.Exp(-k * enjoymentTotal / population));
+        city.SetStat(City.StatType.Safety, 1f - Mathf.Exp(-k * safetyTotal / population));
     }
 }
