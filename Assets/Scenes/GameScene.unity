@@ -174,7 +174,7 @@ MonoBehaviour:
     payoutProgress: 0
     population: 0
     income: 0
-    balance: 0
+    balance: 99999
     jobs: 0
     education: 0
     enjoyment: 0
@@ -198,9 +198,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 73d0f60f719ecbe45a3323b2498a6fe9, type: 2}
   - {fileID: 11400000, guid: 396b68bb91c14e54e87bb714081bf131, type: 2}
   - {fileID: 11400000, guid: 2074f7c5566571748acb5583212a4816, type: 2}
+  buildings: []
   selectedBuilding: {fileID: 0}
   selectedBuildingObject: {fileID: 0}
   planeCollider: {fileID: 1196345572}
+  PG: {fileID: 1196345576}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,6 +589,7 @@ GameObject:
   - component: {fileID: 1196345574}
   - component: {fileID: 1196345573}
   - component: {fileID: 1196345572}
+  - component: {fileID: 1196345576}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -684,6 +687,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1196345576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196345571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3f881e3b90a97e498d5018cf3d34751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planeTransform: {fileID: 1196345575}
+  planeRenderer: {fileID: 1196345573}
+  BM: {fileID: 282369905}
 --- !u!1 &1348919138
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,6 +1038,6 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 1424828732}
   - {fileID: 1849272952}
-  - {fileID: 1196345575}
   - {fileID: 282369903}
   - {fileID: 798436139}
+  - {fileID: 1196345575}

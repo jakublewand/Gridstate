@@ -6,7 +6,7 @@ public class BulidingManager : MonoBehaviour
 {
     [SerializeField] City city;
     [SerializeField] public List<BuildingDefinition> buildingDefinitions = new List<BuildingDefinition>();
-    List<Building> buildings = new List<Building>();
+    public List<Building> buildings = new List<Building>();
     public BuildingDefinition selectedBuilding;
     private BuildingDefinition lastSelectedBuilding;
     public GameObject selectedBuildingObject;
@@ -14,6 +14,7 @@ public class BulidingManager : MonoBehaviour
     private RaycastHit hit;
     public Collider planeCollider;
     private Vector2 mouseDownLocation;
+    public PlaneGenerator PG;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -121,7 +122,9 @@ public class BulidingManager : MonoBehaviour
         city.ModifyStat(City.StatType.Population, buildingDefinition.effects.housing);
         building.Initialize(buildingDefinition, gridPos);
         buildings.Add(building);
+        PG.UpdatePlane();
         RecalculateStats();
+        
     }
     
     private void RecalculateStats()
