@@ -11,15 +11,15 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
   m_Name: SecurityCheckpoint
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   displayName: Security Checkpoint
   primaryCategory: 4
   effects:
-    cost: 80
+    cost: 900000
     maintenance: 0
-    housing: 0
-    jobs: 2
+    housing: 400
+    jobs: 200
     education: 0
-    safety: 5
+    safety: 1300
     enjoyment: 0
   prefab: {fileID: 6702080380065664546, guid: 8c3def96c5bc435098281f6ebde64db0, type: 3}

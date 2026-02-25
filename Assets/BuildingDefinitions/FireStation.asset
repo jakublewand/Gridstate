@@ -11,15 +11,15 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
   m_Name: FireStation
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   displayName: Fire Station
   primaryCategory: 4
   effects:
-    cost: 200
+    cost: 1200
     maintenance: 0
     housing: 0
-    jobs: 8
-    education: 0
-    safety: 15
+    jobs: 15
+    education: 3
+    safety: 45
     enjoyment: 0
   prefab: {fileID: 6702080380065664546, guid: 9e09865ce8fe4a7aa88f9a0dad2ed3f3, type: 3}
