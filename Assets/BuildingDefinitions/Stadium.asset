@@ -11,15 +11,15 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
   m_Name: Stadium
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   displayName: Stadium
   primaryCategory: 5
   effects:
-    cost: 1500
+    cost: 320000
     maintenance: 0
-    housing: 0
-    jobs: 35
-    education: 0
-    safety: 0
-    enjoyment: 70
+    housing: 120
+    jobs: 1000
+    education: -200
+    safety: -100
+    enjoyment: 1900
   prefab: {fileID: 6702080380065664546, guid: b8e673a6dab244ee8b5a6463e55345dd, type: 3}

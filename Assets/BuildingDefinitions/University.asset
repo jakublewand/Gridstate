@@ -11,15 +11,15 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
   m_Name: University
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   displayName: University
   primaryCategory: 3
   effects:
-    cost: 1500
+    cost: 5000
     maintenance: 0
     housing: 0
     jobs: 35
     education: 70
     safety: 0
-    enjoyment: 0
+    enjoyment: 5
   prefab: {fileID: 6702080380065664546, guid: aed223d50de8488caf46e52b03017785, type: 3}

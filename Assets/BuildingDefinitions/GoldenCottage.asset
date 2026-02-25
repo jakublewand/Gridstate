@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
-  m_Name: Cottage
-  m_EditorClassIdentifier:
-  displayName: Cottage
+  m_Name: GoldenCottage
+  m_EditorClassIdentifier: 
+  displayName: Golden cottage
   primaryCategory: 1
   effects:
-    cost: 75
+    cost: 8000
     maintenance: 0
-    housing: 3
+    housing: 150
     jobs: 0
     education: 0
     safety: 0

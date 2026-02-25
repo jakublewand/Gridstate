@@ -11,15 +11,15 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
   m_Name: TradeHouse
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   displayName: Trade House
   primaryCategory: 2
   effects:
-    cost: 150
+    cost: 900
     maintenance: 0
     housing: 0
-    jobs: 10
-    education: 0
+    jobs: 25
+    education: 2
     safety: 0
     enjoyment: 0
   prefab: {fileID: 6702080380065664546, guid: 0c50c4b8c9414344a7c7dfcf73a2a716, type: 3}

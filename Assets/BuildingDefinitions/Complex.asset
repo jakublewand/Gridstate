@@ -11,13 +11,13 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
   m_Name: Complex
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   displayName: Complex
   primaryCategory: 1
   effects:
-    cost: 400
+    cost: 50000
     maintenance: 0
-    housing: 20
+    housing: 2100
     jobs: 0
     education: 0
     safety: 0

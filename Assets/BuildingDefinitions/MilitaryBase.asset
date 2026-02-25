@@ -11,15 +11,15 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
   m_Name: MilitaryBase
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   displayName: Military Base
   primaryCategory: 4
   effects:
-    cost: 1500
+    cost: 13500
     maintenance: 0
     housing: 0
-    jobs: 35
+    jobs: 120
     education: 0
-    safety: 70
+    safety: 330
     enjoyment: 0
   prefab: {fileID: 6702080380065664546, guid: 397a39bae9744ae5a2bd96c89e1785f6, type: 3}

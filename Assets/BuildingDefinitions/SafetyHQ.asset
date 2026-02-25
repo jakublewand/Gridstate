@@ -11,15 +11,15 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
   m_Name: SafetyHQ
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   displayName: Safety Headquarters
   primaryCategory: 4
   effects:
-    cost: 800
+    cost: 95000
     maintenance: 0
     housing: 0
-    jobs: 20
-    education: 0
-    safety: 40
-    enjoyment: 0
+    jobs: 220
+    education: 50
+    safety: 1600
+    enjoyment: -150
   prefab: {fileID: 6702080380065664546, guid: be45d6e79fca412a8aabd00b9e6550ce, type: 3}

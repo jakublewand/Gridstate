@@ -11,11 +11,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
   m_Name: AbleArcher43
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   displayName: Able Archer 43
   primaryCategory: 4
   effects:
-    cost: 6000
+    cost: 6700
     maintenance: 0
     housing: 0
     jobs: 100
