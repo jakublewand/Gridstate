@@ -6,6 +6,8 @@ public class BulidingManager : MonoBehaviour
 {
     [SerializeField] City city;
     [SerializeField] public List<BuildingDefinition> buildingDefinitions = new List<BuildingDefinition>();
+    [SerializeField] AudioScript audioScript;
+    [SerializeField] AudioSource uiSounds;
     public List<Building> buildings = new List<Building>();
     public BuildingDefinition selectedBuilding;
     private BuildingDefinition lastSelectedBuilding;
@@ -124,6 +126,8 @@ public class BulidingManager : MonoBehaviour
         buildings.Add(building);
         PG.UpdatePlane();
         RecalculateStats();
+        uiSounds.PlayOneShot(audioScript.build);
+
         
     }
     
