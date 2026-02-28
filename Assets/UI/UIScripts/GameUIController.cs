@@ -8,6 +8,8 @@ public class GameUIController : MonoBehaviour
 {
     [SerializeField] CameraBehaviour cameraBehaviour;
     [SerializeField] BulidingManager buildingManager;
+    [SerializeField] AudioSource uiSounds;
+    [SerializeField] AudioScript audioScript;
     private VisualElement root;
     private Button playBtn;
     private VisualElement progressFill;
@@ -35,6 +37,7 @@ public class GameUIController : MonoBehaviour
     void OnEnable()
     {
         var uiDoc = GetComponent<UIDocument>();
+        //audioScript = uiSounds.GetComponent<AudioScript>();
         root = uiDoc.rootVisualElement;
 
         // Query UI Elements
@@ -57,18 +60,22 @@ public class GameUIController : MonoBehaviour
         optionsOverlay = root.Q<VisualElement>("OptionsOverlay");
         greetingOverlay = root.Q<VisualElement>("GreetingOverlay");
 
+        // Attach audio
+
+        root.Query<Button>().ForEach(btn => {btn.clicked += () => uiSounds.PlayOneShot(audioScript.click);});
+
         // Event Listeners
         if (playBtn != null) playBtn.clicked += TogglePlay;
         if (zoomInBtn != null) zoomInBtn.clicked += () => cameraBehaviour.Zoom(-1f);
         if (zoomOutBtn != null) zoomOutBtn.clicked += () => cameraBehaviour.Zoom(1f);
-        if (CamBtn != null) CamBtn.clicked += () => cameraBehaviour.changePerspective();
+        if (CamBtn != null) CamBtn.clicked += () =>  cameraBehaviour.changePerspective();
         if (optionsBtn != null) optionsBtn.clicked += () => ShowOverlay(optionsOverlay);
 
         var closeOptionsBtn = root.Q<Button>("CloseOptionsBtn");
         var showGreetingBtn = root.Q<Button>("ShowGreetingBtn");
         var closeGreetingBtn = root.Q<Button>("CloseGreetingBtn");
         if (closeOptionsBtn != null) closeOptionsBtn.clicked += () => HideOverlay(optionsOverlay);
-        if (showGreetingBtn != null) showGreetingBtn.clicked += () => { HideOverlay(optionsOverlay); ShowOverlay(greetingOverlay); };
+        if (showGreetingBtn != null) showGreetingBtn.clicked += () => {HideOverlay(optionsOverlay); ShowOverlay(greetingOverlay); };
         if (closeGreetingBtn != null) closeGreetingBtn.clicked += () => HideOverlay(greetingOverlay);
 
         buildingList = root.Q<ScrollView>("BuildingList");
@@ -86,7 +93,7 @@ public class GameUIController : MonoBehaviour
 
         PopulateBuildings();
     }
-
+    
     private void Start()
     {
         city = City.instance;
@@ -154,6 +161,8 @@ public class GameUIController : MonoBehaviour
         double maintenance = effects.maintenance;
 
         var card = new Button { name = "BuildingCard" };
+        card.clicked += () => uiSounds.PlayOneShot(audioScript.click);
+
         card.AddToClassList("building-card");
 
         var header = new VisualElement();
