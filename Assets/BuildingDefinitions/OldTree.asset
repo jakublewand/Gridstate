@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
-  m_Name: RocketLaunchTower
+  m_Name: OldTree
   m_EditorClassIdentifier: 
-  displayName: Rocket Launch Tower
-  primaryCategory: 2
+  displayName: Oldest tree in the world
+  primaryCategory: 5
   effects:
-    cost: 1200000
+    cost: 9000
     maintenance: 0
     housing: 0
-    jobs: 1300
-    education: 250
-    safety: 200
-    enjoyment: 800
-  prefab: {fileID: 6702080380065664546, guid: 0214ccda091a4d1c91a7b005a1319f6e, type: 3}
+    jobs: 0
+    education: 50
+    safety: 0
+    enjoyment: 600
+  prefab: {fileID: 100000, guid: 8b680e0f7699a254c84ed6737b7eb53d, type: 3}

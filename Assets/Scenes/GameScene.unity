@@ -174,7 +174,7 @@ MonoBehaviour:
     payoutProgress: 0
     population: 0
     income: 0
-    balance: 1000
+    balance: 999999
     jobs: 0
     education: 0
     enjoyment: 0

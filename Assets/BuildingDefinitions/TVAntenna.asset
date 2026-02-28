@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
-  m_Name: Schoolhouse
+  m_Name: TVAntenna
   m_EditorClassIdentifier: 
-  displayName: Schoolhouse
+  displayName: TV tower
   primaryCategory: 3
   effects:
-    cost: 9000
+    cost: 90000
     maintenance: 0
-    housing: 80
-    jobs: 22
-    education: 180
-    safety: 0
-    enjoyment: 0
-  prefab: {fileID: 6702080380065664546, guid: c5dc38e8c343440c98e5219e1a74b02e, type: 3}
+    housing: 0
+    jobs: 500
+    education: 0
+    safety: 400
+    enjoyment: 2200
+  prefab: {fileID: 100000, guid: acf38ccf2258add4ba3aa2d89b708d2a, type: 3}

@@ -19,7 +19,7 @@ MonoBehaviour:
     maintenance: 0
     housing: 120
     jobs: 1000
-    education: -200
-    safety: -100
-    enjoyment: 1900
+    education: -300
+    safety: -400
+    enjoyment: 3500
   prefab: {fileID: 6702080380065664546, guid: b8e673a6dab244ee8b5a6463e55345dd, type: 3}

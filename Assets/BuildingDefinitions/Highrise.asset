@@ -17,9 +17,9 @@ MonoBehaviour:
   effects:
     cost: 32000
     maintenance: 0
-    housing: 330
-    jobs: 20
+    housing: 460
+    jobs: 40
     education: 0
     safety: 0
-    enjoyment: 0
+    enjoyment: 10
   prefab: {fileID: 6702080380065664546, guid: 6c66acad0dc74a439a2f53450dc031e9, type: 3}

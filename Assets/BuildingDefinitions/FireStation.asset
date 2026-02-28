@@ -20,6 +20,6 @@ MonoBehaviour:
     housing: 0
     jobs: 15
     education: 3
-    safety: 45
+    safety: 50
     enjoyment: 0
   prefab: {fileID: 6702080380065664546, guid: 9e09865ce8fe4a7aa88f9a0dad2ed3f3, type: 3}

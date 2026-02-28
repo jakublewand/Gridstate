@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
-  m_Name: Schoolhouse
+  m_Name: FootballField
   m_EditorClassIdentifier: 
-  displayName: Schoolhouse
+  displayName: Football field
   primaryCategory: 3
   effects:
-    cost: 9000
+    cost: 22000
     maintenance: 0
-    housing: 80
-    jobs: 22
-    education: 180
+    housing: 0
+    jobs: 300
+    education: 0
     safety: 0
-    enjoyment: 0
-  prefab: {fileID: 6702080380065664546, guid: c5dc38e8c343440c98e5219e1a74b02e, type: 3}
+    enjoyment: 1100
+  prefab: {fileID: 6702080380065664546, guid: aed223d50de8488caf46e52b03017785, type: 3}

@@ -15,11 +15,11 @@ MonoBehaviour:
   displayName: Activision Blizzard
   primaryCategory: 2
   effects:
-    cost: 2500
+    cost: 3900
     maintenance: 0
     housing: 0
     jobs: 20
-    education: -20
+    education: -50
     safety: -30
-    enjoyment: -120
+    enjoyment: -60
   prefab: {fileID: 6702080380065664546, guid: a15313ed4bac48198a7e064b608e21cc, type: 3}

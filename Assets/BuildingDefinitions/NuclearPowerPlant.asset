@@ -15,11 +15,11 @@ MonoBehaviour:
   displayName: Nuclear power plant
   primaryCategory: 2
   effects:
-    cost: 100000
+    cost: 120000
     maintenance: 0
     housing: 0
-    jobs: 980
-    education: 670
-    safety: -100
-    enjoyment: -80
+    jobs: 2000
+    education: 800
+    safety: -400
+    enjoyment: -300
   prefab: {fileID: 6702080380065664546, guid: 95332ac8071549a4a976254c2b482489, type: 3}

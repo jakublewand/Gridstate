@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
   m_Name: Campus
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   displayName: Campus
   primaryCategory: 3
   effects:
@@ -21,5 +21,5 @@ MonoBehaviour:
     jobs: 60
     education: 120
     safety: 0
-    enjoyment: 0
+    enjoyment: 20
   prefab: {fileID: 6702080380065664546, guid: 7fafe0a388a04a8ebd71ff5deea8883b, type: 3}

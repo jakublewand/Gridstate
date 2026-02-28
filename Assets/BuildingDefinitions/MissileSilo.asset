@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
-  m_Name: Schoolhouse
+  m_Name: MissileSilo
   m_EditorClassIdentifier: 
-  displayName: Schoolhouse
-  primaryCategory: 3
+  displayName: Missile silo
+  primaryCategory: 4
   effects:
-    cost: 9000
+    cost: 1200000
     maintenance: 0
-    housing: 80
-    jobs: 22
-    education: 180
-    safety: 0
-    enjoyment: 0
-  prefab: {fileID: 6702080380065664546, guid: c5dc38e8c343440c98e5219e1a74b02e, type: 3}
+    housing: 0
+    jobs: 1300
+    education: 500
+    safety: 3200
+    enjoyment: 300
+  prefab: {fileID: 6702080380065664546, guid: 0214ccda091a4d1c91a7b005a1319f6e, type: 3}

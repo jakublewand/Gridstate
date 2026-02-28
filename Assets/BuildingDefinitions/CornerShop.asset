@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
-  m_Name: Schoolhouse
+  m_Name: CornerShop
   m_EditorClassIdentifier: 
-  displayName: Schoolhouse
-  primaryCategory: 3
+  displayName: Corner shop
+  primaryCategory: 5
   effects:
-    cost: 9000
+    cost: 4200
     maintenance: 0
-    housing: 80
-    jobs: 22
-    education: 180
-    safety: 0
-    enjoyment: 0
-  prefab: {fileID: 6702080380065664546, guid: c5dc38e8c343440c98e5219e1a74b02e, type: 3}
+    housing: 0
+    jobs: 20
+    education: 0
+    safety: 10
+    enjoyment: 100
+  prefab: {fileID: 100000, guid: 931fa17f0ab17504bbfc8903e54e6a16, type: 3}
