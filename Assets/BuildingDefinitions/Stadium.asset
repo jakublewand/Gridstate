@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
+  m_Name: Stadium
+  m_EditorClassIdentifier: 
+  displayName: Stadium
+  primaryCategory: 5
+  effects:
+    cost: 320000
+    maintenance: 0
+    housing: 120
+    jobs: 1000
+    education: -300
+    safety: -400
+    enjoyment: 3500
+  prefab: {fileID: 6702080380065664546, guid: b8e673a6dab244ee8b5a6463e55345dd, type: 3}

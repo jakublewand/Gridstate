@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
+  m_Name: NuclearPowerPlant
+  m_EditorClassIdentifier: 
+  displayName: Nuclear power plant
+  primaryCategory: 2
+  effects:
+    cost: 120000
+    maintenance: 0
+    housing: 0
+    jobs: 2000
+    education: 800
+    safety: -400
+    enjoyment: -300
+  prefab: {fileID: 6702080380065664546, guid: 95332ac8071549a4a976254c2b482489, type: 3}
