@@ -254,24 +254,35 @@
     border-radius: 12px;
     border-width: 1px;
     border-color: rgba(255, 255, 255, 0.2);
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 6px 10px;
+    margin: 0 0 6px 0;
     flex-shrink: 0;
     flex-direction: column;
+}
+
+.building-card:hover {
+    background-color: rgba(100, 220, 150, 0.2);
+    border-color: rgba(100, 220, 150, 0.5);
+}
+
+.building-card:active {
+    background-color: rgba(100, 220, 150, 0.35);
+    border-color: rgba(100, 220, 150, 0.8);
 }
 
 .card-header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .card-title {
-    font-size: 14px;
+    font-size: 18px;
     -unity-font-style: bold;
     color: white;
     flex-grow: 1;
+    -unity-text-align: middle-center;
 }
 
 .card-image {
@@ -286,7 +297,7 @@
 
 .card-maintenance {
     flex-direction: row;
-    margin-bottom: 6px;
+    margin-bottom: 3px;
 }
 
 .card-label {
@@ -304,7 +315,7 @@
 
 .card-stats {
     flex-direction: column;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .stat-row {
@@ -346,21 +357,6 @@
     color: rgba(255, 215, 100, 0.9);
 }
 
-.card-buy-btn {
-    width: 60px;
-    height: 28px;
-    border-radius: 6px;
-    background-color: rgba(100, 220, 150, 0.3);
-    color: white;
-    border-width: 1px;
-    border-color: rgba(100, 220, 150, 0.6);
-    font-size: 11px;
-    -unity-font-style: bold;
-}
-
-.card-buy-btn:hover {
-    background-color: rgba(100, 220, 150, 0.5);
-}
 
 /* STAT BARS */
 .stat-label { font-size: 11px; color: rgba(255, 255, 255, 0.85); margin: 0; margin-top: 18px; margin-bottom: 2px; padding: 0; }

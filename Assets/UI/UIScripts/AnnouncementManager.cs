@@ -15,6 +15,8 @@ public class AnnouncementManager : MonoBehaviour
     public static AnnouncementManager instance; // static instance var for global reference
 
     [SerializeField] float announceDuration = 5.0f; // in seconds
+    [SerializeField] AudioScript audioScript;
+    [SerializeField] AudioSource uiSounds;
 
     private Label infoLabel; // actual text
     private VisualElement infoPill; // container (change color etc)
@@ -72,9 +74,16 @@ public class AnnouncementManager : MonoBehaviour
         announcing = true;
         timer = announceDuration;
 
-        colorClass = "pill-announce-" + color.ToString().ToLower();
+        colorClass = "pill-announce-" + color.ToString().ToLower(); 
         infoPill.AddToClassList(colorClass);
 
         infoLabel.text = text;
+        switch (color) {
+            case AnnounceColor.White: {uiSounds.PlayOneShot(audioScript.info); break;};
+            case AnnounceColor.Yellow: {uiSounds.PlayOneShot(audioScript.info); break;};
+            case AnnounceColor.Red: {uiSounds.PlayOneShot(audioScript.error); break;};
+            default: {uiSounds.PlayOneShot(audioScript.info); break;};
+        };
+
     }
 }
