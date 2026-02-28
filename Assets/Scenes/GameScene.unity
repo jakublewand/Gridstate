@@ -174,7 +174,7 @@ MonoBehaviour:
     payoutProgress: 0
     population: 0
     income: 0
-    balance: 99999
+    balance: 999999
     jobs: 0
     education: 0
     enjoyment: 0
@@ -198,6 +198,42 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 73d0f60f719ecbe45a3323b2498a6fe9, type: 2}
   - {fileID: 11400000, guid: 396b68bb91c14e54e87bb714081bf131, type: 2}
   - {fileID: 11400000, guid: 2074f7c5566571748acb5583212a4816, type: 2}
+  - {fileID: 11400000, guid: f371715380504694b332aff78d7b31c2, type: 2}
+  - {fileID: 11400000, guid: 18f6e1d1f6df428381b9c7c8fd4470f8, type: 2}
+  - {fileID: 11400000, guid: 804fd88c756e4d889f174feccb8d2fb1, type: 2}
+  - {fileID: 11400000, guid: de0086d8eca44fa0a8563061de4dde95, type: 2}
+  - {fileID: 11400000, guid: 1599805b10ed48bb933acd8e5f0710c3, type: 2}
+  - {fileID: 11400000, guid: b4157ec512ed4c718970a929bec5f4b3, type: 2}
+  - {fileID: 11400000, guid: c4e8c411b20a4e64903052c8b14913db, type: 2}
+  - {fileID: 11400000, guid: 8ddb53f3ef1f4c58acf82651bd8d1e66, type: 2}
+  - {fileID: 11400000, guid: 0d3c196ba6c9452382016bf7ffcda852, type: 2}
+  - {fileID: 11400000, guid: 0ad891c2e0954f19bf5b1940d586a6ed, type: 2}
+  - {fileID: 11400000, guid: 8e36c6d6b8214ecba85e166e6c87abf5, type: 2}
+  - {fileID: 11400000, guid: 536a4e8f4a5041ac8bd17fcf84aef16b, type: 2}
+  - {fileID: 11400000, guid: cd9578d4145f4ae7884c89c2804aade1, type: 2}
+  - {fileID: 11400000, guid: d72b455c0280430f8f9d4db1502d5d38, type: 2}
+  - {fileID: 11400000, guid: a53ef56f29514111a67a73214c4df3a3, type: 2}
+  - {fileID: 11400000, guid: cab17905756a406db5892331d2495dd0, type: 2}
+  - {fileID: 11400000, guid: 325cfb65fc5c4c2db7a25c221f1a044c, type: 2}
+  - {fileID: 11400000, guid: 0fbd4ce3fc4141ce99bb68d004e7d198, type: 2}
+  - {fileID: 11400000, guid: 726cffa47e68463597309ec21c6a3cef, type: 2}
+  - {fileID: 11400000, guid: 226f0b7365b34d76b388218bc7ab244e, type: 2}
+  - {fileID: 11400000, guid: 8668d0bf13804fdd84309182dfd6a01c, type: 2}
+  - {fileID: 11400000, guid: 3065e143b35b4e5ebda7bfc68e25f0f7, type: 2}
+  - {fileID: 11400000, guid: f02223c001134856adc8778e9c1447e6, type: 2}
+  - {fileID: 11400000, guid: dccaf7369ffa4637bbca273f227cf4a7, type: 2}
+  - {fileID: 11400000, guid: 7c8ad201b14d465e9523ab1021caabe9, type: 2}
+  - {fileID: 11400000, guid: 74078c10b80c48c4a1c80da6dbcbb1de, type: 2}
+  - {fileID: 11400000, guid: c35c7791f8ec41c3a0b9103fd8fb47e0, type: 2}
+  - {fileID: 11400000, guid: 8d08ee4cd0f144eebc58970cc7329c62, type: 2}
+  - {fileID: 11400000, guid: 757ba4892d5f42fdaa2c47e5679fd9be, type: 2}
+  - {fileID: 11400000, guid: f8c104a4e5234230953dfb31cb36002f, type: 2}
+  - {fileID: 11400000, guid: 5ac5649a29244e1bbaa32eef769f4928, type: 2}
+  - {fileID: 11400000, guid: 2d85d11322504e90ba054bf5e7f4b4e7, type: 2}
+  - {fileID: 11400000, guid: 81e7d0234add45c4b3dd0e68f27aa207, type: 2}
+  - {fileID: 11400000, guid: a155d5109a7f4f39b1d83276e88f3f68, type: 2}
+  - {fileID: 11400000, guid: 6400b719a0fa4c7da0e92083c9705652, type: 2}
+  - {fileID: 11400000, guid: 5c670f1f22a748499fa30e4166b4c8da, type: 2}
   audioScript: {fileID: 511445004}
   uiSounds: {fileID: 511445003}
   buildings: []

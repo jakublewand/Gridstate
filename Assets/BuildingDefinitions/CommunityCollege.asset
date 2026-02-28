@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
+  m_Name: CommunityCollege
+  m_EditorClassIdentifier: 
+  displayName: Community College
+  primaryCategory: 3
+  effects:
+    cost: 12000
+    maintenance: 0
+    housing: 80
+    jobs: 20
+    education: 180
+    safety: 0
+    enjoyment: 50
+  prefab: {fileID: 6702080380065664546, guid: 252ab0d6103f42ac8b07ea191791523f, type: 3}
