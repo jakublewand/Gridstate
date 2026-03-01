@@ -21,5 +21,5 @@ MonoBehaviour:
     jobs: 220
     education: 50
     safety: 1600
-    enjoyment: -150
+    enjoyment: 0
   prefab: {fileID: 6702080380065664546, guid: be45d6e79fca412a8aabd00b9e6550ce, type: 3}
