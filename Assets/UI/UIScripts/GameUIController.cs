@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using System;
+using System.Linq;
 
 [RequireComponent(typeof(AnnouncementManager))]
 public class GameUIController : MonoBehaviour
@@ -237,10 +238,13 @@ public class GameUIController : MonoBehaviour
     {
         buildingList.Clear();
         if (buildingManager?.buildingDefinitions == null) return;
-        foreach (var def in buildingManager.buildingDefinitions)
+        // sort definitions by cost (cheap to expensive)
+        var defs = buildingManager.buildingDefinitions
+            .Where(def => def != null && def.primaryCategory != PrimaryCategory.TownHall)
+            .Where(def => activeFilter == null || def.primaryCategory == activeFilter)
+            .OrderBy(def => def.effects.cost);
+        foreach (var def in defs)
         {
-            if (def == null || def.primaryCategory == PrimaryCategory.TownHall) continue;
-            if (activeFilter != null && def.primaryCategory != activeFilter) continue;
             buildingList.Add(CreateBuildingCard(def));
         }
     }
