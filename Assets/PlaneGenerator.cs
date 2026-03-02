@@ -5,6 +5,8 @@ public class PlaneGenerator : MonoBehaviour
 {
     public Transform planeTransform;
     public Renderer planeRenderer;
+    public Transform ghostPlaneTransform;
+    public Renderer ghostPlaneRenderer;
     public BulidingManager BM;
 
     float minX, maxX, minZ, maxZ;
@@ -13,16 +15,21 @@ public class PlaneGenerator : MonoBehaviour
     private const float squareSize = 4f;
     private bool firstPlaneSize = false;
     public void SetPlaneSize(float widthInUnits, float lengthInUnits)
-    {   
+    {
         if (!planePositionSet)
         {
-            planeTransform.position = new Vector3(0.5f, 0f,0.5f);
+            planeTransform.position = new Vector3(0.5f, 0f, 0.5f);
+            ghostPlaneTransform.position = new Vector3(0.5f, -0.01f, 0.5f);
             planePositionSet = true;
         }
-        
-        planeTransform.localScale = new Vector3(widthInUnits / 10f, 1f, lengthInUnits / 10f);
 
+        planeTransform.localScale = new Vector3(widthInUnits / 10f, 1f, lengthInUnits / 10f);
         planeRenderer.material.mainTextureScale = new Vector2(widthInUnits / squareSize, lengthInUnits / squareSize);
+
+        float ghostWidth = widthInUnits + squareSize * 2f;
+        float ghostLength = lengthInUnits + squareSize * 2f;
+        ghostPlaneTransform.localScale = new Vector3(ghostWidth / 10f, 1f, ghostLength / 10f);
+        ghostPlaneRenderer.material.mainTextureScale = new Vector2(ghostWidth / squareSize, ghostLength / squareSize);
     }
 
     public void UpdatePlane()
