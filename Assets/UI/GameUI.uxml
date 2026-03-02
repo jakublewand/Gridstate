@@ -39,12 +39,13 @@
             <ui:VisualElement name="BuyMenu" class="buy-menu glass">
                 <ui:VisualElement name="BuyMenuHeader" class="buy-menu-header">
                     <ui:Label text="Buy" class="panel-title" />
-                    <ui:Button name="FilterHousing"   text="🏠" class="category-filter-btn" />
+                    <ui:Button name="FilterHousing"   text="🏠" class="category-filter-btn category-filter-btn--active" />
                     <ui:Button name="FilterJobs"      text="🏗️" class="category-filter-btn" />
                     <ui:Button name="FilterEducation" text="🎓" class="category-filter-btn" />
                     <ui:Button name="FilterSafety"    text="🚔" class="category-filter-btn" />
                     <ui:Button name="FilterEnjoyment" text="🎡" class="category-filter-btn" />
                 </ui:VisualElement>
+                <ui:Label name="CategoryTitle" text="Housing" class="category-title" />
                 <ui:ScrollView name="BuildingList" class="building-list" />
             </ui:VisualElement>
             <ui:VisualElement name="StatPanel" class="stat-panel glass">

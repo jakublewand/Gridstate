@@ -127,8 +127,6 @@ public class BulidingManager : MonoBehaviour
         PG.UpdatePlane();
         RecalculateStats();
         uiSounds.PlayOneShot(audioScript.build);
-
-        
     }
     
     private void RecalculateStats()

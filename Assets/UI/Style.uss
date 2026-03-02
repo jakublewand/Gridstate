@@ -84,7 +84,7 @@
     margin: 0 6px; padding: 0; overflow: hidden;
 }
 .pill-small { width: 138px; }
-.pill-medium { width: 188px; }
+.pill-medium { width: 240px; }
 .pill-wide { flex-grow: 1; }
 
 .pill-icon {
@@ -208,8 +208,9 @@
 
 /* SIDE PANELS */
 .right-panels { position: absolute; top: 138px; right: 2%; bottom: 2%; width: 440px; flex-direction: column; }
-.buy-menu { flex-grow: 1; padding: 19px; margin-bottom: 25px; flex-direction: column; }
-.buy-menu-header { flex-direction: row; align-items: center; flex-shrink: 0; margin-bottom: 10px; justify-content: space-evenly; }
+.buy-menu { flex-grow: 1; padding: 19px; padding-top: 10px; margin-bottom: 25px; flex-direction: column; }
+.buy-menu-header { flex-direction: row; align-items: center; flex-shrink: 0; margin-bottom: 4px; justify-content: space-evenly; }
+.category-title { font-size: 16px; -unity-font-style: bold; color: rgba(255, 255, 255, 0.6); -unity-text-align: middle-center; flex-shrink: 0; margin-bottom: 6px; }
 .buy-menu-header .panel-title { flex-grow: 1; margin-bottom: 0; }
 .category-filter-btn {
     width: 48px; height: 48px; border-radius: 12px; margin-left: 0;
@@ -269,6 +270,26 @@
 .building-card:active {
     background-color: rgba(100, 220, 150, 0.35);
     border-color: rgba(100, 220, 150, 0.8);
+}
+
+.building-card--red {
+    background-color: rgba(140, 60, 60, 0.7);
+    border-color: rgba(220, 80, 80, 0.4);
+}
+.building-card--red:hover {
+    background-color: rgba(160, 70, 70, 0.8);
+    border-color: rgba(220, 80, 80, 0.6);
+}
+
+.building-card--mystery {
+    background-color: rgba(60, 65, 75, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+.building-card--mystery .card-title {
+    color: rgba(255, 255, 255, 0.4);
+}
+.building-card--mystery .card-cost {
+    color: rgba(255, 215, 100, 0.4);
 }
 
 .card-header {

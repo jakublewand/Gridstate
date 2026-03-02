@@ -33,7 +33,9 @@ public class GameUIController : MonoBehaviour
     private VisualElement greetingOverlay;
     private ScrollView buildingList;
     private Button activeFilterBtn;
-    private PrimaryCategory? activeFilter = null;
+    private PrimaryCategory? activeFilter = PrimaryCategory.Housing;
+    private Label categoryTitleLabel;
+    private float buildingListTimer;
 
     void OnEnable()
     {
@@ -47,8 +49,8 @@ public class GameUIController : MonoBehaviour
         infoLabel = root.Q<Label>("InfoLabel");
         zoomInBtn = root.Q<Button>("ZoomInBtn");
         zoomOutBtn = root.Q<Button>("ZoomOutBtn");
-        CityName = root.Q<Label>("CityName");
         CamBtn = root.Q<Button>("CamBtn");
+        CityName = root.Q<Label>("CityName");
         DaysLabel = root.Q<Label>("DaysLabel");
         PopLabel = root.Q<Label>("PopLabel");
         PayoutLabel = root.Q<Label>("PayoutLabel");
@@ -80,6 +82,8 @@ public class GameUIController : MonoBehaviour
         if (closeGreetingBtn != null) closeGreetingBtn.clicked += () => HideOverlay(greetingOverlay);
 
         buildingList = root.Q<ScrollView>("BuildingList");
+        categoryTitleLabel = root.Q<Label>("CategoryTitle");
+        activeFilterBtn = root.Q<Button>("FilterHousing");
 
         void BindFilter(string btnName, PrimaryCategory cat)
         {
@@ -92,12 +96,12 @@ public class GameUIController : MonoBehaviour
         BindFilter("FilterSafety",    PrimaryCategory.Safety);
         BindFilter("FilterEnjoyment", PrimaryCategory.Enjoyment);
 
-        PopulateBuildings();
     }
     
     private void Start()
     {
         city = City.instance;
+        PopulateBuildings();
     }
 
     void Update()
@@ -108,8 +112,8 @@ public class GameUIController : MonoBehaviour
         CityName.text = city.getCityName() ?? string.Empty;
         DaysLabel.text = $"Day {city.getDayCount()}";
         PopLabel.text = city.GetStat(City.StatType.Population).ToString();
-        BalanceLabel.text = $"{Math.Round(city.GetStat(City.StatType.Balance), 1)}k";
-        PayoutLabel.text = $"{Math.Round(city.GetStat(City.StatType.Income), 1)}k/payout";
+        BalanceLabel.text = Suf(city.GetStat(City.StatType.Balance));
+        PayoutLabel.text = $"{Suf(city.GetStat(City.StatType.Income))}/payout";
         progressFill.style.width = new Length(Mathf.Clamp(city.getPayoutProgress(), 0, 100), LengthUnit.Percent);
 
         // Update stat bars (values are 0-1, ProgressBar uses 0-100)
@@ -117,6 +121,13 @@ public class GameUIController : MonoBehaviour
         educationBar.value = (float)city.GetStat(City.StatType.Education) * 100;
         enjoymentBar.value = (float)city.GetStat(City.StatType.Enjoyment) * 100;
         safetyBar.value = (float)city.GetStat(City.StatType.Safety) * 100;
+
+        buildingListTimer += Time.deltaTime;
+        if (buildingListTimer >= 1/4f)
+        {
+            buildingListTimer = 0f;
+            PopulateBuildings();
+        }
     }
 
     private void TogglePlay()
@@ -135,6 +146,17 @@ public class GameUIController : MonoBehaviour
     private void HideOverlay(VisualElement overlay)
     {
         overlay.AddToClassList("hidden");
+    }
+
+    private string Suf(float value)
+    {
+        value *= 1000;
+        if (value < 1000) return Math.Round(value, 1).ToString();
+        if (value < 1000000) return Math.Round(value / 1000, 1) + "K";
+        if (value < 1000000000) return Math.Round(value / 1000000, 1) + "M";
+        if (value < 1000000000000) return Math.Round(value / 1000000000, 1) + "B";
+        if (value < 1000000000000000) return Math.Round(value / 1000000000000, 1) + "T";
+        return Math.Round(value / 1000000000000000, 1) + "Q";
     }
 
     private string calcStatfromValue(float value)
@@ -158,8 +180,8 @@ public class GameUIController : MonoBehaviour
             ? buildingDefinition.name
             : buildingDefinition.displayName;
         BuildingEffects effects = buildingDefinition.effects;
-        double cost = effects.cost;
-        double maintenance = effects.maintenance;
+        float cost = effects.cost;
+        float maintenance = effects.maintenance;
 
         var card = new Button { name = "BuildingCard" };
         card.clicked += () => uiSounds.PlayOneShot(audioScript.click);
@@ -173,7 +195,7 @@ public class GameUIController : MonoBehaviour
         titleLabel.AddToClassList("card-title");
         header.Add(titleLabel);
 
-        var costLabel = new Label { text = $"${cost}k" };
+        var costLabel = new Label { text = $"${Suf(cost)}" };
         costLabel.AddToClassList("card-cost");
         header.Add(costLabel);
 
@@ -183,7 +205,7 @@ public class GameUIController : MonoBehaviour
         maintenanceContainer.AddToClassList("card-maintenance");
         var mainLabel = new Label { text = "Maintenance:" };
         mainLabel.AddToClassList("card-label");
-        var mainValue = new Label { text = $"{maintenance} / day" };
+        var mainValue = new Label { text = $"{Suf(maintenance)} / day" };
         mainValue.AddToClassList("card-value");
         maintenanceContainer.Add(mainLabel);
         maintenanceContainer.Add(mainValue);
@@ -223,13 +245,15 @@ public class GameUIController : MonoBehaviour
         parent.Add(row);
     }
 
-    private void SetCategoryFilter(PrimaryCategory cat, Button btn)
+    private void SetCategoryFilter(PrimaryCategory? cat, Button btn)
     {
         activeFilterBtn?.RemoveFromClassList("category-filter-btn--active");
-        activeFilter = activeFilter == cat ? (PrimaryCategory?)null : cat;
-        activeFilterBtn = activeFilter == null ? null : btn;
+        activeFilter = cat;
+        activeFilterBtn = btn;
         activeFilterBtn?.AddToClassList("category-filter-btn--active");
         PopulateBuildings();
+        if (categoryTitleLabel != null)
+            categoryTitleLabel.text = activeFilter?.ToString() ?? "";
     }
 
     private void PopulateBuildings()
@@ -243,12 +267,46 @@ public class GameUIController : MonoBehaviour
             .OrderBy(def => def.effects.cost);
         foreach (var def in defs)
         {
+            if(city.gameState.topBalance<def.effects.cost/4) {buildingList.Add(CreateMysteryCard(def)); continue;}
+            if(city.gameState.balance<def.effects.cost) {buildingList.Add(CreateCantAffordCard(def)); continue;}
             buildingList.Add(CreateBuildingCard(def));
         }
     }
 
     // Public API Methods
     public void SetInfoMessage(string msg) => infoLabel.text = msg ?? string.Empty;
+
+    private VisualElement CreateCantAffordCard(BuildingDefinition buildingDefinition)
+    {
+        var card = CreateBuildingCard(buildingDefinition);
+        card.RemoveFromClassList("building-card");
+        card.AddToClassList("building-card");
+        card.AddToClassList("building-card--red");
+        return card;
+    }
+
+    private VisualElement CreateMysteryCard(BuildingDefinition buildingDefinition)
+    {
+        float cost = buildingDefinition.effects.cost;
+
+        var card = new VisualElement();
+        card.AddToClassList("building-card");
+        card.AddToClassList("building-card--mystery");
+
+        var header = new VisualElement();
+        header.AddToClassList("card-header");
+
+        var titleLabel = new Label { text = "???" };
+        titleLabel.AddToClassList("card-title");
+        header.Add(titleLabel);
+
+        var costLabel = new Label { text = $"${Suf(cost)}" };
+        costLabel.AddToClassList("card-cost");
+        header.Add(costLabel);
+
+        card.Add(header);
+        return card;
+    }
 
     private void BuyButtonPressed(BuildingDefinition buildingDefinition)
     {

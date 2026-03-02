@@ -13,7 +13,7 @@ public class CameraBehaviour : MonoBehaviour
     [SerializeField] private float perspectiveDuration = 0.5f;
 
     private bool isChangingPerspective;
-    private bool isAngled;
+    private bool isAngled = true;
     private float perspectiveT;
     private float lastSmoothT;
     private Quaternion rotFrom, rotTo;
@@ -95,7 +95,6 @@ public class CameraBehaviour : MonoBehaviour
         if (TryGetMousePlanePoint(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f), out Vector3 focalPoint))
         {
             float yRot = transform.eulerAngles.y;
-
             bool goingToAngled = !isAngled;
             float targetXAngle = goingToAngled ? angledAngle : topDownAngle;
 

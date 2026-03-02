@@ -12,6 +12,7 @@ public class GameState
     public float population;
     public float income;
     public float balance;
+    public float topBalance;
     // Stats:
     public float jobs;
     public float education;
