@@ -173,6 +173,10 @@ public class GameUIController : MonoBehaviour
         titleLabel.AddToClassList("card-title");
         header.Add(titleLabel);
 
+        var costLabel = new Label { text = $"${cost}k" };
+        costLabel.AddToClassList("card-cost");
+        header.Add(costLabel);
+
         card.Add(header);
 
         var maintenanceContainer = new VisualElement();
@@ -194,12 +198,6 @@ public class GameUIController : MonoBehaviour
         AddStatRow(statsContainer, "Safety", calcStatfromValue(effects.safety));
         card.Add(statsContainer);
 
-        var footer = new VisualElement();
-        footer.AddToClassList("card-footer");
-        var costLabel = new Label { text = $"${cost}k" };
-        costLabel.AddToClassList("card-cost");
-        footer.Add(costLabel);
-        card.Add(footer);
 
         card.clicked += () => BuyButtonPressed(buildingDefinition);
 
