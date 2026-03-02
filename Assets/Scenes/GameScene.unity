@@ -237,6 +237,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5c670f1f22a748499fa30e4166b4c8da, type: 2}
   audioScript: {fileID: 511445004}
   uiSounds: {fileID: 511445003}
+  ui: {fileID: 1644778566}
   buildings: []
   selectedBuilding: {fileID: 0}
   selectedBuildingObject: {fileID: 0}

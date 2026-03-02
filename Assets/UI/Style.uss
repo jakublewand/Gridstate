@@ -392,6 +392,23 @@
 .stat-bar .unity-progress-bar__progress { margin: 0; padding: 0; background-color: rgba(90, 220, 140, 0.8); border-radius: 0; }
 .stat-bar .unity-progress-bar__title { display: none; }
 
+/* DETAIL CARD */
+.detail-card {
+    position: absolute;
+    left: 10%;
+    bottom: 2%;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 16px;
+}
+.detail-title {
+    font-size: 18px;
+    -unity-font-style: bold;
+    color: white;
+    margin-right: 16px;
+}
+.detail-demolish-btn { font-size: 36px; }
+
 /* ============================================================
    TITLE SCENE
    ============================================================ */

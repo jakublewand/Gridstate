@@ -11,6 +11,7 @@ public class GameUIController : MonoBehaviour
     [SerializeField] BulidingManager buildingManager;
     [SerializeField] AudioSource uiSounds;
     [SerializeField] AudioScript audioScript;
+    private Building focusedBuilding;
     private VisualElement root;
     private Button playBtn;
     private VisualElement progressFill;
@@ -28,6 +29,8 @@ public class GameUIController : MonoBehaviour
     private ProgressBar educationBar;
     private ProgressBar enjoymentBar;
     private ProgressBar safetyBar;
+    private VisualElement detailCard;
+    private Label detailTitle;
     private Button optionsBtn;
     private VisualElement optionsOverlay;
     private VisualElement greetingOverlay;
@@ -80,6 +83,13 @@ public class GameUIController : MonoBehaviour
         if (closeOptionsBtn != null) closeOptionsBtn.clicked += () => HideOverlay(optionsOverlay);
         if (showGreetingBtn != null) showGreetingBtn.clicked += () => {HideOverlay(optionsOverlay); ShowOverlay(greetingOverlay); };
         if (closeGreetingBtn != null) closeGreetingBtn.clicked += () => HideOverlay(greetingOverlay);
+
+        detailCard = root.Q<VisualElement>("DetailCard");
+        detailTitle = root.Q<Label>("DetailTitle");
+        var demolishBtn = root.Q<Button>("DemolishBtn");
+        var detailCloseBtn = root.Q<Button>("DetailCloseBtn");
+        if (detailCloseBtn != null) detailCloseBtn.clicked += () => HideOverlay(detailCard);
+        if (demolishBtn != null) demolishBtn.clicked += () => {HideOverlay(detailCard); buildingManager.Demolish(focusedBuilding);};
 
         buildingList = root.Q<ScrollView>("BuildingList");
         categoryTitleLabel = root.Q<Label>("CategoryTitle");
@@ -283,6 +293,24 @@ public class GameUIController : MonoBehaviour
         card.AddToClassList("building-card");
         card.AddToClassList("building-card--red");
         return card;
+    }
+
+
+    public void ShowDetails(GameObject building)
+    {
+        uiSounds.PlayOneShot(audioScript.info);
+        focusedBuilding = building.GetComponent<Building>();
+        string title = focusedBuilding != null && focusedBuilding.definition != null
+            ? (string.IsNullOrEmpty(focusedBuilding.definition.displayName) ? focusedBuilding.definition.name : focusedBuilding.definition.displayName)
+            : building.name;
+
+        detailTitle.text = title;
+        detailCard.RemoveFromClassList("hidden");
+    }
+
+    public void CloseDetails()
+    {
+        detailCard.AddToClassList("hidden");
     }
 
     private VisualElement CreateMysteryCard(BuildingDefinition buildingDefinition)

@@ -8,6 +8,7 @@ public class BulidingManager : MonoBehaviour
     [SerializeField] public List<BuildingDefinition> buildingDefinitions = new List<BuildingDefinition>();
     [SerializeField] AudioScript audioScript;
     [SerializeField] AudioSource uiSounds;
+    [SerializeField] GameUIController ui;
     public List<Building> buildings = new List<Building>();
     public BuildingDefinition selectedBuilding;
     private BuildingDefinition lastSelectedBuilding;
@@ -36,6 +37,10 @@ public class BulidingManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            mouseDownLocation = Input.mousePosition;
+        }
         if (selectedBuilding != null) {
             if (selectedBuildingObject == null) {
                 selectedBuildingObject = Instantiate(selectedBuilding.prefab, Vector3.zero, Quaternion.identity);
@@ -56,11 +61,6 @@ public class BulidingManager : MonoBehaviour
                 selectedBuildingObject.transform.position += Vector3.up * selectedBuildingObject.transform.localScale.y / 2;
             }
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                mouseDownLocation = Input.mousePosition;
-            }
-
             if (Input.GetMouseButtonUp(0))
             {
                 if (EventSystem.current.IsPointerOverGameObject())
@@ -71,7 +71,6 @@ public class BulidingManager : MonoBehaviour
                 {
                     return;
                 }
-
 
                 Vector3 mousePos = Input.mousePosition;
                 ray = Camera.main.ScreenPointToRay(mousePos);
@@ -93,6 +92,27 @@ public class BulidingManager : MonoBehaviour
                         selectedBuilding = null;
                     }   
                 }
+            }
+        } else if (Input.GetMouseButtonUp(0) && Vector3.Distance(mouseDownLocation, Input.mousePosition) <= 5f)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (planeCollider.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+            {
+                Vector3 alignedPos = hit.point - new Vector3(-0.5f, 0f, -0.5f);
+                alignedPos.x = Mathf.Floor(alignedPos.x);
+                alignedPos.z = Mathf.Floor(alignedPos.z);
+                bool found = false;
+                foreach (var building in buildings)
+                    {
+                        if (building.gameObject.transform.position.x == alignedPos.x &&
+                            building.gameObject.transform.position.z == alignedPos.z && building.definition.primaryCategory!=PrimaryCategory.TownHall)
+                        {
+                            ui.ShowDetails(building.gameObject);
+                            found = true;
+                            break;
+                        }
+                    }
+                if (!found) ui.CloseDetails();
             }
         }
     }
@@ -127,6 +147,19 @@ public class BulidingManager : MonoBehaviour
         PG.UpdatePlane();
         RecalculateStats();
         uiSounds.PlayOneShot(audioScript.build);
+    }
+
+    public void Demolish(Building building)
+    {
+        if (building.definition == null || building.definition.prefab == null)
+            return;
+        city.ModifyStat(City.StatType.Population, -building.definition.effects.housing);
+        Destroy(building.gameObject);
+        buildings.Remove(building);
+        PG.UpdatePlane();
+        RecalculateStats();
+        uiSounds.PlayOneShot(audioScript.demolish);
+        
     }
     
     private void RecalculateStats()
