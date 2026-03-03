@@ -82,6 +82,17 @@ public class City : MonoBehaviour
 
     }
 
+    public enum Characters {king = 1, idol = 2, engineer = 3}
+
+    public void SetCharacter(Characters ch)
+    {
+        gameState.character=(int)ch;
+    }
+    public Characters GetCharacter()
+    {
+        return (Characters)gameState.character;
+    }
+
     public enum StatType
     {
         Education,

@@ -152,6 +152,92 @@
     font-size: 18px;
 }
 
+/* GREETING / CHARACTER SELECTION */
+.greeting-panel {
+    width: 900px;
+    padding: 40px;
+    flex-direction: column;
+    align-items: center;
+}
+.greeting-title {
+    font-size: 34px;
+    -unity-font-style: bold;
+    color: white;
+    -unity-text-align: middle-center;
+    margin-bottom: 28px;
+}
+.character-row {
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+.character-card {
+    width: 230px;
+    margin-left: 14px;
+    margin-right: 14px;
+    padding: 14px;
+    border-radius: 18px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.15);
+    align-items: center;
+    transition-duration: 0.15s;
+}
+.character-card:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    scale: 1.03;
+}
+.character-card--selected {
+    border-color: rgba(100, 180, 255, 0.8);
+    background-color: rgba(100, 180, 255, 0.2);
+}
+.character-portrait {
+    width: 180px;
+    height: 220px;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.12);
+    margin-bottom: 10px;
+}
+.character-name {
+    font-size: 20px;
+    -unity-font-style: bold;
+    color: white;
+    -unity-text-align: middle-center;
+}
+.character-quote {
+    font-size: 22px;
+    -unity-font-style: italic;
+    color: rgba(255, 255, 255, 0.65);
+    -unity-text-align: middle-center;
+    margin-top: 16px;
+    height: 30px;
+}
+.city-name-field {
+    width: 380px;
+    margin-top: 14px;
+    margin-bottom: 8px;
+}
+.city-name-field Label {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 18px;
+    min-width: 100px;
+}
+.city-name-field .unity-text-field__input {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    font-size: 20px;
+    padding: 8px 14px;
+}
+.start-btn {
+    width: 260px;
+    margin-top: 20px;
+    font-size: 24px;
+    -unity-font-style: bold;
+}
+
 /* === TYPOGRAPHY === */
 
 .panel-title { font-size: 20px; -unity-font-style: bold; color: white; margin-bottom: -18px; }

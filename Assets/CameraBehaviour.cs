@@ -114,6 +114,11 @@ public class CameraBehaviour : MonoBehaviour
             isAngled = goingToAngled;
         }
     }
+
+    public void resetCamera()
+    {
+        transform.position = new Vector3(0f,4f,-4f);
+    }
     private bool TryGetMousePlanePoint(Vector3 screenPosition, out Vector3 worldPoint)
     {
         var cam = Camera.main;

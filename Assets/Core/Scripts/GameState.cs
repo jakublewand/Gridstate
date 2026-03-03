@@ -6,6 +6,7 @@ public class GameState
     //I decided on no methods (handled through gameManager) and clean state for SRP
     public string cityName;
     public int dayCount;
+    public int character;
     public bool paused;
     public float dayProgress;
     public float payoutProgress;

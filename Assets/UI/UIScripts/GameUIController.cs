@@ -39,6 +39,9 @@ public class GameUIController : MonoBehaviour
     private PrimaryCategory? activeFilter = PrimaryCategory.Housing;
     private Label categoryTitleLabel;
     private float buildingListTimer;
+    private Button selectedCharBtn;
+    private TextField cityNameField;
+    private Label charQuoteLabel;
 
     void OnEnable()
     {
@@ -75,14 +78,26 @@ public class GameUIController : MonoBehaviour
         if (zoomInBtn != null) zoomInBtn.clicked += () => cameraBehaviour.Zoom(-1f);
         if (zoomOutBtn != null) zoomOutBtn.clicked += () => cameraBehaviour.Zoom(1f);
         if (CamBtn != null) CamBtn.clicked += () =>  cameraBehaviour.changePerspective();
+        var resetCamBtn = root.Q<Button>("ResetCamBtn");
+        if (resetCamBtn != null) resetCamBtn.clicked += () => cameraBehaviour.resetCamera();
         if (optionsBtn != null) optionsBtn.clicked += () => ShowOverlay(optionsOverlay);
 
         var closeOptionsBtn = root.Q<Button>("CloseOptionsBtn");
         var showGreetingBtn = root.Q<Button>("ShowGreetingBtn");
-        var closeGreetingBtn = root.Q<Button>("CloseGreetingBtn");
         if (closeOptionsBtn != null) closeOptionsBtn.clicked += () => HideOverlay(optionsOverlay);
         if (showGreetingBtn != null) showGreetingBtn.clicked += () => {HideOverlay(optionsOverlay); ShowOverlay(greetingOverlay); };
-        if (closeGreetingBtn != null) closeGreetingBtn.clicked += () => HideOverlay(greetingOverlay);
+
+        // Character selection
+        cityNameField = root.Q<TextField>("CityNameField");
+        charQuoteLabel = root.Q<Label>("CharQuote");
+        var king = root.Q<Button>("KingOfAmerica");
+        var idol = root.Q<Button>("IdolOfTheNorth");
+        var engineer = root.Q<Button>("SoftwareEngineer");
+        if (king != null) king.clicked += () => SelectCharacter(king, City.Characters.king, "\"Make your city great again!\"");
+        if (idol != null) idol.clicked += () => SelectCharacter(idol, City.Characters.idol, "\"My city was perfect from day one. The citizens just don't know it yet.\"");
+        if (engineer != null) engineer.clicked += () => SelectCharacter(engineer, City.Characters.engineer, "\"Children's playground converted to datacenter.\"");
+        var startBtn = root.Q<Button>("StartGameBtn");
+        if (startBtn != null) startBtn.clicked += StartGame;
 
         detailCard = root.Q<VisualElement>("DetailCard");
         detailTitle = root.Q<Label>("DetailTitle");
@@ -112,6 +127,11 @@ public class GameUIController : MonoBehaviour
     {
         city = City.instance;
         PopulateBuildings();
+
+        // Show character selection on game start
+        ShowOverlay(greetingOverlay);
+        if (!city.isPaused()) city.playPauseGame();
+        playBtn.text = "▶";
     }
 
     void Update()
@@ -334,6 +354,28 @@ public class GameUIController : MonoBehaviour
 
         card.Add(header);
         return card;
+    }
+
+    private City.Characters selectedCharacter;
+
+    private void SelectCharacter(Button btn, City.Characters character, string quote)
+    {
+        selectedCharBtn?.RemoveFromClassList("character-card--selected");
+        selectedCharBtn = btn;
+        selectedCharacter = character;
+        selectedCharBtn.AddToClassList("character-card--selected");
+        if (charQuoteLabel != null) charQuoteLabel.text = quote;
+    }
+
+    private void StartGame()
+    {
+        string name = cityNameField?.value;
+        if (!string.IsNullOrWhiteSpace(name))
+            city.renameCity(name);
+        city.SetCharacter(selectedCharacter);
+        HideOverlay(greetingOverlay);
+        if (city.isPaused()) city.playPauseGame();
+        playBtn.text = "II";
     }
 
     private void BuyButtonPressed(BuildingDefinition buildingDefinition)
