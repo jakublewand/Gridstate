@@ -42,6 +42,7 @@ public class GameUIController : MonoBehaviour
     private Button selectedCharBtn;
     private TextField cityNameField;
     private Label charQuoteLabel;
+    private Button startGameBtn;
 
     void OnEnable()
     {
@@ -96,8 +97,12 @@ public class GameUIController : MonoBehaviour
         if (king != null) king.clicked += () => SelectCharacter(king, City.Characters.king, "\"Make your city great again!\"");
         if (idol != null) idol.clicked += () => SelectCharacter(idol, City.Characters.idol, "\"My city was perfect from day one. The citizens just don't know it yet.\"");
         if (engineer != null) engineer.clicked += () => SelectCharacter(engineer, City.Characters.engineer, "\"Children's playground converted to datacenter.\"");
-        var startBtn = root.Q<Button>("StartGameBtn");
-        if (startBtn != null) startBtn.clicked += StartGame;
+        startGameBtn = root.Q<Button>("StartGameBtn");
+        if (startGameBtn != null)
+        {
+            startGameBtn.SetEnabled(false);
+            startGameBtn.clicked += StartGame;
+        }
 
         detailCard = root.Q<VisualElement>("DetailCard");
         detailTitle = root.Q<Label>("DetailTitle");
@@ -365,6 +370,7 @@ public class GameUIController : MonoBehaviour
         selectedCharacter = character;
         selectedCharBtn.AddToClassList("character-card--selected");
         if (charQuoteLabel != null) charQuoteLabel.text = quote;
+        startGameBtn?.SetEnabled(true);
     }
 
     private void StartGame()
