@@ -141,6 +141,36 @@
     margin-top: 25px;
     margin-bottom: 25px;
 }
+/* OPTIONS ROWS */
+.options-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 18px;
+}
+.options-label {
+    font-size: 18px;
+    -unity-font-style: bold;
+    color: white;
+    flex-shrink: 0;
+    margin-right: 16px;
+}
+.options-toggle .unity-toggle__input {
+    flex-direction: row-reverse;
+}
+.options-toggle .unity-toggle__checkmark {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+.options-toggle .unity-toggle__input:checked .unity-toggle__checkmark {
+    background-color: rgba(100, 180, 255, 0.6);
+    border-color: rgba(100, 180, 255, 0.9);
+}
+
 .overlay-btn {
     height: 45px;
     margin-top: 12px;

@@ -668,6 +668,7 @@ MonoBehaviour:
   info: {fileID: 8300000, guid: 24764b27c2b97e943b895579b33123da, type: 3}
   build: {fileID: 8300000, guid: 4cddbcb46bbc8de4fa30a223a23c66c5, type: 3}
   demolish: {fileID: 8300000, guid: 09f3f0d01ec7dbc438d3835f8fa02e91, type: 3}
+  uiSounds: {fileID: 511445003}
 --- !u!1 &592428964
 GameObject:
   m_ObjectHideFlags: 0

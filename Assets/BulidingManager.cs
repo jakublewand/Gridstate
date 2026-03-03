@@ -146,7 +146,7 @@ public class BulidingManager : MonoBehaviour
         buildings.Add(building);
         PG.UpdatePlane();
         RecalculateStats();
-        uiSounds.PlayOneShot(audioScript.build);
+        audioScript.PlaySound(audioScript.build);
     }
 
     public void Demolish(Building building)
@@ -158,7 +158,7 @@ public class BulidingManager : MonoBehaviour
         buildings.Remove(building);
         PG.UpdatePlane();
         RecalculateStats();
-        uiSounds.PlayOneShot(audioScript.demolish);
+        audioScript.PlaySound(audioScript.demolish);
         
     }
     

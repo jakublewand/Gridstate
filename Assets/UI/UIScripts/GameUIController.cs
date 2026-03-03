@@ -43,6 +43,8 @@ public class GameUIController : MonoBehaviour
     private TextField cityNameField;
     private Label charQuoteLabel;
     private Button startGameBtn;
+    public Toggle audioToggle;
+    public Toggle hideUnaffordableToggle;
 
     void OnEnable()
     {
@@ -68,11 +70,13 @@ public class GameUIController : MonoBehaviour
         safetyBar = root.Q<ProgressBar>("SafetyBar");
         optionsBtn = root.Q<Button>("OptionsBtn");
         optionsOverlay = root.Q<VisualElement>("OptionsOverlay");
+        audioToggle = root.Q<Toggle>("AudioToggle");
+        hideUnaffordableToggle = root.Q<Toggle>("HideUnaffordableToggle");
         greetingOverlay = root.Q<VisualElement>("GreetingOverlay");
 
         // Attach audio
 
-        root.Query<Button>().ForEach(btn => {btn.clicked += () => uiSounds.PlayOneShot(audioScript.click);});
+        root.Query<Button>().ForEach(btn => {btn.clicked += () => audioScript.PlaySound(audioScript.click);});
 
         // Event Listeners
         if (playBtn != null) playBtn.clicked += TogglePlay;
@@ -83,10 +87,19 @@ public class GameUIController : MonoBehaviour
         if (resetCamBtn != null) resetCamBtn.clicked += () => cameraBehaviour.resetCamera();
         if (optionsBtn != null) optionsBtn.clicked += () => ShowOverlay(optionsOverlay);
 
+        if (resetCamBtn != null) resetCamBtn.clicked += () => cameraBehaviour.resetCamera();
+        if (optionsBtn != null) optionsBtn.clicked += () => ShowOverlay(optionsOverlay);
+
+        
         var closeOptionsBtn = root.Q<Button>("CloseOptionsBtn");
         var showGreetingBtn = root.Q<Button>("ShowGreetingBtn");
         if (closeOptionsBtn != null) closeOptionsBtn.clicked += () => HideOverlay(optionsOverlay);
-        if (showGreetingBtn != null) showGreetingBtn.clicked += () => {HideOverlay(optionsOverlay); ShowOverlay(greetingOverlay); };
+        if (showGreetingBtn != null) showGreetingBtn.clicked += () => { HideOverlay(optionsOverlay); ShowOverlay(greetingOverlay); };
+        audioToggle.RegisterValueChangedCallback(evt => OnAudioToggleChanged(evt.newValue));
+        hideUnaffordableToggle.RegisterValueChangedCallback(evt => OnHideUnaffordableChanged(evt.newValue));
+        audioToggle.value = PlayerPrefs.GetInt("Audio", 1) == 1;
+        hideUnaffordableToggle.value = PlayerPrefs.GetInt("HideUnaffordable", 0) == 1;
+        
 
         // Character selection
         cityNameField = root.Q<TextField>("CityNameField");
@@ -219,7 +232,7 @@ public class GameUIController : MonoBehaviour
         float maintenance = effects.maintenance;
 
         var card = new Button { name = "BuildingCard" };
-        card.clicked += () => uiSounds.PlayOneShot(audioScript.click);
+        card.clicked += () => audioScript.PlaySound(audioScript.click);
 
         card.AddToClassList("building-card");
 
@@ -302,8 +315,8 @@ public class GameUIController : MonoBehaviour
             .OrderBy(def => def.effects.cost);
         foreach (var def in defs)
         {
-            if(city.gameState.topBalance<def.effects.cost/4) {buildingList.Add(CreateMysteryCard(def)); continue;}
-            if(city.gameState.balance<def.effects.cost) {buildingList.Add(CreateCantAffordCard(def)); continue;}
+            if(city.gameState.topBalance<def.effects.cost/4) {if(PlayerPrefs.GetInt("HideUnaffordable") == 1) {continue;} buildingList.Add(CreateMysteryCard(def)); continue;}
+            if(city.gameState.balance<def.effects.cost) {if(PlayerPrefs.GetInt("HideUnaffordable") == 1) {continue;} buildingList.Add(CreateCantAffordCard(def)); continue;}
             buildingList.Add(CreateBuildingCard(def));
         }
     }
@@ -323,7 +336,7 @@ public class GameUIController : MonoBehaviour
 
     public void ShowDetails(GameObject building)
     {
-        uiSounds.PlayOneShot(audioScript.info);
+        audioScript.PlaySound(audioScript.info);
         focusedBuilding = building.GetComponent<Building>();
         string title = focusedBuilding != null && focusedBuilding.definition != null
             ? (string.IsNullOrEmpty(focusedBuilding.definition.displayName) ? focusedBuilding.definition.name : focusedBuilding.definition.displayName)
@@ -388,4 +401,8 @@ public class GameUIController : MonoBehaviour
     {
         buildingManager.selectedBuilding = buildingDefinition;
     }
+
+    void OnHideUnaffordableChanged(bool isOn) {PlayerPrefs.SetInt("HideUnaffordable", isOn ? 1 : 0); PlayerPrefs.Save();}
+    void OnAudioToggleChanged(bool isOn) {PlayerPrefs.SetInt("Audio", isOn ? 1 : 0); PlayerPrefs.Save();}
 }
+

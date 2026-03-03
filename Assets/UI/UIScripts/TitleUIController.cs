@@ -7,6 +7,8 @@ public class TitleUIController : MonoBehaviour
     private UIDocument _uiDocument;
     private VisualElement _root;
     private VisualElement _optionsOverlay;
+    public Toggle audioToggle;
+    public Toggle hideUnaffordableToggle;
 
     void Awake()
     {
@@ -17,6 +19,13 @@ public class TitleUIController : MonoBehaviour
     {
         _root = _uiDocument.rootVisualElement;
         _optionsOverlay = _root.Q<VisualElement>("OptionsOverlay");
+        audioToggle = _root.Q<Toggle>("AudioToggle");
+        hideUnaffordableToggle = _root.Q<Toggle>("HideUnaffordableToggle");
+
+        audioToggle.RegisterValueChangedCallback(evt => OnAudioToggleChanged(evt.newValue));
+        hideUnaffordableToggle.RegisterValueChangedCallback(evt => OnHideUnaffordableChanged(evt.newValue));
+        audioToggle.value = PlayerPrefs.GetInt("Audio", 1) == 1;
+        hideUnaffordableToggle.value = PlayerPrefs.GetInt("HideUnaffordable", 0) == 1;
 
         _root.Q<Button>("NewGameBtn").clicked += OnNewGameClicked;
         _root.Q<Button>("LoadGameBtn").clicked += OnLoadGameClicked;
@@ -53,4 +62,7 @@ public class TitleUIController : MonoBehaviour
         Application.Quit();
 #endif
     }
+
+    void OnAudioToggleChanged(bool isOn) { PlayerPrefs.SetInt("Audio", isOn ? 1 : 0); PlayerPrefs.Save(); }
+    void OnHideUnaffordableChanged(bool isOn) { PlayerPrefs.SetInt("HideUnaffordable", isOn ? 1 : 0); PlayerPrefs.Save(); }
 }
