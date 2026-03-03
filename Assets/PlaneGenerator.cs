@@ -72,15 +72,10 @@ public class PlaneGenerator : MonoBehaviour
         maxX += padding;
         maxZ += padding;
 
-        float sizeX = maxX - minX;  
-        float sizeZ = maxZ - minZ;
+        float sizeX = Mathf.Max(maxX - minX, 10f);
+        float sizeZ = Mathf.Max(maxZ - minZ, 10f);
 
-        Vector3 NewVector = new Vector3(sizeX, 0f, sizeZ);
-        if (NewVector.x <= new Vector3(10f, 0f, 10f).x || NewVector.z <= new Vector3(10f, 0f, 10f).z)
-        {
-            return new Vector3(10f, 0f, 10f);
-        }else
-        {return new Vector3(sizeX, 0f, sizeZ);}
+        return new Vector3(sizeX, 0f, sizeZ);
         
     }
 }
