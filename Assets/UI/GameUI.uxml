@@ -42,21 +42,21 @@
                     <ui:Button name="FilterHousing"   text="🏠" class="category-filter-btn category-filter-btn--active" />
                     <ui:Button name="FilterJobs"      text="🏗️" class="category-filter-btn" />
                     <ui:Button name="FilterEducation" text="🎓" class="category-filter-btn" />
-                    <ui:Button name="FilterSafety"    text="🚔" class="category-filter-btn" />
                     <ui:Button name="FilterEnjoyment" text="🎡" class="category-filter-btn" />
+                    <ui:Button name="FilterSafety"    text="🚔" class="category-filter-btn" />
                 </ui:VisualElement>
                 <ui:Label name="CategoryTitle" text="Housing" class="category-title" />
                 <ui:ScrollView name="BuildingList" class="building-list" />
             </ui:VisualElement>
             <ui:VisualElement name="StatPanel" class="stat-panel glass">
                 <ui:Label text="Stats" class="panel-title" />
-                <ui:Label text="Jobs" class="stat-label" />
+                <ui:Label text="🏗️ Jobs" class="stat-label" />
                 <ui:ProgressBar name="JobsBar" value="0" high-value="100" class="stat-bar" />
-                <ui:Label text="Education" class="stat-label" />
+                <ui:Label text="🎓 Education" class="stat-label" />
                 <ui:ProgressBar name="EducationBar" value="0" high-value="100" class="stat-bar" />
-                <ui:Label text="Enjoyment" class="stat-label" />
+                <ui:Label text="🎡 Enjoyment" class="stat-label" />
                 <ui:ProgressBar name="EnjoymentBar" value="0" high-value="100" class="stat-bar" />
-                <ui:Label text="Safety" class="stat-label" />
+                <ui:Label text="🚔 Safety" class="stat-label" />
                 <ui:ProgressBar name="SafetyBar" value="0" high-value="100" class="stat-bar" />
             </ui:VisualElement>
         </ui:VisualElement>
