@@ -87,9 +87,6 @@ public class GameUIController : MonoBehaviour
         if (resetCamBtn != null) resetCamBtn.clicked += () => cameraBehaviour.resetCamera();
         if (optionsBtn != null) optionsBtn.clicked += () => ShowOverlay(optionsOverlay);
 
-        if (resetCamBtn != null) resetCamBtn.clicked += () => cameraBehaviour.resetCamera();
-        if (optionsBtn != null) optionsBtn.clicked += () => ShowOverlay(optionsOverlay);
-
         
         var closeOptionsBtn = root.Q<Button>("CloseOptionsBtn");
         var showGreetingBtn = root.Q<Button>("ShowGreetingBtn");
@@ -232,7 +229,6 @@ public class GameUIController : MonoBehaviour
         float maintenance = effects.maintenance;
 
         var card = new Button { name = "BuildingCard" };
-        card.clicked += () => audioScript.PlaySound(audioScript.click);
 
         card.AddToClassList("building-card");
 
@@ -269,8 +265,20 @@ public class GameUIController : MonoBehaviour
         card.Add(statsContainer);
 
 
-        card.clicked += () => BuyButtonPressed(buildingDefinition);
+        card.RegisterCallback<PointerDownEvent>(evt => //pointerdown event is low level: used here for drag&drop buying
+        {
+            if (evt.button == 0)
+            {
+                buildingManager.dragDropMode=true;
+                BuyButtonPressed(buildingDefinition); 
+                audioScript.PlaySound(audioScript.click);
+            }
+        }, TrickleDown.TrickleDown);
 
+        card.clicked += () => {
+            buildingManager.dragDropMode=false;
+            BuyButtonPressed(buildingDefinition);
+        };
         return card;
     }
 

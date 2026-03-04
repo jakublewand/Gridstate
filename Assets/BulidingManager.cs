@@ -14,9 +14,12 @@ public class BulidingManager : MonoBehaviour
     private BuildingDefinition lastSelectedBuilding;
     public GameObject selectedBuildingObject;
     private Ray ray;
+
+    public bool dragDropMode;
     private RaycastHit hit;
     public Collider planeCollider;
     private Vector2 mouseDownLocation;
+    private Vector2 mouseUpLocation;
     public PlaneGenerator PG;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -40,7 +43,8 @@ public class BulidingManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             mouseDownLocation = Input.mousePosition;
-        }
+        } else if(Input.GetMouseButtonUp(0)) {mouseUpLocation = Input.mousePosition;}
+
         if (selectedBuilding != null) {
             if (selectedBuildingObject == null) {
                 selectedBuildingObject = Instantiate(selectedBuilding.prefab, Vector3.zero, Quaternion.identity);
@@ -63,12 +67,15 @@ public class BulidingManager : MonoBehaviour
 
             if (Input.GetMouseButtonUp(0))
             {
-                if (EventSystem.current.IsPointerOverGameObject())
+                Debug.Log("nmousebutton UP on BM");
+                if (!dragDropMode && EventSystem.current.IsPointerOverGameObject())
                 {
+                    Debug.Log("if1 nmousebutton UP on BM");
                     return;
                 }
-                if (Vector3.Distance(mouseDownLocation, Input.mousePosition) > 5f)
+                if ((Vector3.Distance(mouseDownLocation, Input.mousePosition) > 5f) && !dragDropMode)
                 {
+                    Debug.Log("if 2nmousebutton UP on BM");
                     return;
                 }
 
@@ -76,6 +83,7 @@ public class BulidingManager : MonoBehaviour
                 ray = Camera.main.ScreenPointToRay(mousePos);
                 if (planeCollider.Raycast(ray, out hit, Mathf.Infinity))
                 {
+                    Debug.Log("inside buildingloop");
                     bool occupied = false;
                     foreach (var building in buildings)
                     {
@@ -90,7 +98,8 @@ public class BulidingManager : MonoBehaviour
                         Build(selectedBuilding, selectedBuildingObject.transform.position);
                         Destroy(selectedBuildingObject);
                         selectedBuilding = null;
-                    }   
+                    }
+                    dragDropMode=false;   
                 }
             }
         } else if (Input.GetMouseButtonUp(0) && Vector3.Distance(mouseDownLocation, Input.mousePosition) <= 5f)
