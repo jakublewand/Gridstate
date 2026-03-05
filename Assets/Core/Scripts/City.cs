@@ -32,6 +32,8 @@ public class City : MonoBehaviour
             _gameState.cityName = "City Name";
         if (_gameState.balance == 0)
             _gameState.balance = 100;
+        if (_gameState.topBalance == 0)
+            _gameState.topBalance = _gameState.balance;
     }
 
     // Update is called once per frame
@@ -76,7 +78,19 @@ public class City : MonoBehaviour
         {
             gameState.balance = temp;
         }
+        if(gameState.balance > gameState.topBalance) {gameState.topBalance = gameState.balance;}
 
+    }
+
+    public enum Characters {king = 1, idol = 2, engineer = 3}
+
+    public void SetCharacter(Characters ch)
+    {
+        gameState.character=(int)ch;
+    }
+    public Characters GetCharacter()
+    {
+        return (Characters)gameState.character;
     }
 
     public enum StatType
@@ -87,7 +101,8 @@ public class City : MonoBehaviour
         Jobs,
         Population,
         Income,
-        Balance
+        Balance,
+        TopBalance
 
     }
 
@@ -102,6 +117,7 @@ public class City : MonoBehaviour
             case StatType.Population: gameState.population = amount; break;
             case StatType.Income: gameState.income = amount; break;
             case StatType.Balance: gameState.balance = amount; break;
+            case StatType.TopBalance: gameState.topBalance = amount; break;
         }
     }
     public void ModifyStat(StatType stat, float amount)
@@ -115,6 +131,7 @@ public class City : MonoBehaviour
             case StatType.Population: gameState.population += amount; break;
             case StatType.Income: gameState.income += amount; break;
             case StatType.Balance: gameState.balance += amount; break;
+            case StatType.TopBalance: gameState.topBalance += amount; break;
         }
     }
 
@@ -129,6 +146,7 @@ public class City : MonoBehaviour
             case StatType.Population: return gameState.population;
             case StatType.Income: return gameState.income;
             case StatType.Balance: return gameState.balance;
+            case StatType.TopBalance: return gameState.topBalance;
             default: return 0;
         }
     }

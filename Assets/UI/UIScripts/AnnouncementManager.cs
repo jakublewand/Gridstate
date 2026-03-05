@@ -79,10 +79,10 @@ public class AnnouncementManager : MonoBehaviour
 
         infoLabel.text = text;
         switch (color) {
-            case AnnounceColor.White: {uiSounds.PlayOneShot(audioScript.info); break;};
-            case AnnounceColor.Yellow: {uiSounds.PlayOneShot(audioScript.info); break;};
-            case AnnounceColor.Red: {uiSounds.PlayOneShot(audioScript.error); break;};
-            default: {uiSounds.PlayOneShot(audioScript.info); break;};
+            case AnnounceColor.White: {audioScript.PlaySound(audioScript.info); break;};
+            case AnnounceColor.Yellow: {audioScript.PlaySound(audioScript.info); break;};
+            case AnnounceColor.Red: {audioScript.PlaySound(audioScript.error); break;};
+            default: {audioScript.PlaySound(audioScript.info); break;};
         };
 
     }

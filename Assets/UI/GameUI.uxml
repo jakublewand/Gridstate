@@ -38,28 +38,35 @@
         <ui:VisualElement name="RightPanels" class="right-panels">
             <ui:VisualElement name="BuyMenu" class="buy-menu glass">
                 <ui:VisualElement name="BuyMenuHeader" class="buy-menu-header">
-                    <ui:Label text="Köp" class="panel-title" />
-                    <ui:Button name="FilterHousing"   text="🏠" class="category-filter-btn" />
+                    <ui:Label text="Buy" class="panel-title" />
+                    <ui:Button name="FilterHousing"   text="🏠" class="category-filter-btn category-filter-btn--active" />
                     <ui:Button name="FilterJobs"      text="🏗️" class="category-filter-btn" />
                     <ui:Button name="FilterEducation" text="🎓" class="category-filter-btn" />
-                    <ui:Button name="FilterSafety"    text="🚔" class="category-filter-btn" />
                     <ui:Button name="FilterEnjoyment" text="🎡" class="category-filter-btn" />
+                    <ui:Button name="FilterSafety"    text="🚔" class="category-filter-btn" />
                 </ui:VisualElement>
+                <ui:Label name="CategoryTitle" text="Housing" class="category-title" />
                 <ui:ScrollView name="BuildingList" class="building-list" />
             </ui:VisualElement>
             <ui:VisualElement name="StatPanel" class="stat-panel glass">
                 <ui:Label text="Stats" class="panel-title" />
-                <ui:Label text="Jobs" class="stat-label" />
+                <ui:Label text="🏗️ Jobs" class="stat-label" />
                 <ui:ProgressBar name="JobsBar" value="0" high-value="100" class="stat-bar" />
-                <ui:Label text="Education" class="stat-label" />
+                <ui:Label text="🎓 Education" class="stat-label" />
                 <ui:ProgressBar name="EducationBar" value="0" high-value="100" class="stat-bar" />
-                <ui:Label text="Enjoyment" class="stat-label" />
+                <ui:Label text="🎡 Enjoyment" class="stat-label" />
                 <ui:ProgressBar name="EnjoymentBar" value="0" high-value="100" class="stat-bar" />
-                <ui:Label text="Safety" class="stat-label" />
+                <ui:Label text="🚔 Safety" class="stat-label" />
                 <ui:ProgressBar name="SafetyBar" value="0" high-value="100" class="stat-bar" />
             </ui:VisualElement>
         </ui:VisualElement>
+        <ui:VisualElement name="DetailCard" class="detail-card glass hidden">
+            <ui:Label name="DetailTitle" text="Building Name" class="detail-title" />
+            <ui:Button name="DemolishBtn" text="💥" class="btn btn-round detail-demolish-btn" />
+            <ui:Button name="DetailCloseBtn" text="✕" class="btn btn-round" />
+        </ui:VisualElement>
         <ui:VisualElement name="ZoomControls" class="zoom-controls glass">
+            <ui:Button name="ResetCamBtn" text="📍" class="zoom-btn" />
             <ui:Button name="CamBtn" text="📷" class="zoom-btn" />
             <ui:Button name="ZoomInBtn" text="+" class="zoom-btn" />
             <ui:Button name="ZoomOutBtn" text="−" class="zoom-btn" />
@@ -67,16 +74,38 @@
         <ui:VisualElement name="OptionsOverlay" class="overlay hidden">
             <ui:VisualElement class="overlay-panel glass">
                 <ui:Label text="Options" class="panel-title" />
-                <ui:Label text="This is the options screen." class="overlay-text" />
+                <ui:VisualElement class="options-row">
+                    <ui:Label text="Audio" class="options-label" />
+                    <ui:Toggle name="AudioToggle" value="true" class="options-toggle" />
+                </ui:VisualElement>
+                <ui:VisualElement class="options-row">
+                    <ui:Label text="Hide unaffordable" class="options-label" />
+                    <ui:Toggle name="HideUnaffordableToggle" class="options-toggle" />
+                </ui:VisualElement>
                 <ui:Button name="ShowGreetingBtn" text="Show Greeting Screen" class="overlay-btn" />
                 <ui:Button name="CloseOptionsBtn" text="Close" class="overlay-btn" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="GreetingOverlay" class="overlay hidden">
-            <ui:VisualElement class="overlay-panel glass">
-                <ui:Label text="Welcome!" class="panel-title" />
-                <ui:Label text="This is the greeting screen demo." class="overlay-text" />
-                <ui:Button name="CloseGreetingBtn" text="Close" class="overlay-btn" />
+        <ui:VisualElement name="GreetingOverlay" class="overlay">
+            <ui:VisualElement class="greeting-panel glass">
+                <ui:Label text="CHARACTER SELECTION" class="greeting-title" />
+                <ui:VisualElement class="character-row">
+                    <ui:Button name="KingOfAmerica" class="character-card">
+                        <ui:VisualElement class="character-portrait" />
+                        <ui:Label text="King of America" class="character-name" />
+                    </ui:Button>
+                    <ui:Button name="IdolOfTheNorth" class="character-card">
+                        <ui:VisualElement class="character-portrait" />
+                        <ui:Label text="Idol of the North" class="character-name" />
+                    </ui:Button>
+                    <ui:Button name="SoftwareEngineer" class="character-card">
+                        <ui:VisualElement class="character-portrait" />
+                        <ui:Label text="Software Engineer" class="character-name" />
+                    </ui:Button>
+                </ui:VisualElement>
+                <ui:Label name="CharQuote" text="" class="character-quote" />
+                <ui:TextField name="CityNameField" label="City Name" value="New City" class="city-name-field" />
+                <ui:Button name="StartGameBtn" text="Start" class="overlay-btn start-btn" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

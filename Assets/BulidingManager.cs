@@ -8,14 +8,18 @@ public class BulidingManager : MonoBehaviour
     [SerializeField] public List<BuildingDefinition> buildingDefinitions = new List<BuildingDefinition>();
     [SerializeField] AudioScript audioScript;
     [SerializeField] AudioSource uiSounds;
+    [SerializeField] GameUIController ui;
     public List<Building> buildings = new List<Building>();
     public BuildingDefinition selectedBuilding;
     private BuildingDefinition lastSelectedBuilding;
     public GameObject selectedBuildingObject;
     private Ray ray;
+
+    public bool dragDropMode;
     private RaycastHit hit;
     public Collider planeCollider;
     private Vector2 mouseDownLocation;
+    private Vector2 mouseUpLocation;
     public PlaneGenerator PG;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,6 +40,11 @@ public class BulidingManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            mouseDownLocation = Input.mousePosition;
+        } else if(Input.GetMouseButtonUp(0)) {mouseUpLocation = Input.mousePosition;}
+
         if (selectedBuilding != null) {
             if (selectedBuildingObject == null) {
                 selectedBuildingObject = Instantiate(selectedBuilding.prefab, Vector3.zero, Quaternion.identity);
@@ -56,27 +65,25 @@ public class BulidingManager : MonoBehaviour
                 selectedBuildingObject.transform.position += Vector3.up * selectedBuildingObject.transform.localScale.y / 2;
             }
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                mouseDownLocation = Input.mousePosition;
-            }
-
             if (Input.GetMouseButtonUp(0))
             {
-                if (EventSystem.current.IsPointerOverGameObject())
+                Debug.Log("nmousebutton UP on BM");
+                if (!dragDropMode && EventSystem.current.IsPointerOverGameObject())
                 {
+                    Debug.Log("if1 nmousebutton UP on BM");
                     return;
                 }
-                if (Vector3.Distance(mouseDownLocation, Input.mousePosition) > 5f)
+                if ((Vector3.Distance(mouseDownLocation, Input.mousePosition) > 5f) && !dragDropMode)
                 {
+                    Debug.Log("if 2nmousebutton UP on BM");
                     return;
                 }
-
 
                 Vector3 mousePos = Input.mousePosition;
                 ray = Camera.main.ScreenPointToRay(mousePos);
                 if (planeCollider.Raycast(ray, out hit, Mathf.Infinity))
                 {
+                    Debug.Log("inside buildingloop");
                     bool occupied = false;
                     foreach (var building in buildings)
                     {
@@ -91,8 +98,30 @@ public class BulidingManager : MonoBehaviour
                         Build(selectedBuilding, selectedBuildingObject.transform.position);
                         Destroy(selectedBuildingObject);
                         selectedBuilding = null;
-                    }   
+                    }
+                    dragDropMode=false;   
                 }
+            }
+        } else if (Input.GetMouseButtonUp(0) && Vector3.Distance(mouseDownLocation, Input.mousePosition) <= 5f)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (planeCollider.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+            {
+                Vector3 alignedPos = hit.point - new Vector3(-0.5f, 0f, -0.5f);
+                alignedPos.x = Mathf.Floor(alignedPos.x);
+                alignedPos.z = Mathf.Floor(alignedPos.z);
+                bool found = false;
+                foreach (var building in buildings)
+                    {
+                        if (building.gameObject.transform.position.x == alignedPos.x &&
+                            building.gameObject.transform.position.z == alignedPos.z && building.definition.primaryCategory!=PrimaryCategory.TownHall)
+                        {
+                            ui.ShowDetails(building.gameObject);
+                            found = true;
+                            break;
+                        }
+                    }
+                if (!found) ui.CloseDetails();
             }
         }
     }
@@ -126,8 +155,19 @@ public class BulidingManager : MonoBehaviour
         buildings.Add(building);
         PG.UpdatePlane();
         RecalculateStats();
-        uiSounds.PlayOneShot(audioScript.build);
+        audioScript.PlaySound(audioScript.build);
+    }
 
+    public void Demolish(Building building)
+    {
+        if (building.definition == null || building.definition.prefab == null)
+            return;
+        city.ModifyStat(City.StatType.Population, -building.definition.effects.housing);
+        Destroy(building.gameObject);
+        buildings.Remove(building);
+        PG.UpdatePlane();
+        RecalculateStats();
+        audioScript.PlaySound(audioScript.demolish);
         
     }
     

@@ -8,5 +8,12 @@ public class AudioScript : MonoBehaviour
     [SerializeField] public AudioClip info;
     [SerializeField] public AudioClip build;
     [SerializeField] public AudioClip demolish;
+    [SerializeField] public AudioSource uiSounds;
+
+    public void PlaySound(AudioClip clip)
+    {
+        if (PlayerPrefs.GetInt("Audio") == 1)
+            uiSounds.PlayOneShot(clip);
+    }
 
 }

@@ -26,7 +26,14 @@
         <ui:VisualElement name="OptionsOverlay" class="overlay hidden">
             <ui:VisualElement class="overlay-panel glass">
                 <ui:Label text="Options" class="panel-title" />
-                <ui:Label text="Options coming soon..." class="overlay-text" />
+                <ui:VisualElement class="options-row">
+                    <ui:Label text="Audio" class="options-label" />
+                    <ui:Toggle name="AudioToggle" value="true" class="options-toggle" />
+                </ui:VisualElement>
+                <ui:VisualElement class="options-row">
+                    <ui:Label text="Hide unaffordable" class="options-label" />
+                    <ui:Toggle name="HideUnaffordableToggle" class="options-toggle" />
+                </ui:VisualElement>
                 <ui:Button name="CloseOptionsBtn" text="Close" class="overlay-btn" />
             </ui:VisualElement>
         </ui:VisualElement>
