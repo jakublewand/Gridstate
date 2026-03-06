@@ -14,8 +14,6 @@ public class BulidingManager : MonoBehaviour
     private BuildingDefinition lastSelectedBuilding;
     public GameObject selectedBuildingObject;
     private Ray ray;
-
-    public bool dragDropMode;
     private RaycastHit hit;
     public Collider planeCollider;
     private Vector2 mouseDownLocation;
@@ -68,12 +66,12 @@ public class BulidingManager : MonoBehaviour
             if (Input.GetMouseButtonUp(0))
             {
                 Debug.Log("nmousebutton UP on BM");
-                if (!dragDropMode && EventSystem.current.IsPointerOverGameObject())
+                if (IsPointerOverUI())
                 {
                     Debug.Log("if1 nmousebutton UP on BM");
                     return;
                 }
-                if ((Vector3.Distance(mouseDownLocation, Input.mousePosition) > 5f) && !dragDropMode)
+                if (Vector3.Distance(mouseDownLocation, Input.mousePosition) > 5f && !EventSystem.current.IsPointerOverGameObject())
                 {
                     Debug.Log("if 2nmousebutton UP on BM");
                     return;
@@ -98,8 +96,7 @@ public class BulidingManager : MonoBehaviour
                         Build(selectedBuilding, selectedBuildingObject.transform.position);
                         Destroy(selectedBuildingObject);
                         selectedBuilding = null;
-                    }
-                    dragDropMode=false;   
+                    } 
                 }
             }
         } else if (Input.GetMouseButtonUp(0) && Vector3.Distance(mouseDownLocation, Input.mousePosition) <= 5f)
@@ -171,6 +168,15 @@ public class BulidingManager : MonoBehaviour
         
     }
     
+    private bool IsPointerOverUI()
+    {
+        PointerEventData eventData = new PointerEventData(EventSystem.current);
+        eventData.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+        return results.Count > 0;
+    }
+
     private void RecalculateStats()
     {
         float k = 1.386f;

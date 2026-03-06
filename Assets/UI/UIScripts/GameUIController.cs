@@ -269,16 +269,15 @@ public class GameUIController : MonoBehaviour
         {
             if (evt.button == 0)
             {
-                buildingManager.dragDropMode=true;
                 BuyButtonPressed(buildingDefinition); 
                 audioScript.PlaySound(audioScript.click);
             }
         }, TrickleDown.TrickleDown);
 
-        card.clicked += () => {
-            buildingManager.dragDropMode=false;
-            BuyButtonPressed(buildingDefinition);
-        };
+        //card.clicked += () => { old click check before drag drop
+        //    buildingManager.dragDropMode=false;
+        //    BuyButtonPressed(buildingDefinition);
+        //};
         return card;
     }
 
