@@ -15,11 +15,11 @@ MonoBehaviour:
   displayName: Schoolhouse
   primaryCategory: 3
   effects:
-    cost: 9000
+    cost: 25000
     maintenance: 0
     housing: 80
     jobs: 22
-    education: 180
+    education: 700
     safety: 0
     enjoyment: 0
   prefab: {fileID: 6702080380065664546, guid: c5dc38e8c343440c98e5219e1a74b02e, type: 3}

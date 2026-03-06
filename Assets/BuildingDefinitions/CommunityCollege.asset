@@ -15,11 +15,11 @@ MonoBehaviour:
   displayName: Community College
   primaryCategory: 3
   effects:
-    cost: 12000
+    cost: 110000
     maintenance: 0
     housing: 80
     jobs: 20
-    education: 180
+    education: 1200
     safety: 0
     enjoyment: 50
   prefab: {fileID: 6702080380065664546, guid: 252ab0d6103f42ac8b07ea191791523f, type: 3}

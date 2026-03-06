@@ -164,8 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48473b8a6e9c4fd40a1afb9592121571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SECONDS_PER_DAY: 20
-  PAYOUTS_PER_DAY: 4
+  SECONDS_PER_DAY: 200
+  PAYOUTS_PER_DAY: 40
   _gameState:
     cityName: 
     dayCount: 0
@@ -242,6 +242,7 @@ MonoBehaviour:
   buildings: []
   selectedBuilding: {fileID: 0}
   selectedBuildingObject: {fileID: 0}
+  dragDropMode: 0
   planeCollider: {fileID: 1196345572}
   PG: {fileID: 1373062911}
 --- !u!1 &330585543
