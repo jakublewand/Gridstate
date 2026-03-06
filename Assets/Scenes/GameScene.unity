@@ -235,7 +235,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 81e7d0234add45c4b3dd0e68f27aa207, type: 2}
   - {fileID: 11400000, guid: a155d5109a7f4f39b1d83276e88f3f68, type: 2}
   - {fileID: 11400000, guid: 6400b719a0fa4c7da0e92083c9705652, type: 2}
+  - {fileID: 11400000, guid: 064fa06a60e6db64996764996a439d13, type: 2}
+  - {fileID: 11400000, guid: ec6eadf8e8dfbb74e900a3c46f8c2ad1, type: 2}
   - {fileID: 11400000, guid: 5c670f1f22a748499fa30e4166b4c8da, type: 2}
+  - {fileID: 11400000, guid: 5c670f1f22a748499fa30e4166b4c8da, type: 2}
+  - {fileID: 11400000, guid: c6a88386ee0e079459cc3bf79233ab0d, type: 2}
+  - {fileID: 11400000, guid: c874d4520e49ff845b659d777621a249, type: 2}
+  - {fileID: 11400000, guid: 32714ffdb13a10f4a9827e3f913c9d86, type: 2}
+  - {fileID: 11400000, guid: 483d703ff485ffd4cafcd052c1fd4cda, type: 2}
   audioScript: {fileID: 511445004}
   uiSounds: {fileID: 511445003}
   ui: {fileID: 1644778566}
