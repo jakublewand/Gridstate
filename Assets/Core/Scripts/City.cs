@@ -196,22 +196,22 @@ public class City : MonoBehaviour
         if (AnnouncementManager.instance == null)
         return;
 
-        if (this.GetStat(City.StatType.Education) < 0.25 && this.GetStat(City.StatType.Income)>150)
+        if (this.GetStat(City.StatType.Education) < 0.2 && this.GetStat(City.StatType.Income)>150)
         {
                 message = "Your city needs to fund more education!";
                 showMessage = true;
         }
-        else if(this.GetStat(City.StatType.Jobs) < 0.25 && this.GetStat(City.StatType.Income)>150)
+        else if(this.GetStat(City.StatType.Jobs) < 0.2 && this.GetStat(City.StatType.Income)>150)
         {
                 message = "Your population is unemployed! Create job opportunities!";
                 showMessage = true;
         }
-        else if(this.GetStat(City.StatType.Enjoyment) < 0.25 && this.GetStat(City.StatType.Income)>150)
+        else if(this.GetStat(City.StatType.Enjoyment) < 0.2 && this.GetStat(City.StatType.Income)>150)
         {
                 message = "Your city is very depressing! Maybe plant some trees!";
                 showMessage = true;
         }
-        else if(this.GetStat(City.StatType.Safety) < 0.25 && this.GetStat(City.StatType.Income)>150)
+        else if(this.GetStat(City.StatType.Safety) < 0.2 && this.GetStat(City.StatType.Income)>150)
         {
                 message = "Your city isn't safe at all! Where is the police?";
                 showMessage = true;

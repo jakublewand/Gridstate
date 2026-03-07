@@ -15,11 +15,11 @@ MonoBehaviour:
   displayName: Tower
   primaryCategory: 1
   effects:
-    cost: 80000
+    cost: 1200000
     maintenance: 0
-    housing: 1300
-    jobs: 100
+    housing: 12000
+    jobs: 200
     education: 0
     safety: 0
-    enjoyment: 100
+    enjoyment: 1
   prefab: {fileID: 6702080380065664546, guid: 76756b41db144699b417ffa33259a463, type: 3}

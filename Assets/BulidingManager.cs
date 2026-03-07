@@ -215,7 +215,7 @@ public class BulidingManager : MonoBehaviour
         city.SetStat(City.StatType.Safety, 1f - Mathf.Exp(-k * safetyTotal / population));
         foreach (var randomEvent in randomEvents)
         {
-            city.ModifyStat(randomEvent.affectedStat, randomEvent.effectAmount);
+            city.SetStat(randomEvent.affectedStat, city.GetStat(randomEvent.affectedStat)*randomEvent.effectAmount);
         }
     }
 }

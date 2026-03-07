@@ -15,9 +15,9 @@ MonoBehaviour:
   displayName: Complex
   primaryCategory: 1
   effects:
-    cost: 50000
+    cost: 500000
     maintenance: 0
-    housing: 2100
+    housing: 4000
     jobs: 0
     education: 0
     safety: 0

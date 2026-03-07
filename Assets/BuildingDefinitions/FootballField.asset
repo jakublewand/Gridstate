@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FootballField
   m_EditorClassIdentifier: 
   displayName: Football field
-  primaryCategory: 3
+  primaryCategory: 5
   effects:
     cost: 22000
     maintenance: 0
@@ -22,4 +22,4 @@ MonoBehaviour:
     education: 0
     safety: 0
     enjoyment: 1100
-  prefab: {fileID: 6702080380065664546, guid: aed223d50de8488caf46e52b03017785, type: 3}
+  prefab: {fileID: 100000, guid: 00b78b03851cb0748b61d9005fb73b49, type: 3}
