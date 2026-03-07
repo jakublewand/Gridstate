@@ -91,15 +91,15 @@
                 <ui:Label text="CHARACTER SELECTION" class="greeting-title" />
                 <ui:VisualElement class="character-row">
                     <ui:Button name="KingOfAmerica" class="character-card">
-                        <ui:VisualElement class="character-portrait" />
+                        <ui:VisualElement class="character-portrait king-banner" />
                         <ui:Label text="King of America" class="character-name" />
                     </ui:Button>
                     <ui:Button name="LionOfTheNorth" class="character-card">
-                        <ui:VisualElement class="character-portrait" />
+                        <ui:VisualElement class="character-portrait lion-banner" />
                         <ui:Label text="Lion of the North" class="character-name" />
                     </ui:Button>
                     <ui:Button name="SoftwareEngineer" class="character-card">
-                        <ui:VisualElement class="character-portrait" />
+                        <ui:VisualElement class="character-portrait soft-banner" />
                         <ui:Label text="Software Engineer" class="character-name" />
                     </ui:Button>
                 </ui:VisualElement>
