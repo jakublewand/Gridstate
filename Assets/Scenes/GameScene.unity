@@ -196,8 +196,8 @@ MonoBehaviour:
   city: {fileID: 282369904}
   buildingDefinitions:
   - {fileID: 11400000, guid: e3e0a2fb1b3352b4c85d2f79f023aa5d, type: 2}
-  - {fileID: 11400000, guid: e40c4119898fbbc44938cb1f666d0975, type: 2}
   - {fileID: 11400000, guid: 15dd113f5e9eefc4d8b3844bee54f3e6, type: 2}
+  - {fileID: 11400000, guid: e40c4119898fbbc44938cb1f666d0975, type: 2}
   - {fileID: 11400000, guid: 6c8f061423f6e934aa1d04898724b134, type: 2}
   - {fileID: 11400000, guid: b5bcab5b46cfdae45a82dd36e5bc67f6, type: 2}
   - {fileID: 11400000, guid: 73d0f60f719ecbe45a3323b2498a6fe9, type: 2}
