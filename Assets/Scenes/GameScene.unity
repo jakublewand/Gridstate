@@ -181,6 +181,7 @@ MonoBehaviour:
     education: 0
     enjoyment: 0
     safety: 0
+  buildingManager: {fileID: 282369905}
 --- !u!114 &282369905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1328,6 +1329,20 @@ MonoBehaviour:
   buildingManager: {fileID: 282369905}
   uiSounds: {fileID: 511445003}
   audioScript: {fileID: 511445004}
+  kingLevelImages:
+  - {fileID: 2800000, guid: faaae4fd3406c1a42977f248f9d0ee2a, type: 3}
+  - {fileID: 2800000, guid: 6aa508a234ba8ca45a285b823e4300de, type: 3}
+  - {fileID: 2800000, guid: 5e75df212d3fa224ea7da9600e76aad5, type: 3}
+  lionLevelImages:
+  - {fileID: 2800000, guid: 802b064b508c31b45a69ea3a6b2e5a87, type: 3}
+  - {fileID: 2800000, guid: fdfa8ed5c5b414c4a8c7acc382ef4caf, type: 3}
+  - {fileID: 2800000, guid: 851e7343edbbeec4b91f61e0cbe78cf4, type: 3}
+  softLevelImages:
+  - {fileID: 2800000, guid: f1614e648d411e046b0d9bfe273b5706, type: 3}
+  - {fileID: 2800000, guid: ce11eeffa61071b4db14a864f6f92a29, type: 3}
+  - {fileID: 2800000, guid: f63c74cbfa452834fac32bdbec3dc3b6, type: 3}
+  levelOnePopGoal: 50
+  levelTwoPopGoal: 200
 --- !u!114 &1644778567
 MonoBehaviour:
   m_ObjectHideFlags: 0
