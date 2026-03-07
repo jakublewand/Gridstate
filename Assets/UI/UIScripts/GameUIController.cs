@@ -102,10 +102,10 @@ public class GameUIController : MonoBehaviour
         cityNameField = root.Q<TextField>("CityNameField");
         charQuoteLabel = root.Q<Label>("CharQuote");
         var king = root.Q<Button>("KingOfAmerica");
-        var idol = root.Q<Button>("IdolOfTheNorth");
+        var lion = root.Q<Button>("LionOfTheNorth");
         var engineer = root.Q<Button>("SoftwareEngineer");
         if (king != null) king.clicked += () => SelectCharacter(king, City.Characters.king, "\"Make your city great again!\"");
-        if (idol != null) idol.clicked += () => SelectCharacter(idol, City.Characters.idol, "\"My city was perfect from day one. The citizens just don't know it yet.\"");
+        if (lion != null) lion.clicked += () => SelectCharacter(lion, City.Characters.lion, "\"My city was perfect from day one. The citizens just don't know it yet.\"");
         if (engineer != null) engineer.clicked += () => SelectCharacter(engineer, City.Characters.engineer, "\"Children's playground converted to datacenter.\"");
         startGameBtn = root.Q<Button>("StartGameBtn");
         if (startGameBtn != null)
@@ -399,6 +399,7 @@ public class GameUIController : MonoBehaviour
         if (!string.IsNullOrWhiteSpace(name))
             city.renameCity(name);
         city.SetCharacter(selectedCharacter);
+        buildingManager.PlaceTownHall((int)selectedCharacter);
         HideOverlay(greetingOverlay);
         if (city.isPaused()) city.playPauseGame();
         playBtn.text = "II";

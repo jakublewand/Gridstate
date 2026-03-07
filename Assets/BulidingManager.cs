@@ -29,11 +29,8 @@ public class BulidingManager : MonoBehaviour
             return;
         }
 
-        Build(
-            buildingDefinitions[0],
-            new Vector3(0, buildingDefinitions[0].prefab.transform.localScale.y / 2, 0)
-        );
     }
+
 
     // Update is called once per frame
     void Update()
@@ -153,6 +150,18 @@ public class BulidingManager : MonoBehaviour
         PG.UpdatePlane();
         RecalculateStats();
         audioScript.PlaySound(audioScript.build);
+    }
+    public void PlaceTownHall(int ch)
+    {
+        var townHalls = buildings.FindAll(b => b.definition.primaryCategory == PrimaryCategory.TownHall);
+        foreach (var building in townHalls)
+        {
+            Demolish(building);
+        }
+        Build(
+            buildingDefinitions[ch],
+            new Vector3(0, buildingDefinitions[ch].prefab.transform.localScale.y / 2, 0)
+        );
     }
 
     public void Demolish(Building building)

@@ -82,7 +82,7 @@ public class City : MonoBehaviour
 
     }
 
-    public enum Characters {king = 1, idol = 2, engineer = 3}
+    public enum Characters {king = 1, lion = 2, engineer = 3}
 
     public void SetCharacter(Characters ch)
     {

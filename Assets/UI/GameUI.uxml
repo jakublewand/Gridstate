@@ -94,9 +94,9 @@
                         <ui:VisualElement class="character-portrait" />
                         <ui:Label text="King of America" class="character-name" />
                     </ui:Button>
-                    <ui:Button name="IdolOfTheNorth" class="character-card">
+                    <ui:Button name="LionOfTheNorth" class="character-card">
                         <ui:VisualElement class="character-portrait" />
-                        <ui:Label text="Idol of the North" class="character-name" />
+                        <ui:Label text="Lion of the North" class="character-name" />
                     </ui:Button>
                     <ui:Button name="SoftwareEngineer" class="character-card">
                         <ui:VisualElement class="character-portrait" />
