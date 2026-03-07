@@ -15,9 +15,9 @@ MonoBehaviour:
   displayName: Tower
   primaryCategory: 1
   effects:
-    cost: 220000
+    cost: 1200000
     maintenance: 0
-    housing: 2500
+    housing: 12000
     jobs: 200
     education: 0
     safety: 0

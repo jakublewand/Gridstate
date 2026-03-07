@@ -15,11 +15,11 @@ MonoBehaviour:
   displayName: Missile silo
   primaryCategory: 4
   effects:
-    cost: 800000
+    cost: 8000000
     maintenance: 0
     housing: 0
-    jobs: 1300
-    education: 500
-    safety: 4500
+    jobs: 4000
+    education: 2000
+    safety: 15000
     enjoyment: 300
   prefab: {fileID: 6702080380065664546, guid: 0214ccda091a4d1c91a7b005a1319f6e, type: 3}

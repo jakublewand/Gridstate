@@ -15,11 +15,11 @@ MonoBehaviour:
   displayName: Golden cottage
   primaryCategory: 1
   effects:
-    cost: 8000
+    cost: 60000
     maintenance: 0
-    housing: 250
+    housing: 1100
     jobs: 0
     education: 0
-    safety: 100
+    safety: 200
     enjoyment: 0
   prefab: {fileID: 6702080380065664546, guid: 16164c6b09ac481b82d1e60a4ee41202, type: 3}

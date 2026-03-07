@@ -15,9 +15,9 @@ MonoBehaviour:
   displayName: High-rise
   primaryCategory: 1
   effects:
-    cost: 32000
+    cost: 120000
     maintenance: 0
-    housing: 460
+    housing: 1500
     jobs: 40
     education: 0
     safety: 0
