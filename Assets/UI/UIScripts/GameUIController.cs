@@ -7,6 +7,7 @@ using System.Linq;
 public class GameUIController : MonoBehaviour
     // Script for the UI
 {
+    public static GameUIController instance; // static instance for global reference
     [SerializeField] CameraBehaviour cameraBehaviour;
     [SerializeField] BulidingManager buildingManager;
     [SerializeField] AudioSource uiSounds;
@@ -34,6 +35,9 @@ public class GameUIController : MonoBehaviour
     private Button optionsBtn;
     private VisualElement optionsOverlay;
     private VisualElement greetingOverlay;
+    private VisualElement eventPopupOverlay;
+    private Label eventMessageLabel;
+    private Button eventCloseBtn;
     private ScrollView buildingList;
     private Button activeFilterBtn;
     private PrimaryCategory? activeFilter = PrimaryCategory.Housing;
@@ -45,9 +49,11 @@ public class GameUIController : MonoBehaviour
     private Button startGameBtn;
     public Toggle audioToggle;
     public Toggle hideUnaffordableToggle;
+    public static bool IsEventPopupActive { get; private set; }
 
     void OnEnable()
     {
+        instance = this;
         var uiDoc = GetComponent<UIDocument>();
         //audioScript = uiSounds.GetComponent<AudioScript>();
         root = uiDoc.rootVisualElement;
@@ -73,6 +79,9 @@ public class GameUIController : MonoBehaviour
         audioToggle = root.Q<Toggle>("AudioToggle");
         hideUnaffordableToggle = root.Q<Toggle>("HideUnaffordableToggle");
         greetingOverlay = root.Q<VisualElement>("GreetingOverlay");
+        eventPopupOverlay = root.Q<VisualElement>("EventPopupOverlay");
+        eventMessageLabel = root.Q<Label>("EventMessageLabel");
+        eventCloseBtn = root.Q<Button>("EventCloseBtn");
 
         // Attach audio
 
@@ -92,6 +101,7 @@ public class GameUIController : MonoBehaviour
         var showGreetingBtn = root.Q<Button>("ShowGreetingBtn");
         if (closeOptionsBtn != null) closeOptionsBtn.clicked += () => HideOverlay(optionsOverlay);
         if (showGreetingBtn != null) showGreetingBtn.clicked += () => { HideOverlay(optionsOverlay); ShowOverlay(greetingOverlay); };
+        if (eventCloseBtn != null) eventCloseBtn.clicked += () => { HideOverlay(eventPopupOverlay); IsEventPopupActive = false; };
         audioToggle.RegisterValueChangedCallback(evt => OnAudioToggleChanged(evt.newValue));
         hideUnaffordableToggle.RegisterValueChangedCallback(evt => OnHideUnaffordableChanged(evt.newValue));
         audioToggle.value = PlayerPrefs.GetInt("Audio", 1) == 1;
@@ -191,6 +201,16 @@ public class GameUIController : MonoBehaviour
     private void HideOverlay(VisualElement overlay)
     {
         overlay.AddToClassList("hidden");
+    }
+
+    public void ShowEventPopup(string message)
+    {
+        if (eventMessageLabel != null)
+        {
+            eventMessageLabel.text = message;
+        }
+        ShowOverlay(eventPopupOverlay);
+        IsEventPopupActive = true;
     }
 
     private string Suf(float value)

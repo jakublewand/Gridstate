@@ -96,7 +96,7 @@
                     </ui:Button>
                     <ui:Button name="IdolOfTheNorth" class="character-card">
                         <ui:VisualElement class="character-portrait" />
-                        <ui:Label text="Idol of the North" class="character-name" />
+                        <ui:Label text="Lion of the North" class="character-name" />
                     </ui:Button>
                     <ui:Button name="SoftwareEngineer" class="character-card">
                         <ui:VisualElement class="character-portrait" />
@@ -106,6 +106,13 @@
                 <ui:Label name="CharQuote" text="" class="character-quote" />
                 <ui:TextField name="CityNameField" label="City Name" value="New City" class="city-name-field" />
                 <ui:Button name="StartGameBtn" text="Start" class="overlay-btn start-btn" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="EventPopupOverlay" class="overlay hidden">
+            <ui:VisualElement class="event-popup-panel glass">
+                <ui:Label text="Random Event!" class="event-popup-title" />
+                <ui:Label name="EventMessageLabel" text="Something happened in your city!" class="event-popup-message" />
+                <ui:Button name="EventCloseBtn" text="OK" class="overlay-btn event-popup-close-btn" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
