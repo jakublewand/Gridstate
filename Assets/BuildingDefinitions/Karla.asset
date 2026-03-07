@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
+  m_Name: Karla
+  m_EditorClassIdentifier: 
+  displayName: Town Hall
+  primaryCategory: 0
+  effects:
+    cost: 0
+    maintenance: 0
+    housing: 10
+    jobs: 5
+    education: 5
+    safety: 5
+    enjoyment: 5
+  prefab: {fileID: 893746719676800230, guid: 34f4b21b64e21af42851e18f147be5ba, type: 3}

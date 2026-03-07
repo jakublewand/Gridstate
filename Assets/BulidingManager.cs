@@ -10,12 +10,11 @@ public class BulidingManager : MonoBehaviour
     [SerializeField] AudioSource uiSounds;
     [SerializeField] GameUIController ui;
     public List<Building> buildings = new List<Building>();
+    public List<RandomEventData> randomEvents = new List<RandomEventData>();
     public BuildingDefinition selectedBuilding;
     private BuildingDefinition lastSelectedBuilding;
     public GameObject selectedBuildingObject;
     private Ray ray;
-
-    public bool dragDropMode;
     private RaycastHit hit;
     public Collider planeCollider;
     private Vector2 mouseDownLocation;
@@ -31,11 +30,8 @@ public class BulidingManager : MonoBehaviour
             return;
         }
 
-        Build(
-            buildingDefinitions[0],
-            new Vector3(0, buildingDefinitions[0].prefab.transform.localScale.y / 2, 0)
-        );
     }
+
 
     // Update is called once per frame
     void Update()
@@ -68,12 +64,12 @@ public class BulidingManager : MonoBehaviour
             if (Input.GetMouseButtonUp(0))
             {
                 Debug.Log("nmousebutton UP on BM");
-                if (!dragDropMode && EventSystem.current.IsPointerOverGameObject())
+                if (IsPointerOverUI())
                 {
                     Debug.Log("if1 nmousebutton UP on BM");
                     return;
                 }
-                if ((Vector3.Distance(mouseDownLocation, Input.mousePosition) > 5f) && !dragDropMode)
+                if (Vector3.Distance(mouseDownLocation, Input.mousePosition) > 5f && !EventSystem.current.IsPointerOverGameObject())
                 {
                     Debug.Log("if 2nmousebutton UP on BM");
                     return;
@@ -98,8 +94,7 @@ public class BulidingManager : MonoBehaviour
                         Build(selectedBuilding, selectedBuildingObject.transform.position);
                         Destroy(selectedBuildingObject);
                         selectedBuilding = null;
-                    }
-                    dragDropMode=false;   
+                    } 
                 }
             }
         } else if (Input.GetMouseButtonUp(0) && Vector3.Distance(mouseDownLocation, Input.mousePosition) <= 5f)
@@ -157,6 +152,18 @@ public class BulidingManager : MonoBehaviour
         RecalculateStats();
         audioScript.PlaySound(audioScript.build);
     }
+    public void PlaceTownHall(int ch)
+    {
+        var townHalls = buildings.FindAll(b => b.definition.primaryCategory == PrimaryCategory.TownHall);
+        foreach (var building in townHalls)
+        {
+            Demolish(building);
+        }
+        Build(
+            buildingDefinitions[ch],
+            new Vector3(0, buildingDefinitions[ch].prefab.transform.localScale.y / 2, 0)
+        );
+    }
 
     public void Demolish(Building building)
     {
@@ -171,7 +178,16 @@ public class BulidingManager : MonoBehaviour
         
     }
     
-    private void RecalculateStats()
+    private bool IsPointerOverUI()
+    {
+        PointerEventData eventData = new PointerEventData(EventSystem.current);
+        eventData.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+        return results.Count > 0;
+    }
+
+    public void RecalculateStats()
     {
         float k = 1.386f;
         city.SetStat(City.StatType.Jobs, 0);
@@ -192,9 +208,14 @@ public class BulidingManager : MonoBehaviour
             safetyTotal += building.definition.effects.safety;
         }
 
+
         city.SetStat(City.StatType.Jobs, 1f - Mathf.Exp(-k * jobsTotal / population));
         city.SetStat(City.StatType.Education, 1f - Mathf.Exp(-k * educationTotal / population));
         city.SetStat(City.StatType.Enjoyment, 1f - Mathf.Exp(-k * enjoymentTotal / population));
         city.SetStat(City.StatType.Safety, 1f - Mathf.Exp(-k * safetyTotal / population));
+        foreach (var randomEvent in randomEvents)
+        {
+            city.SetStat(randomEvent.affectedStat, city.GetStat(randomEvent.affectedStat)*randomEvent.effectAmount);
+        }
     }
 }
