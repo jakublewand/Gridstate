@@ -208,7 +208,7 @@
     -unity-text-align: middle-center;
     margin-bottom: 30px;
     white-space: normal;
-    word-wrap: break-word;
+    overflow: hidden;
 }
 
 /* GREETING / CHARACTER SELECTION */
@@ -250,6 +250,10 @@
     border-color: rgba(100, 180, 255, 0.8);
     background-color: rgba(100, 180, 255, 0.2);
 }
+.king-banner { background-image: url("project://database/Assets/UI/img/kingbanner.png"); -unity-background-scale-mode: scale-to-fit; }
+.lion-banner { background-image: url("project://database/Assets/UI/img/lionbanner.png"); -unity-background-scale-mode: scale-to-fit; }
+.soft-banner { background-image: url("project://database/Assets/UI/img/softbanner.png"); -unity-background-scale-mode: scale-to-fit; }
+
 .character-portrait {
     width: 180px;
     height: 220px;
