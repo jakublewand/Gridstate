@@ -46,6 +46,7 @@ public class GameUIController : MonoBehaviour
     private int lastCrestLevel = -1;
     private VisualElement eventPopupOverlay;
     private Label eventMessageLabel;
+    private Label eventTitle;
     private Button eventCloseBtn;
     private ScrollView buildingList;
     private Button activeFilterBtn;
@@ -96,6 +97,7 @@ public class GameUIController : MonoBehaviour
         levelBarFills[1] = root.Q<VisualElement>("LevelBarFill1");
         eventPopupOverlay = root.Q<VisualElement>("EventPopupOverlay");
         eventMessageLabel = root.Q<Label>("EventMessageLabel");
+        eventTitle = root.Q<Label> ("event-title");
         eventCloseBtn = root.Q<Button>("EventCloseBtn");
 
         // Attach audio
@@ -229,11 +231,15 @@ public class GameUIController : MonoBehaviour
         overlay.AddToClassList("hidden");
     }
 
-    public void ShowEventPopup(string message)
+    public void ShowEventPopup(string message, string title)
     {
         if (eventMessageLabel != null)
         {
             eventMessageLabel.text = message;
+        }
+        if (eventTitle != null)
+        {
+            eventTitle.text = title;
         }
         ShowOverlay(eventPopupOverlay);
         IsEventPopupActive = true;
