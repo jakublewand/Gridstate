@@ -7,10 +7,16 @@ using System.Linq;
 public class GameUIController : MonoBehaviour
     // Script for the UI
 {
+    public static GameUIController instance; // static instance for global reference
     [SerializeField] CameraBehaviour cameraBehaviour;
     [SerializeField] BulidingManager buildingManager;
     [SerializeField] AudioSource uiSounds;
     [SerializeField] AudioScript audioScript;
+    [SerializeField] Texture2D[] kingLevelImages;  // king0, king1, king2
+    [SerializeField] Texture2D[] lionLevelImages;  // lion0, lion1, lion2
+    [SerializeField] Texture2D[] softLevelImages;  // soft0, soft1, soft2
+    [SerializeField] int levelOnePopGoal = 50;
+    [SerializeField] int levelTwoPopGoal = 200;
     private Building focusedBuilding;
     private VisualElement root;
     private Button playBtn;
@@ -34,6 +40,13 @@ public class GameUIController : MonoBehaviour
     private Button optionsBtn;
     private VisualElement optionsOverlay;
     private VisualElement greetingOverlay;
+    private Button cityCrestBtn;
+    private VisualElement[] levelSteps = new VisualElement[3];
+    private VisualElement[] levelBarFills = new VisualElement[2];
+    private int lastCrestLevel = -1;
+    private VisualElement eventPopupOverlay;
+    private Label eventMessageLabel;
+    private Button eventCloseBtn;
     private ScrollView buildingList;
     private Button activeFilterBtn;
     private PrimaryCategory? activeFilter = PrimaryCategory.Housing;
@@ -45,9 +58,11 @@ public class GameUIController : MonoBehaviour
     private Button startGameBtn;
     public Toggle audioToggle;
     public Toggle hideUnaffordableToggle;
+    public static bool IsEventPopupActive { get; private set; }
 
     void OnEnable()
     {
+        instance = this;
         var uiDoc = GetComponent<UIDocument>();
         //audioScript = uiSounds.GetComponent<AudioScript>();
         root = uiDoc.rootVisualElement;
@@ -73,6 +88,15 @@ public class GameUIController : MonoBehaviour
         audioToggle = root.Q<Toggle>("AudioToggle");
         hideUnaffordableToggle = root.Q<Toggle>("HideUnaffordableToggle");
         greetingOverlay = root.Q<VisualElement>("GreetingOverlay");
+        cityCrestBtn = root.Q<Button>("CityCrestBtn");
+        levelSteps[0] = root.Q<VisualElement>("LevelStep0");
+        levelSteps[1] = root.Q<VisualElement>("LevelStep1");
+        levelSteps[2] = root.Q<VisualElement>("LevelStep2");
+        levelBarFills[0] = root.Q<VisualElement>("LevelBarFill0");
+        levelBarFills[1] = root.Q<VisualElement>("LevelBarFill1");
+        eventPopupOverlay = root.Q<VisualElement>("EventPopupOverlay");
+        eventMessageLabel = root.Q<Label>("EventMessageLabel");
+        eventCloseBtn = root.Q<Button>("EventCloseBtn");
 
         // Attach audio
 
@@ -91,7 +115,9 @@ public class GameUIController : MonoBehaviour
         var closeOptionsBtn = root.Q<Button>("CloseOptionsBtn");
         var showGreetingBtn = root.Q<Button>("ShowGreetingBtn");
         if (closeOptionsBtn != null) closeOptionsBtn.clicked += () => HideOverlay(optionsOverlay);
-        if (showGreetingBtn != null) showGreetingBtn.clicked += () => { HideOverlay(optionsOverlay); ShowOverlay(greetingOverlay); };
+        if (showGreetingBtn != null) showGreetingBtn.clicked += () => { HideOverlay(optionsOverlay); ShowOverlay(greetingOverlay); RefreshLevelBar(); };
+        if (cityCrestBtn != null) cityCrestBtn.clicked += () => { ShowOverlay(greetingOverlay); RefreshLevelBar(); };
+        if (eventCloseBtn != null) eventCloseBtn.clicked += () => { HideOverlay(eventPopupOverlay); IsEventPopupActive = false; };
         audioToggle.RegisterValueChangedCallback(evt => OnAudioToggleChanged(evt.newValue));
         hideUnaffordableToggle.RegisterValueChangedCallback(evt => OnHideUnaffordableChanged(evt.newValue));
         audioToggle.value = PlayerPrefs.GetInt("Audio", 1) == 1;
@@ -102,10 +128,10 @@ public class GameUIController : MonoBehaviour
         cityNameField = root.Q<TextField>("CityNameField");
         charQuoteLabel = root.Q<Label>("CharQuote");
         var king = root.Q<Button>("KingOfAmerica");
-        var idol = root.Q<Button>("IdolOfTheNorth");
+        var lion = root.Q<Button>("LionOfTheNorth");
         var engineer = root.Q<Button>("SoftwareEngineer");
         if (king != null) king.clicked += () => SelectCharacter(king, City.Characters.king, "\"Make your city great again!\"");
-        if (idol != null) idol.clicked += () => SelectCharacter(idol, City.Characters.idol, "\"My city was perfect from day one. The citizens just don't know it yet.\"");
+        if (lion != null) lion.clicked += () => SelectCharacter(lion, City.Characters.lion, "\"My city was perfect from day one. The citizens just don't know it yet.\"");
         if (engineer != null) engineer.clicked += () => SelectCharacter(engineer, City.Characters.engineer, "\"Children's playground converted to datacenter.\"");
         startGameBtn = root.Q<Button>("StartGameBtn");
         if (startGameBtn != null)
@@ -143,6 +169,12 @@ public class GameUIController : MonoBehaviour
         city = City.instance;
         PopulateBuildings();
 
+        // Set population goal labels
+        var goal0 = root.Q<Label>("LevelGoal0");
+        var goal1 = root.Q<Label>("LevelGoal1");
+        if (goal0 != null) goal0.text = $"👤 {levelOnePopGoal}";
+        if (goal1 != null) goal1.text = $"👤 {levelTwoPopGoal}";
+
         // Show character selection on game start
         ShowOverlay(greetingOverlay);
         if (!city.isPaused()) city.playPauseGame();
@@ -166,6 +198,10 @@ public class GameUIController : MonoBehaviour
         educationBar.value = (float)city.GetStat(City.StatType.Education) * 100;
         enjoymentBar.value = (float)city.GetStat(City.StatType.Enjoyment) * 100;
         safetyBar.value = (float)city.GetStat(City.StatType.Safety) * 100;
+
+        RefreshCityCrest();
+        if (greetingOverlay != null && !greetingOverlay.ClassListContains("hidden"))
+            UpdateLevelBarFills();
 
         buildingListTimer += Time.deltaTime;
         if (buildingListTimer >= 1/4f)
@@ -191,6 +227,16 @@ public class GameUIController : MonoBehaviour
     private void HideOverlay(VisualElement overlay)
     {
         overlay.AddToClassList("hidden");
+    }
+
+    public void ShowEventPopup(string message)
+    {
+        if (eventMessageLabel != null)
+        {
+            eventMessageLabel.text = message;
+        }
+        ShowOverlay(eventPopupOverlay);
+        IsEventPopupActive = true;
     }
 
     private string Suf(float value)
@@ -269,16 +315,15 @@ public class GameUIController : MonoBehaviour
         {
             if (evt.button == 0)
             {
-                buildingManager.dragDropMode=true;
                 BuyButtonPressed(buildingDefinition); 
                 audioScript.PlaySound(audioScript.click);
             }
         }, TrickleDown.TrickleDown);
 
-        card.clicked += () => {
-            buildingManager.dragDropMode=false;
-            BuyButtonPressed(buildingDefinition);
-        };
+        //card.clicked += () => { old click check before drag drop
+        //    buildingManager.dragDropMode=false;
+        //    BuyButtonPressed(buildingDefinition);
+        //};
         return card;
     }
 
@@ -392,6 +437,7 @@ public class GameUIController : MonoBehaviour
         selectedCharBtn.AddToClassList("character-card--selected");
         if (charQuoteLabel != null) charQuoteLabel.text = quote;
         startGameBtn?.SetEnabled(true);
+        RefreshLevelBar();
     }
 
     private void StartGame()
@@ -400,9 +446,83 @@ public class GameUIController : MonoBehaviour
         if (!string.IsNullOrWhiteSpace(name))
             city.renameCity(name);
         city.SetCharacter(selectedCharacter);
+        buildingManager.PlaceTownHall((int)selectedCharacter);
         HideOverlay(greetingOverlay);
         if (city.isPaused()) city.playPauseGame();
         playBtn.text = "II";
+    }
+
+    private int GetCityLevel()
+    {
+        if (city == null) return 0;
+        float pop = city.GetStat(City.StatType.Population);
+        if (pop >= levelTwoPopGoal) return 2;
+        if (pop >= levelOnePopGoal) return 1;
+        return 0;
+    }
+
+    private Texture2D[] GetCharImages(City.Characters ch)
+    {
+        return ch switch
+        {
+            City.Characters.king     => kingLevelImages,
+            City.Characters.lion     => lionLevelImages,
+            City.Characters.engineer => softLevelImages,
+            _                        => kingLevelImages,
+        };
+    }
+
+    private void RefreshLevelBar()
+    {
+        var images = GetCharImages(selectedCharacter);
+        int level = GetCityLevel();
+        for (int i = 0; i < 3; i++)
+        {
+            if (levelSteps[i] == null) continue;
+            if (images != null && i < images.Length && images[i] != null)
+                levelSteps[i].style.backgroundImage = new StyleBackground(images[i]);
+            if (i == level)
+            {
+                levelSteps[i].AddToClassList("level-step--active");
+                levelSteps[i].RemoveFromClassList("level-step--inactive");
+            }
+            else
+            {
+                levelSteps[i].RemoveFromClassList("level-step--active");
+                levelSteps[i].AddToClassList("level-step--inactive");
+            }
+        }
+        UpdateLevelBarFills();
+    }
+
+    private void UpdateLevelBarFills()
+    {
+        float pop = city != null ? city.GetStat(City.StatType.Population) : 0;
+        // Bar 0: level 0 → 1
+        if (levelBarFills[0] != null)
+        {
+            float f = Mathf.Clamp01(pop / levelOnePopGoal);
+            levelBarFills[0].style.width = new StyleLength(new Length(f * 100f, LengthUnit.Percent));
+        }
+        // Bar 1: level 1 → 2
+        if (levelBarFills[1] != null)
+        {
+            float f = Mathf.Clamp01((pop - levelOnePopGoal) / (float)(levelTwoPopGoal - levelOnePopGoal));
+            levelBarFills[1].style.width = new StyleLength(new Length(f * 100f, LengthUnit.Percent));
+        }
+    }
+
+    private void RefreshCityCrest()
+    {
+        if (cityCrestBtn == null || city == null) return;
+        var ch = city.GetCharacter();
+        if ((int)ch == 0) return;
+        int level = GetCityLevel();
+        if (level == lastCrestLevel) return;
+        lastCrestLevel = level;
+        var images = GetCharImages(ch);
+        if (images != null && level < images.Length && images[level] != null)
+            cityCrestBtn.style.backgroundImage = new StyleBackground(images[level]);
     }
 
     private void BuyButtonPressed(BuildingDefinition buildingDefinition)
