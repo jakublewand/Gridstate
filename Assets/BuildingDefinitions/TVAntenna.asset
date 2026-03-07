@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TVAntenna
   m_EditorClassIdentifier: 
   displayName: TV tower
-  primaryCategory: 3
+  primaryCategory: 5
   effects:
     cost: 90000
     maintenance: 0
