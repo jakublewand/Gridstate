@@ -4,7 +4,7 @@
         <ui:VisualElement name="TopBar" class="topbar glass">
             <ui:VisualElement class="topbar-section-left">
                 <ui:VisualElement class="city-crest-container">
-                    <ui:VisualElement class="city-crest" />
+                    <ui:Button name="CityCrestBtn" class="city-crest" />
                 </ui:VisualElement>
                 <ui:VisualElement class="city-info-group">
                     <ui:Label name="CityName" text="Vermont" class="city-name" />
@@ -104,6 +104,23 @@
                     </ui:Button>
                 </ui:VisualElement>
                 <ui:Label name="CharQuote" text="" class="character-quote" />
+                <ui:VisualElement name="LevelProgressBar" class="level-progress">
+                    <ui:VisualElement name="LevelStep0" class="level-step" />
+                    <ui:VisualElement class="level-bar-wrapper">
+                        <ui:VisualElement name="LevelBar0" class="level-bar">
+                            <ui:VisualElement name="LevelBarFill0" class="level-bar-fill" />
+                        </ui:VisualElement>
+                        <ui:Label name="LevelGoal0" text="50" class="level-goal-label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="LevelStep1" class="level-step" />
+                    <ui:VisualElement class="level-bar-wrapper">
+                        <ui:VisualElement name="LevelBar1" class="level-bar">
+                            <ui:VisualElement name="LevelBarFill1" class="level-bar-fill" />
+                        </ui:VisualElement>
+                        <ui:Label name="LevelGoal1" text="200" class="level-goal-label" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="LevelStep2" class="level-step" />
+                </ui:VisualElement>
                 <ui:TextField name="CityNameField" label="City Name" value="New City" class="city-name-field" />
                 <ui:Button name="StartGameBtn" text="Start" class="overlay-btn start-btn" />
             </ui:VisualElement>
