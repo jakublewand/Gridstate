@@ -127,7 +127,7 @@
         </ui:VisualElement>
         <ui:VisualElement name="EventPopupOverlay" class="overlay hidden">
             <ui:VisualElement class="event-popup-panel glass">
-                <ui:Label text="Random Event!" class="event-popup-title" />
+                <ui:Label text="Random Event!" name="event-title" class="event-popup-title" />
                 <ui:Label name="EventMessageLabel" text="Something happened in your city!" class="event-popup-message" />
                 <ui:Button name="EventCloseBtn" text="OK" class="overlay-btn event-popup-close-btn" />
             </ui:VisualElement>

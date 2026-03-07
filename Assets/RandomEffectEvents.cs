@@ -24,7 +24,7 @@ public class RandomEffectEvents
     public void update() //should be triggered once per payout
     {
         Debug.Log("Checking for random event...");
-        if (UnityEngine.Random.Range(0, 1) == 0 && !GameUIController.IsEventPopupActive)
+        if (UnityEngine.Random.Range(0, 12) == 0 && !GameUIController.IsEventPopupActive)
         {
             createEvent();
         }
@@ -32,46 +32,121 @@ public class RandomEffectEvents
 
     private void createEvent()
     {
-        int randomEvent = UnityEngine.Random.Range(0, 7);
+        int randomEvent = UnityEngine.Random.Range(0, 20);
         string message = "";
+        string title = "";
         switch (randomEvent)
         {
             case 0:
-                message = "Obama visited town! Nothing happens.";
+                message = "Obama visited town!";
+                title = "Local News!";
                 break;
             case 1:
-                message = "People become more productive!  +Money";
-                buildingManager.randomEvents.Add(new RandomEventData(City.StatType.Balance, 1.5f));
-                buildingManager.RecalculateStats();
+                message = "Rich bankers enjoy your city!  +Money";
+                title = "Finance Update!";
+                City.instance.SetStat(City.StatType.Balance, City.instance.GetStat(City.StatType.Balance)*2f);
                 break;
             case 2:
                 message = "Neighboring circuses pass through!  +Enjoyment";
-                buildingManager.randomEvents.Add(new RandomEventData(City.StatType.Enjoyment, 1.2f));
+                title = "Joyful News!";
+                buildingManager.randomEvents.Add(new RandomEventData(City.StatType.Enjoyment, 1.25f));
                 buildingManager.RecalculateStats();
                 break;
             case 3:
                 message = "People apply to Hustler University in masses!  +Education";
-                buildingManager.randomEvents.Add(new RandomEventData(City.StatType.Education, 1.2f));
+                title = "Scholarly Research!";
+                buildingManager.randomEvents.Add(new RandomEventData(City.StatType.Education, 1.25f));
                 buildingManager.RecalculateStats();
                 break;
             case 4:
                 message = "You start handing out guns to newborns!  +Safety";
-                buildingManager.randomEvents.Add(new RandomEventData(City.StatType.Safety, 1.2f));
+                title = "Safety News!";
+                buildingManager.randomEvents.Add(new RandomEventData(City.StatType.Safety, 1.25f));
                 buildingManager.RecalculateStats();
                 break;
             case 5:
                 message = "Private investors kill the wildlife to make room for factories!  +Jobs";
-                buildingManager.randomEvents.Add(new RandomEventData(City.StatType.Jobs, 1.2f));
+                title = "Employment Alert!";
+                buildingManager.randomEvents.Add(new RandomEventData(City.StatType.Jobs, 1.25f));
                 buildingManager.RecalculateStats();
                 break;
             case 6:
-                message = "Your neighbor stalks you when you shower. Nothing happens.";
+                message = "Your neighbor stalks you when you shower";
+                title = "Local News!";
+                break;
+            case 7:
+                message = "The government taxes the poor down to their last penny!  +Money";
+                title = "Finance Update!";
+                City.instance.SetStat(City.StatType.Balance, City.instance.GetStat(City.StatType.Balance)*1.5f);
+                break;
+            case 8:
+                message = "Fights break out at the local pubs!  +Enjoyment";
+                title = "Joyful News!";
+                City.instance.SetStat(City.StatType.Enjoyment, City.instance.GetStat(City.StatType.Enjoyment)*1.5f);
+                buildingManager.RecalculateStats();
+                break;
+            case 9:
+                message = "Your F students become inventors!  +Education";
+                title = "Scholarly Research!";
+                buildingManager.randomEvents.Add(new RandomEventData(City.StatType.Education, 1.25f));
+                buildingManager.RecalculateStats();
+                break;
+            case 10:
+                message = "The death sentence became the punishment for every crime!  +Safety";
+                title = "Safety News!";
+                buildingManager.randomEvents.Add(new RandomEventData(City.StatType.Safety, 1.25f));
+                buildingManager.RecalculateStats();
+                break;
+            case 11:
+                message = "The mayor hires a bodyguard for their bodyguard!  +Jobs";
+                title = "Employment Alert!";
+                buildingManager.randomEvents.Add(new RandomEventData(City.StatType.Jobs, 1.25f));
+                buildingManager.RecalculateStats();
+                break;
+            case 12:
+                message = "The president disguises themself as a supervillain and robs people on the street!  +Money";
+                title = "Finance Update!";
+                City.instance.SetStat(City.StatType.Balance, City.instance.GetStat(City.StatType.Balance)*1.5f);
+                break;
+            case 13:
+                message = "Meteors of gold hit your city!  +++Money";
+                title = "Finance Update!";
+                City.instance.SetStat(City.StatType.Balance, City.instance.GetStat(City.StatType.Balance)*5f);
+                break;
+            case 14:
+                message = "The player clicked on a golden cookie!  +++Money";
+                title = "Finance Update!";
+                City.instance.SetStat(City.StatType.Balance, City.instance.GetStat(City.StatType.Balance)*5f);
+                break;
+            case 15:
+                message = "The city is hit by the biggest tsunami to have ever existed.";
+                title = "Local News!";
+                break;
+            case 16:
+                message = "States critical of your city attempt to nuke it, passing birds absorb the impact.  +Safety ";
+                title = "Safety News!";
+                buildingManager.randomEvents.Add(new RandomEventData(City.StatType.Safety, 1.25f));
+                buildingManager.RecalculateStats();
+                break;
+            case 17:
+                message = "The devs doubled your money!  +Money";
+                title = "Finance Update!";
+                City.instance.SetStat(City.StatType.Balance, City.instance.GetStat(City.StatType.Balance)*2f);
+                break;
+            case 18:
+                message = "You empty the pensions and flee the city!  +++++Money";
+                title = "Finance Update!";
+                City.instance.SetStat(City.StatType.Balance, City.instance.GetStat(City.StatType.Balance)*10f);
+                break;
+            case 19:
+                message = "Someone fell off the grid :(";
+                title = "Local News!";
                 break;
         }
 
         if (!string.IsNullOrEmpty(message))
         {
-            GameUIController.instance?.ShowEventPopup(message);
+            GameUIController.instance?.ShowEventPopup(message,title);
         }
     }
 }
