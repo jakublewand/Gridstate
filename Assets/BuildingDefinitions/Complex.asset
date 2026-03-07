@@ -17,7 +17,7 @@ MonoBehaviour:
   effects:
     cost: 50000
     maintenance: 0
-    housing: 2100
+    housing: 1300
     jobs: 0
     education: 0
     safety: 0

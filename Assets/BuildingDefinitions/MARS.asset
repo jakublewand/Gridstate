@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
-  m_Name: CInema
+  m_Name: MARS
   m_EditorClassIdentifier: 
-  displayName: Cinema
-  primaryCategory: 5
+  displayName: MARS
+  primaryCategory: 4
   effects:
-    cost: 4000
+    cost: 100000000
     maintenance: 0
-    housing: 0
-    jobs: 12
-    education: 0
-    safety: 0
-    enjoyment: 170
-  prefab: {fileID: 6702080380065664546, guid: aed223d50de8488caf46e52b03017785, type: 3}
+    housing: 5000
+    jobs: 6767
+    education: 46767
+    safety: 80085
+    enjoyment: 100
+  prefab: {fileID: 1765932194190166, guid: 3df3664da57f11e499cce3799496e311, type: 3}

@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
-  m_Name: CarShop
+  m_Name: EARTH
   m_EditorClassIdentifier: 
-  displayName: Car shop
-  primaryCategory: 2
+  displayName: The earth
+  primaryCategory: 1
   effects:
-    cost: 16000
+    cost: 1e+9
     maintenance: 0
-    housing: 42
-    jobs: 245
+    housing: 80000000
+    jobs: 0
     education: 0
-    safety: 0
-    enjoyment: 80
-  prefab: {fileID: 100000, guid: 121f662ea65e2cf40a50c66470757a9e, type: 3}
+    safety: 80085
+    enjoyment: 0
+  prefab: {fileID: 1364001922356752, guid: 88fbb209caf420445842095fdc20d63c, type: 3}
