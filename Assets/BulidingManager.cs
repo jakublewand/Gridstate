@@ -10,6 +10,7 @@ public class BulidingManager : MonoBehaviour
     [SerializeField] AudioSource uiSounds;
     [SerializeField] GameUIController ui;
     public List<Building> buildings = new List<Building>();
+    public List<RandomEventData> randomEvents = new List<RandomEventData>();
     public BuildingDefinition selectedBuilding;
     private BuildingDefinition lastSelectedBuilding;
     public GameObject selectedBuildingObject;
@@ -186,7 +187,7 @@ public class BulidingManager : MonoBehaviour
         return results.Count > 0;
     }
 
-    private void RecalculateStats()
+    public void RecalculateStats()
     {
         float k = 1.386f;
         city.SetStat(City.StatType.Jobs, 0);
@@ -207,9 +208,14 @@ public class BulidingManager : MonoBehaviour
             safetyTotal += building.definition.effects.safety;
         }
 
+
         city.SetStat(City.StatType.Jobs, 1f - Mathf.Exp(-k * jobsTotal / population));
         city.SetStat(City.StatType.Education, 1f - Mathf.Exp(-k * educationTotal / population));
         city.SetStat(City.StatType.Enjoyment, 1f - Mathf.Exp(-k * enjoymentTotal / population));
         city.SetStat(City.StatType.Safety, 1f - Mathf.Exp(-k * safetyTotal / population));
+        foreach (var randomEvent in randomEvents)
+        {
+            city.ModifyStat(randomEvent.affectedStat, randomEvent.effectAmount);
+        }
     }
 }

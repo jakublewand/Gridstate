@@ -23,6 +23,8 @@ public class AnnouncementManager : MonoBehaviour
     private float timer;
     private bool announcing;
     private string colorClass;
+    private string lastText;
+
 
 
     private void Awake()
@@ -71,19 +73,36 @@ public class AnnouncementManager : MonoBehaviour
 
     public void msgAnnounce(AnnounceColor color, string text)
     {
+        bool newMessage = text != lastText;
+        lastText = text;
+
         announcing = true;
         timer = announceDuration;
 
-        colorClass = "pill-announce-" + color.ToString().ToLower(); 
+        if (colorClass != null)
+            infoPill.RemoveFromClassList(colorClass);
+
+        colorClass = "pill-announce-" + color.ToString().ToLower();
         infoPill.AddToClassList(colorClass);
 
         infoLabel.text = text;
-        switch (color) {
-            case AnnounceColor.White: {audioScript.PlaySound(audioScript.info); break;};
-            case AnnounceColor.Yellow: {audioScript.PlaySound(audioScript.info); break;};
-            case AnnounceColor.Red: {audioScript.PlaySound(audioScript.error); break;};
-            default: {audioScript.PlaySound(audioScript.info); break;};
-        };
 
+        if (newMessage) // only play sound for new warning
+        {
+            switch (color)
+            {
+                case AnnounceColor.Red:
+                    audioScript.PlaySound(audioScript.error);
+                    break;
+
+                default:
+                    audioScript.PlaySound(audioScript.info);
+                    break;
+            }
+        }
+    }
+    public bool IsAnnouncing()
+    {
+        return announcing;
     }
 }

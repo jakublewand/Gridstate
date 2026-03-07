@@ -11,6 +11,11 @@ public class City : MonoBehaviour
     public GameState gameState => _gameState; //not decided if to make private: gamestate has only values for now
 
     private float temp;
+    private float product;
+
+    private RandomEffectEvents cityEvent;
+
+    [SerializeField] private BulidingManager buildingManager;
 
     // Awake is called when loading the script, good to ensure existing data like gamestate
     void Awake()    
@@ -23,6 +28,7 @@ public class City : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
+        cityEvent = new RandomEffectEvents(buildingManager);
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -48,6 +54,7 @@ public class City : MonoBehaviour
         if (!gameState.paused)
         {
             RecalculateIncome(); //calculates your income each frame
+            announcementHints();
 
             gameState.dayProgress += (time / SECONDS_PER_DAY) * 100;
             if (100 <= gameState.dayProgress) //dayprogress full -> new day
@@ -74,6 +81,7 @@ public class City : MonoBehaviour
         gameState.payoutProgress = 0;
         temp = gameState.balance;
         gameState.balance += gameState.income; 
+        cityEvent.update();
         if(gameState.balance <= 0)
         {
             gameState.balance = temp;
@@ -175,8 +183,46 @@ public class City : MonoBehaviour
     public void RecalculateIncome()
     {
         float k = 10f;
-        float product = gameState.jobs * gameState.education * gameState.enjoyment * gameState.safety;
+        product = gameState.jobs * gameState.education * gameState.enjoyment * gameState.safety;
         float quality = Mathf.Pow(product, 0.25f);
         gameState.income = quality * gameState.population * k;
+    }
+
+    public void announcementHints()
+    {
+        string message="";
+        bool showMessage = false;
+
+        if (AnnouncementManager.instance == null)
+        return;
+
+        if (this.GetStat(City.StatType.Education) < 0.25 && this.GetStat(City.StatType.Income)>150)
+        {
+                message = "Your city needs to fund more education!";
+                showMessage = true;
+        }
+        else if(this.GetStat(City.StatType.Jobs) < 0.25 && this.GetStat(City.StatType.Income)>150)
+        {
+                message = "Your population is unemployed! Create job opportunities!";
+                showMessage = true;
+        }
+        else if(this.GetStat(City.StatType.Enjoyment) < 0.25 && this.GetStat(City.StatType.Income)>150)
+        {
+                message = "Your city is very depressing! Maybe plant some trees!";
+                showMessage = true;
+        }
+        else if(this.GetStat(City.StatType.Safety) < 0.25 && this.GetStat(City.StatType.Income)>150)
+        {
+                message = "Your city isn't safe at all! Where is the police?";
+                showMessage = true;
+        }
+
+        if (showMessage == true)
+        {
+            AnnouncementManager.instance.msgAnnounce(
+                AnnounceColor.Red,
+                message
+            );
+        }
     }
 }
