@@ -11,6 +11,7 @@ public class City : MonoBehaviour
     public GameState gameState => _gameState; //not decided if to make private: gamestate has only values for now
 
     private float temp;
+    private float product;
 
     // Awake is called when loading the script, good to ensure existing data like gamestate
     void Awake()    
@@ -48,6 +49,7 @@ public class City : MonoBehaviour
         if (!gameState.paused)
         {
             RecalculateIncome(); //calculates your income each frame
+            announcementHints();
 
             gameState.dayProgress += (time / SECONDS_PER_DAY) * 100;
             if (100 <= gameState.dayProgress) //dayprogress full -> new day
@@ -175,8 +177,43 @@ public class City : MonoBehaviour
     public void RecalculateIncome()
     {
         float k = 10f;
-        float product = gameState.jobs * gameState.education * gameState.enjoyment * gameState.safety;
+        product = gameState.jobs * gameState.education * gameState.enjoyment * gameState.safety;
         float quality = Mathf.Pow(product, 0.25f);
         gameState.income = quality * gameState.population * k;
+    }
+
+    public void announcementHints()
+    {
+        if (AnnouncementManager.instance == null)
+        return;
+
+        if (this.GetStat(City.StatType.Education) < 0.18 && this.GetStat(City.StatType.Income)>150)
+        {
+            AnnouncementManager.instance.msgAnnounce(
+                AnnounceColor.Red,
+                "Your city needs to fund more education!"
+            );
+        }
+        else if(this.GetStat(City.StatType.Jobs) < 0.18 && this.GetStat(City.StatType.Income)>150)
+        {
+            AnnouncementManager.instance.msgAnnounce(
+                AnnounceColor.Red,
+                "Your population is unemployed! Create some job opportunities!"
+            );
+        }
+        else if(this.GetStat(City.StatType.Enjoyment) < 0.18 && this.GetStat(City.StatType.Income)>150)
+        {
+            AnnouncementManager.instance.msgAnnounce(
+                AnnounceColor.Red,
+                "Your city is very depressing, maybe plant some trees!"
+            );
+        }
+        else if(this.GetStat(City.StatType.Safety) < 0.18 && this.GetStat(City.StatType.Income)>150)
+        {
+            AnnouncementManager.instance.msgAnnounce(
+                AnnounceColor.Red,
+                "Your city isn't safe at all! Where is the police?"
+            );
+        }
     }
 }
