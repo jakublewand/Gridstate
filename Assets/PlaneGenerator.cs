@@ -10,7 +10,7 @@ public class PlaneGenerator : MonoBehaviour
     public BulidingManager BM;
 
     float minX, maxX, minZ, maxZ;
-    int padding = 1;
+    int padding = 2;
     private bool planePositionSet = false;
     private const float squareSize = 4f;
     private bool firstPlaneSize = false;
@@ -18,8 +18,8 @@ public class PlaneGenerator : MonoBehaviour
     {
         if (!planePositionSet)
         {
-            planeTransform.position = new Vector3(0.5f, 0f, 0.5f);
-            ghostPlaneTransform.position = new Vector3(0.5f, -0.01f, 0.5f);
+            planeTransform.position = new Vector3(0, 0f, 0f);
+            ghostPlaneTransform.position = new Vector3(0, -0.01f, 0);
             planePositionSet = true;
         }
 
@@ -36,15 +36,15 @@ public class PlaneGenerator : MonoBehaviour
     {
         Vector3 bounds = CalculateBounds();
 
-        float snappedWidth = Mathf.CeilToInt(bounds.x / squareSize) * squareSize;
-        float snappedLength = Mathf.CeilToInt(bounds.z / squareSize) * squareSize;
+        float snappedWidth = Mathf.CeilToInt(bounds.x / squareSize) * squareSize - 1;
+        float snappedLength = Mathf.CeilToInt(bounds.z / squareSize) * squareSize - 1;
 
         SetPlaneSize(snappedWidth, snappedLength);
     }
     public Vector3 CalculateBounds()
     {
         if (BM.buildings.Count == 0)
-            return new Vector3(10f, 0f, 10f);
+            return new Vector3(10f, 0f,10f);
             
         if (!firstPlaneSize)
         {

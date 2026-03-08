@@ -18,8 +18,8 @@ MonoBehaviour:
     cost: 100000000
     maintenance: 0
     housing: 5000
-    jobs: 6767
+    jobs: 1000
     education: 46767
     safety: 80085
-    enjoyment: 100
+    enjoyment: 0
   prefab: {fileID: 1765932194190166, guid: 3df3664da57f11e499cce3799496e311, type: 3}
