@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
-  m_Name: MARS
+  m_Name: Saturn
   m_EditorClassIdentifier: 
-  displayName: MARS
-  primaryCategory: 4
+  displayName: Saturn
+  primaryCategory: 2
   effects:
-    cost: 100000000
+    cost: 250000000
     maintenance: 0
-    housing: 5000
-    jobs: 0
-    education: 35000
-    safety: 55000
-    enjoyment: 0
-  prefab: {fileID: 1765932194190166, guid: 3df3664da57f11e499cce3799496e311, type: 3}
+    housing: 0
+    jobs: 85000
+    education: 0
+    safety: 0
+    enjoyment: 30000
+  prefab: {fileID: 1875475122005904, guid: 42c78d6610148f34cb859ef0d73a4a2b, type: 3}
