@@ -175,7 +175,7 @@ MonoBehaviour:
     payoutProgress: 0
     population: 0
     income: 0
-    balance: 0
+    balance: 1e+14
     topBalance: 0
     jobs: 0
     education: 0
@@ -248,6 +248,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 32714ffdb13a10f4a9827e3f913c9d86, type: 2}
   - {fileID: 11400000, guid: 483d703ff485ffd4cafcd052c1fd4cda, type: 2}
   - {fileID: 11400000, guid: a82e5b76a7a542541808f0cd28cbe14d, type: 2}
+  - {fileID: 11400000, guid: a82e5b76a7a542541808f0cd28cbe14d, type: 2}
+  - {fileID: 11400000, guid: 763adb83510a9ef459aeafeb06b1b1ed, type: 2}
   audioScript: {fileID: 511445004}
   uiSounds: {fileID: 511445003}
   ui: {fileID: 1644778566}
