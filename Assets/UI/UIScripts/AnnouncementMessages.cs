@@ -35,11 +35,11 @@ public static class AnnouncementMessages
             //1. wrap in Msg(), 
             //2. write message as value 1. 
             // 3. write condition as lambda based on gamestate (or other) stats in valeu 2
-            Msg("this is the worst city i have ever seen", () => true),
-            Msg("pretty cool city!!!", () => 10000 < city.GetStat(City.StatType.Balance)),
-            Msg("pretty cool city!!!!!!!", () => 100000 < city.GetStat(City.StatType.Balance)),
-            Msg("pretty cool city!!!!!!!!!!!!!!!!!", () => 1000000 < city.GetStat(City.StatType.Balance)),
-            Msg("pretty cool city!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", () => 10000000 < city.GetStat(City.StatType.Balance)),
+            Msg("This is the worst city I have ever seen...", () => 500 > city.GetStat(City.StatType.Income)),
+            Msg("Cool city... For a 5 year old", () => 500 <= city.GetStat(City.StatType.Income) && city.GetStat(City.StatType.Income) < 1000),
+            Msg("Getting somewhere", () => 1000 <= city.GetStat(City.StatType.Income) && city.GetStat(City.StatType.Income) < 10000),
+            Msg("Pretty cool city!", () => 10000 <= city.GetStat(City.StatType.Income) && city.GetStat(City.StatType.Income) < 100000),
+            Msg("Coolest city I've ever seen!!!", () => 100000 < city.GetStat(City.StatType.Income)),
         };
     }
 }
