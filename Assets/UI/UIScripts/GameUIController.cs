@@ -15,8 +15,8 @@ public class GameUIController : MonoBehaviour
     [SerializeField] Texture2D[] kingLevelImages;  // king0, king1, king2
     [SerializeField] Texture2D[] lionLevelImages;  // lion0, lion1, lion2
     [SerializeField] Texture2D[] softLevelImages;  // soft0, soft1, soft2
-    [SerializeField] int levelOnePopGoal = 50;
-    [SerializeField] int levelTwoPopGoal = 200;
+    [SerializeField] long levelOnePopGoal = 10000;
+    [SerializeField] long levelTwoPopGoal = 10_000_000_000L;
     private Building focusedBuilding;
     private VisualElement root;
     private Button playBtn;
@@ -174,8 +174,8 @@ public class GameUIController : MonoBehaviour
         // Set population goal labels
         var goal0 = root.Q<Label>("LevelGoal0");
         var goal1 = root.Q<Label>("LevelGoal1");
-        if (goal0 != null) goal0.text = $"👤 {levelOnePopGoal}";
-        if (goal1 != null) goal1.text = $"👤 {levelTwoPopGoal}";
+        if (goal0 != null) goal0.text = $"👤 {SufRaw(levelOnePopGoal)}";
+        if (goal1 != null) goal1.text = $"👤 {SufRaw(levelTwoPopGoal)}";
 
         // Show character selection on game start
         ShowOverlay(greetingOverlay);
@@ -190,7 +190,7 @@ public class GameUIController : MonoBehaviour
         //update these every frame, basically optimal to do this even though most of them rarely change
         CityName.text = city.getCityName() ?? string.Empty;
         DaysLabel.text = $"Day {city.getDayCount()}";
-        PopLabel.text = city.GetStat(City.StatType.Population).ToString();
+        PopLabel.text = SufRaw(city.GetStat(City.StatType.Population));
         BalanceLabel.text = Suf(city.GetStat(City.StatType.Balance));
         PayoutLabel.text = $"{Suf(city.GetStat(City.StatType.Income))}/payout";
         progressFill.style.width = new Length(Mathf.Clamp(city.getPayoutProgress(), 0, 100), LengthUnit.Percent);
@@ -245,15 +245,25 @@ public class GameUIController : MonoBehaviour
         IsEventPopupActive = true;
     }
 
-    private string Suf(float value)
+    private string Suf(float value) => SufRaw(value * 1000f);
+
+    private string SufRaw(float value)
     {
-        value *= 1000;
-        if (value < 1000) return Math.Round(value, 1).ToString();
-        if (value < 1000000) return Math.Round(value / 1000, 1) + "K";
-        if (value < 1000000000) return Math.Round(value / 1000000, 1) + "M";
-        if (value < 1000000000000) return Math.Round(value / 1000000000, 1) + "B";
-        if (value < 1000000000000000) return Math.Round(value / 1000000000000, 1) + "T";
-        return Math.Round(value / 1000000000000000, 1) + "Q";
+        float abs = Math.Abs(value);
+        if (abs < 1000) return Sig3(value);
+        if (abs < 1000000f) return Sig3(value / 1000f) + "K";
+        if (abs < 1000000000f) return Sig3(value / 1000000f) + "M";
+        if (abs < 1000000000000f) return Sig3(value / 1000000000f) + "B";
+        if (abs < 1000000000000000f) return Sig3(value / 1000000000000f) + "T";
+        return Sig3(value / 1000000000000000f) + "Q";
+    }
+
+    private string Sig3(float v)
+    {
+        float abs = Math.Abs(v);
+        if (abs >= 100f) return ((int)Math.Round(v)).ToString();
+        if (abs >= 10f) return v.ToString("F1");
+        return v.ToString("F2");
     }
 
     private string calcStatfromValue(float value)
@@ -278,8 +288,6 @@ public class GameUIController : MonoBehaviour
             : buildingDefinition.displayName;
         BuildingEffects effects = buildingDefinition.effects;
         float cost = effects.cost;
-        float maintenance = effects.maintenance;
-
         var card = new Button { name = "BuildingCard" };
 
         card.AddToClassList("building-card");
@@ -296,16 +304,6 @@ public class GameUIController : MonoBehaviour
         header.Add(costLabel);
 
         card.Add(header);
-
-        var maintenanceContainer = new VisualElement();
-        maintenanceContainer.AddToClassList("card-maintenance");
-        var mainLabel = new Label { text = "Maintenance:" };
-        mainLabel.AddToClassList("card-label");
-        var mainValue = new Label { text = $"{Suf(maintenance)} / day" };
-        mainValue.AddToClassList("card-value");
-        maintenanceContainer.Add(mainLabel);
-        maintenanceContainer.Add(mainValue);
-        card.Add(maintenanceContainer);
 
         var statsContainer = new VisualElement();
         statsContainer.AddToClassList("card-stats");
