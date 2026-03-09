@@ -15,6 +15,7 @@ public class RandomEventData
 public class RandomEffectEvents
 {
     private BulidingManager buildingManager;
+    private int currentChance = 0;
 
     public RandomEffectEvents(BulidingManager manager)
     {
@@ -23,9 +24,11 @@ public class RandomEffectEvents
 
     public void update() //should be triggered once per payout
     {
-        Debug.Log("Checking for random event...");
-        if (UnityEngine.Random.Range(0, 12) == 0 && !GameUIController.IsEventPopupActive)
+        Debug.Log("Current chance: " + currentChance);
+        currentChance += 2;
+        if (UnityEngine.Random.Range(0, 1000) < currentChance && !GameUIController.IsEventPopupActive)
         {
+            currentChance = 0;
             createEvent();
         }
     }

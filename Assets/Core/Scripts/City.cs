@@ -3,8 +3,8 @@ using UnityEngine;
 public class City : MonoBehaviour
     //god object for game progress
 {
-    [SerializeField] private int SECONDS_PER_DAY = 20; // what should it be???
-    [SerializeField] private int PAYOUTS_PER_DAY = 4; // what should it be???
+    [SerializeField] private int SECONDS_PER_DAY = 200; // what should it be???
+    [SerializeField] private int PAYOUTS_PER_DAY = 40; // what should it be???
     public static City instance; //singleton to reference manager everywhere
 
     [SerializeField] private GameState _gameState;
