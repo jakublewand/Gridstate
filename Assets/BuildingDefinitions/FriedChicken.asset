@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
   m_Name: FriedChicken
   m_EditorClassIdentifier: 
-  displayName: Fried chicken resturant
+  displayName: Fried Chicken Restaurant
   primaryCategory: 5
   effects:
     cost: 100000000
