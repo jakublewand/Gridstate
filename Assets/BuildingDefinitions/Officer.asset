@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
-  m_Name: EARTH
+  m_Name: Officer
   m_EditorClassIdentifier: 
-  displayName: EARTH
-  primaryCategory: 1
+  displayName: Patrolling Officer
+  primaryCategory: 4
   effects:
-    cost: 1e+9
+    cost: 267000
     maintenance: 0
-    housing: 8e+9
-    jobs: 0
-    education: 0
-    safety: 80085
+    housing: 0
+    jobs: 1
+    education: 1
+    safety: 5500
     enjoyment: 0
-  prefab: {fileID: 1364001922356752, guid: 88fbb209caf420445842095fdc20d63c, type: 3}
+  prefab: {fileID: 100000, guid: 4e1d641d34aab0846a1252a49f72f268, type: 3}
