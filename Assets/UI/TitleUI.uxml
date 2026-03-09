@@ -10,15 +10,11 @@
             <ui:Label text="🕹️" class="btn-icon" />
             <ui:Label text="New Game" class="btn-text" />
         </ui:Button>
-        <ui:Button name="LoadGameBtn" class="btn btn-pill glass title-arc-btn title-arc-1">
-            <ui:Label text="💾" class="btn-icon" />
-            <ui:Label text="Load Game" class="btn-text" />
-        </ui:Button>
-        <ui:Button name="OptionsBtn" class="btn btn-pill glass title-arc-btn title-arc-2">
+        <ui:Button name="OptionsBtn" class="btn btn-pill glass title-arc-btn title-arc-1">
             <ui:Label text="⚙️" class="btn-icon" />
             <ui:Label text="Options" class="btn-text" />
         </ui:Button>
-        <ui:Button name="QuitBtn" class="btn btn-pill glass title-arc-btn title-arc-3">
+        <ui:Button name="QuitBtn" class="btn btn-pill glass title-arc-btn title-arc-2">
             <ui:Label text="🚪" class="btn-icon" />
             <ui:Label text="Quit" class="btn-text" />
         </ui:Button>

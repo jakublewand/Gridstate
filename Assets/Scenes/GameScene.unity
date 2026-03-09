@@ -1353,8 +1353,8 @@ MonoBehaviour:
   - {fileID: 2800000, guid: f1614e648d411e046b0d9bfe273b5706, type: 3}
   - {fileID: 2800000, guid: ce11eeffa61071b4db14a864f6f92a29, type: 3}
   - {fileID: 2800000, guid: f63c74cbfa452834fac32bdbec3dc3b6, type: 3}
-  levelOnePopGoal: 50
-  levelTwoPopGoal: 200
+  levelOnePopGoal: 10000
+  levelTwoPopGoal: 100000
 --- !u!114 &1644778567
 MonoBehaviour:
   m_ObjectHideFlags: 0

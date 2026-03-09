@@ -685,20 +685,15 @@
 
 .title-arc-0 {
     left: 14%;
-    top: 18%;
+    top: 22%;
 }
 
 .title-arc-1 {
     left: 10%;
-    top: 38%;
+    top: 50%;
 }
 
 .title-arc-2 {
-    left: 10%;
-    top: 58%;
-}
-
-.title-arc-3 {
     left: 14%;
     top: 78%;
 }

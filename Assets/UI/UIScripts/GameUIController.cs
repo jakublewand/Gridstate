@@ -190,7 +190,7 @@ public class GameUIController : MonoBehaviour
         //update these every frame, basically optimal to do this even though most of them rarely change
         CityName.text = city.getCityName() ?? string.Empty;
         DaysLabel.text = $"Day {city.getDayCount()}";
-        PopLabel.text = SufRaw(city.GetStat(City.StatType.Population));
+        PopLabel.text = SufRaw(city.GetStat(City.StatType.Population), noDecimals: true);
         BalanceLabel.text = Suf(city.GetStat(City.StatType.Balance));
         PayoutLabel.text = $"{Suf(city.GetStat(City.StatType.Income))}/payout";
         progressFill.style.width = new Length(Mathf.Clamp(city.getPayoutProgress(), 0, 100), LengthUnit.Percent);
@@ -247,21 +247,21 @@ public class GameUIController : MonoBehaviour
 
     private string Suf(float value) => SufRaw(value * 1000f);
 
-    private string SufRaw(float value)
+    private string SufRaw(float value, bool noDecimals = false)
     {
         float abs = Math.Abs(value);
-        if (abs < 1000) return Sig3(value);
-        if (abs < 1000000f) return Sig3(value / 1000f) + "K";
-        if (abs < 1000000000f) return Sig3(value / 1000000f) + "M";
-        if (abs < 1000000000000f) return Sig3(value / 1000000000f) + "B";
-        if (abs < 1000000000000000f) return Sig3(value / 1000000000000f) + "T";
-        return Sig3(value / 1000000000000000f) + "Q";
+        if (abs < 1000) return Sig3(value, noDecimals);
+        if (abs < 1000000f) return Sig3(value / 1000f, noDecimals) + "K";
+        if (abs < 1000000000f) return Sig3(value / 1000000f, noDecimals) + "M";
+        if (abs < 1000000000000f) return Sig3(value / 1000000000f, noDecimals) + "B";
+        if (abs < 1000000000000000f) return Sig3(value / 1000000000000f, noDecimals) + "T";
+        return Sig3(value / 1000000000000000f, noDecimals) + "Q";
     }
 
-    private string Sig3(float v)
+    private string Sig3(float v, bool noDecimals = false)
     {
         float abs = Math.Abs(v);
-        if (abs >= 100f) return ((int)Math.Round(v)).ToString();
+        if (noDecimals || abs >= 100f) return ((int)Math.Round(v)).ToString();
         if (abs >= 10f) return v.ToString("F1");
         return v.ToString("F2");
     }

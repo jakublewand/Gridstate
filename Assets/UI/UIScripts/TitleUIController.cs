@@ -28,7 +28,6 @@ public class TitleUIController : MonoBehaviour
         hideUnaffordableToggle.value = PlayerPrefs.GetInt("HideUnaffordable", 0) == 1;
 
         _root.Q<Button>("NewGameBtn").clicked += OnNewGameClicked;
-        _root.Q<Button>("LoadGameBtn").clicked += OnLoadGameClicked;
         _root.Q<Button>("OptionsBtn").clicked += OnOptionsClicked;
         _root.Q<Button>("QuitBtn").clicked += OnQuitClicked;
         _root.Q<Button>("CloseOptionsBtn").clicked += OnCloseOptionsClicked;
@@ -37,11 +36,6 @@ public class TitleUIController : MonoBehaviour
     void OnNewGameClicked()
     {
         SceneManager.LoadScene("GameScene");
-    }
-
-    void OnLoadGameClicked()
-    {
-        // load functionality?
     }
 
     void OnOptionsClicked()
