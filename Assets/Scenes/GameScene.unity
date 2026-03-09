@@ -254,6 +254,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 763adb83510a9ef459aeafeb06b1b1ed, type: 2}
   - {fileID: 11400000, guid: f582b5d406b902e49997230cbf4e3cfa, type: 2}
   - {fileID: 11400000, guid: b943122737ccdbd41a8ce46f6f78d337, type: 2}
+  - {fileID: 11400000, guid: a30cb209c067a7c49a0f9b46db010e9c, type: 2}
   audioScript: {fileID: 511445004}
   uiSounds: {fileID: 511445003}
   ui: {fileID: 1644778566}

@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b78c54aefb0968f48b8c3c90153cd514, type: 3}
-  m_Name: NuclearPowerPlant
+  m_Name: Transport & Co
   m_EditorClassIdentifier: 
-  displayName: Nuclear power plant
+  displayName: Transport & Co
   primaryCategory: 2
   effects:
-    cost: 120000
+    cost: 7000000
     maintenance: 0
     housing: 0
-    jobs: 2500
-    education: 800
+    jobs: 38000
+    education: 0
     safety: 0
     enjoyment: 0
-  prefab: {fileID: 6702080380065664546, guid: 95332ac8071549a4a976254c2b482489, type: 3}
+  prefab: {fileID: 100000, guid: 979de0ac65f6d2b48a89e9088986637f, type: 3}
