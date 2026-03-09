@@ -90,9 +90,9 @@
             <ui:VisualElement class="greeting-panel glass">
                 <ui:Label text="CHARACTER SELECTION" class="greeting-title" />
                 <ui:VisualElement class="character-row">
-                    <ui:Button name="KingOfAmerica" class="character-card">
+                    <ui:Button name="KingOfTheWest" class="character-card">
                         <ui:VisualElement class="character-portrait king-banner" />
-                        <ui:Label text="King of America" class="character-name" />
+                        <ui:Label text="King of the West" class="character-name" />
                     </ui:Button>
                     <ui:Button name="LionOfTheNorth" class="character-card">
                         <ui:VisualElement class="character-portrait lion-banner" />

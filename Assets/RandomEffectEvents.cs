@@ -38,7 +38,7 @@ public class RandomEffectEvents
         switch (randomEvent)
         {
             case 0:
-                message = "Obama visited town!";
+                message = "VIPs visited town!";
                 title = "Local News!";
                 break;
             case 1:

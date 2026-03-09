@@ -129,10 +129,10 @@ public class GameUIController : MonoBehaviour
         // Character selection
         cityNameField = root.Q<TextField>("CityNameField");
         charQuoteLabel = root.Q<Label>("CharQuote");
-        var king = root.Q<Button>("KingOfAmerica");
+        var king = root.Q<Button>("KingOfTheWest");
         var lion = root.Q<Button>("LionOfTheNorth");
         var engineer = root.Q<Button>("SoftwareEngineer");
-        if (king != null) king.clicked += () => SelectCharacter(king, City.Characters.king, "\"Make your city great again!\"");
+        if (king != null) king.clicked += () => SelectCharacter(king, City.Characters.king, "\"Give me six hours to build a city, I will spend the first four sharpening the axe.\"");
         if (lion != null) lion.clicked += () => SelectCharacter(lion, City.Characters.lion, "\"My city was perfect from day one. The citizens just don't know it yet.\"");
         if (engineer != null) engineer.clicked += () => SelectCharacter(engineer, City.Characters.engineer, "\"Children's playground converted to datacenter.\"");
         startGameBtn = root.Q<Button>("StartGameBtn");
