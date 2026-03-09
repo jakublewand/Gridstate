@@ -59,7 +59,7 @@ public class RandomEffectEvents
                 buildingManager.RecalculateStats();
                 break;
             case 4:
-                message = "You start handing out guns to newborns!  +Safety";
+                message = "You beat a drug kingpin in a dance battle!  +Safety";
                 title = "Safety News!";
                 buildingManager.randomEvents.Add(new RandomEventData(City.StatType.Safety, 1.25f));
                 buildingManager.RecalculateStats();
@@ -71,11 +71,11 @@ public class RandomEffectEvents
                 buildingManager.RecalculateStats();
                 break;
             case 6:
-                message = "Your neighbor stalks you when you shower";
+                message = "Nuclear winter approaches...";
                 title = "Local News!";
                 break;
             case 7:
-                message = "The government taxes the poor down to their last penny!  +Money";
+                message = "Taxes increase, you buy private yachts!  +Money";
                 title = "Finance Update!";
                 City.instance.SetStat(City.StatType.Balance, City.instance.GetStat(City.StatType.Balance)*1.5f);
                 break;
@@ -88,11 +88,11 @@ public class RandomEffectEvents
             case 9:
                 message = "Your F students become inventors!  +Education";
                 title = "Scholarly Research!";
-                buildingManager.randomEvents.Add(new RandomEventData(City.StatType.Education, 1.25f));
+                buildingManager.randomEvents.Add(new RandomEventData(City.StatType.Education, 1.5f));
                 buildingManager.RecalculateStats();
                 break;
             case 10:
-                message = "The death sentence became the punishment for every crime!  +Safety";
+                message = "You banned IRL streamers!  +Safety";
                 title = "Safety News!";
                 buildingManager.randomEvents.Add(new RandomEventData(City.StatType.Safety, 1.25f));
                 buildingManager.RecalculateStats();
@@ -134,7 +134,7 @@ public class RandomEffectEvents
                 City.instance.SetStat(City.StatType.Balance, City.instance.GetStat(City.StatType.Balance)*2f);
                 break;
             case 18:
-                message = "You empty the pensions and flee the city!  +++++Money";
+                message = "The city's accountant misplaced a decimal point!  +++++Money";
                 title = "Finance Update!";
                 City.instance.SetStat(City.StatType.Balance, City.instance.GetStat(City.StatType.Balance)*10f);
                 break;
