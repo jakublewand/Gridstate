@@ -372,7 +372,7 @@ public class GameUIController : MonoBehaviour
             .OrderBy(def => def.effects.cost);
         foreach (var def in defs)
         {
-            if(city.gameState.topBalance<def.effects.cost/4) {if(PlayerPrefs.GetInt("HideUnaffordable") == 1) {continue;} buildingList.Add(CreateMysteryCard(def)); continue;}
+            if(city.gameState.topBalance<def.effects.cost*0.90f) {if(PlayerPrefs.GetInt("HideUnaffordable") == 1) {continue;} buildingList.Add(CreateMysteryCard(def)); continue;}
             if(city.gameState.balance<def.effects.cost) {if(PlayerPrefs.GetInt("HideUnaffordable") == 1) {continue;} buildingList.Add(CreateCantAffordCard(def)); continue;}
             buildingList.Add(CreateBuildingCard(def));
         }

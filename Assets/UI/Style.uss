@@ -441,7 +441,7 @@
 /* SCROLLBAR */
 .building-list .unity-scroller--vertical {
     position: absolute;
-    right: 0; top: 0; bottom: 0;
+    right: -4px; top: 0; bottom: 0;
     width: 15px;
 }
 .building-list .unity-scroller__low-button,
