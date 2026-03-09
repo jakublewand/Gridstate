@@ -175,7 +175,7 @@ MonoBehaviour:
     payoutProgress: 0
     population: 0
     income: 0
-    balance: 1e+14
+    balance: 0
     topBalance: 0
     jobs: 0
     education: 0
