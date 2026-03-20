@@ -25,7 +25,7 @@ public class RandomEffectEvents
     public void update() //should be triggered once per payout
     {
         Debug.Log("Current chance: " + currentChance);
-        currentChance += 2;
+        currentChance += 20;
         if (UnityEngine.Random.Range(0, 1000) < currentChance && !GameUIController.IsEventPopupActive)
         {
             currentChance = 0;

@@ -52,8 +52,13 @@ public class TitleUIController : MonoBehaviour
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_WEBGL
+        // WebGL cannot programmatically close the tab in most browsers, but this attempts a best-effort close.
+        Application.OpenURL("javascript:window.close();");
 #else
         Application.Quit();
+        // Some platforms may not close cleanly; ensure termination.
+        System.Environment.Exit(0);
 #endif
     }
 
